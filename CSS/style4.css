@@ -531,3 +531,32 @@ border:none;
 
 
 }
+
+svg{
+    display:block;
+margin: auto;
+}
+
+
+#button{
+cursor: pointer;
+}
+.graphe_container{
+-moz-transform-origin: 160px 160px;
+-ms-transform-origin:  160px 160px;
+-o-transform-origin: 160px 160px;
+-webkit-transform-origin:  160px 160px;
+transform-origin: 160px 160px;
+}
+rect,circle{
+user-select: none;
+-webkit-user-select:none;
+-moz-user-select:none;
+}
+
+
+
+
+
+
+

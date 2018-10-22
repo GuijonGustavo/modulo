@@ -78,18 +78,52 @@ else if ($nombreUsuario == 'Gustavo')
         {
 $nom = 'CPR';
 }
+else if ($nombreUsuario == 'Estrella Cruz')
+        {
+$nom = 'ecruz';
+}
+else if ($nombreUsuario == 'Rocío López')
+        {
+$nom = 'rlopez';
+}
+else if ($nombreUsuario == 'Laura Herrera')
+        {
+$nom = 'oherrera';
+}
 else { 
 
-    $nom = 'nombreUsuario';
+    $nom = $nombreUsuario;
 }
+
+//Obtenemos el tiempo actual.
+//$tiempo = time();
+
+//$time = time();
+
+//$tiempo_actual = date('Y-m-d  H:i:s', $time);
+//$tiempo= date('H:i:s', $time);
+
+//$strStart = $tiempo_actual;
+//Tiempo de expira.
+//$strEnd   = '2019-05-09 21:25';    
+
+//Convierte la cadena en una variable de fecha.
+//$dteStart = new DateTime($strStart);
+//$dteEnd   = new DateTime($strEnd);
+
+//Calculamos la diferencia 
+//$dteDiff  = $dteStart->diff($dteEnd);    
+
+//Salida de data.
+//print $dteDiff->format("%H:%I:%S");
+
+
 ?>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
 <html >
 
   <head>
-    <title>Menu</title>
+    <title>Módulo CBM</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
    <link rel="stylesheet" href="openLayers/v4.2.0/css/ol.css"  type="text/css"> 
     <link rel="stylesheet" href="CSS/style4.css" media="all" />
@@ -344,45 +378,123 @@ function habilitar() {
 
 </script>
 
+<script>
+var customDialog = function (options) {
+$('<div></div>').appendTo('body')
+    .html('<div style="margin-top: 15px; font-weight: bold; text-align:center">' + options.message + '</div>')
+.dialog({
+modal: true,
+title: options.title || 'Bienvenid@ <?php echo $nombreUsuario; ?>', zIndex: 10000, autoOpen: true,
+width: 'auto', resizable: false,
+buttons: {
+Editar: function () {
+$(this).dialog("close");
+},
+Crear: function () {
+$("#dialog_nuevo" ).dialog( "open" );
+},
+Duplicar: function () {
+$("#dialog_duplica" ).dialog( "open" );
+},
+},
+close: function (event, ui) {
+$(this).remove();
+}
+});
+};
+    </script>
+
+
+    <script>
+
+var thetime = '00:00:00';
+// this would be something like:
+// // var thetime = '<?=date('H:i:s');?>';
+var arr_time = thetime.split(':');
+var ss = arr_time[2];
+var mm = arr_time[1];
+var hh = arr_time[0];
+//
+var update_ss = setInterval(updatetime, 1000);
+//
+function updatetime() {
+ss++;
+if (ss < 10) {
+ss = '0' + ss;
+}
+if (ss == 60) {
+ss = '00';
+mm++;
+if (mm < 10) {
+mm = '0' + mm;
+}
+if (mm == 60) {
+mm = '00';
+hh++;
+if (hh < 10) {
+hh = '0' + hh;
+}
+if (hh == 24) {
+hh = '00';
+}
+$("#hours").html(2 - hh);
+}
+$("#minutes").html(60 - mm);
+}
+$("#seconds").html(60 - ss);
+}
+
+
+    </script>
+
+
+
+
 
 
 </head>
+
 <body>
+<?php
+if($id == 0) {echo "<script>$(document).ready(function(){ customDialog({message: '¿Qué desea hacer?</br>Crear registro, duplicar o continuar'}); });</script>";}?>
 	<div id="hd">
     	<table width="1200px">
           <tr>
-            <td width="20%" valign="middle" align="center"><a href="http://www.biodiversidad.gob.mx/" target="_blank"><img src="CSS/images/logo_conabio.png" width="400"></a></td>
-            <td width="80%" class="title"><span>
-			  <p class="txtN2">Direcci&oacute;n General de Geom&aacute;tica</p>
-              <p class="txtN2">Subcoordinaci&oacute;n de Sistemas de Informaci&oacute;n Geogr&aacute;fica</p>
-			  <p class="txtN2">Corredor Biológico Mesoamericano</p>
+            <td width="20%" class="title"><span>
+            <td width="60%" class="title"><span>
+            <td width="20%" ><img src="CSS/images/logos2.png" width="800"></td>
+			  <p class="txtN2"></p>
 <!--<?php echo $iden ;?><br />
 <?php echo $cv_principal;?>	
 <?php echo $tooltipNomArchivo; ?> -->
-
+			</span></td>
+			  <p class="txtN2" style="text-align:center">Proyecto de Cooperación Triangular Fortalecimiento de capacidades para la gestión territorial sostenible del Corredor Biológico Mesoamericano en Guatemala</p>
 			</span></td>
           </tr>
         </table>
-	</div> <!-- FIN <div id="hd">-->
-    <div id="nu">&nbsp;&nbsp; Bienvenido <b><?php echo $nombreUsuario; ?></b></div>
+    </div> <!-- FIN <div id="hd">-->
+    <div id="nu">&nbsp;&nbsp; Hola <b><?php echo $nombreUsuario.",";?> </b>tu sesión expira en: <span id="hours">02</span>:<span id="minutes">00</span>:<span id="seconds">00</span> minutos.
+<input style="float:right; background:url(CSS/images/cerrar_sesion_btn.png) no-repeat; width:150px; height:40px; border-radius: 15px; " type="button" id="cerrarSesion"><a href="manualTaller.pdf"> <input style="float:right; background:url(CSS/images/manual.jpeg) no-repeat; width:130px; height:43px; border-radius: 25px; " type="button" id="manual"></a></div>   
     <div id="cn">
 		<div id="lf">
-	    	<div id="lf1">
+	    <!--	<div id="lf1">
  
-            	<input type="button" id="nuevo" value="Nuevo Registro">
                 <input type="button" id="duplica" value="Duplicar Registro">
+                <input type="button" id="nuevo" value="Crear Registro">
 				<?php if ($cv_principal == 28) {echo 
                 '<input type="button" id="borrar" value="Borrar Registro">'
 				;}; ?>   
-                <input type="button" id="cerrarSesion" value="Cerrar Sesi&oacute;n">
+             <input type="button" id="cerrarSesion" value="Cerrar Sesi&oacute;n"> 
 	      	
-			</div> 
-			<div class="separador"></div>
-          	<div id="lf2" class="accordion">
+			</div> -->
+            <div id="lf2" class="accordion">
+
+
+
 	        	<p>Seleccione el registro a editar o revisar:</p>    
 	        	<?php seleccion($id, $cv_principal);?>
             	<h1> Informaci&oacute;n b&aacute;sica </h1>
-				<div>
+				<div style="display:none;">
                   <input type="button" onclick="cambiar.accion (1)" value="Datos Generales">
                   <!--<input type="button" onclick="cambiar.accion (2)" value="Ubicaci&oacute;n Geogr&aacute;fica">-->
                   <input type="button" onclick="cambiar.accion (3)" value="Restricciones">
@@ -390,12 +502,26 @@ function habilitar() {
                   <input type="button" onclick="cambiar.accion (5)" value="Ambiente de Trabajo">
 	
 				</div>
-			  <h1>Calidad de los datos</h1>
+
+
+
+
+
+
+              <h1>Calidad de los datos</h1>
 				<div style="display:none;">
                   <input type="button" onclick="cambiar.accion (6)" value="Calidad de los Datos">
                   <input type="button" onclick="cambiar.accion (7)" value="Taxonom&iacute;a">
 				</div>
-			  <h1> Informaci&oacute;n espacial y atributos</h1>
+
+
+
+
+
+
+
+
+              <h1> Informaci&oacute;n espacial y atributos</h1>
 				<div style="display:none;">
                 	
                   <input type="button" onclick="cambiar.accion (9)" value="Datos  Espaciales">
@@ -422,6 +548,9 @@ function habilitar() {
                  		'<input type="button" onclick="cambiar.accion (16)" value="XML">'                  
 				;}; ?>   
                                  
+                                 <?php if ($puesto == "Administrador de Metadatos" || $puesto == "analista") {echo 
+                 		'<input type="button" onclick="cambiar.accion (17)" value="SLD">'                  
+				;}; ?>   
 				<?php if ($puesto == "Administrador de Metadatos" || $puesto == "administrador" || $puesto == "analista") {echo 
 				'<input type="button" onclick="cambiar.accion (12)" value="Registro de colaborador">'
 				;}; ?>   
@@ -441,8 +570,29 @@ function habilitar() {
 				</div>		
 
 
-	
-	      	</div> <!--FIN <div id="lf2" class="accordion">-->
+
+
+
+
+
+			  <h1>Registro de datos</h1>  
+				<div id="lf1" style="display:none;">
+       <!--     <div id="lf1">-->
+ 
+                <input type="button" id="duplica" value="Duplicar Registro">
+                <input type="button" id="nuevo" value="Crear Registro">
+				<?php if ($cv_principal == 28) {echo 
+                '<input type="button" id="borrar" value="Borrar Registro">'
+				;}; ?>   
+	      	
+			</div> 
+
+
+
+            </div> <!--FIN <div id="lf2" class="accordion">-->
+
+
+
         </div> <!--FIN <div id="lf">-->       
 	</div> <!--FIN <div id="cn">-->
     <div id="rg">
@@ -450,7 +600,6 @@ function habilitar() {
          	 <div style="display:block" id="div1" class="element">
              	<div id="contenido">
                     <form name="datos" method="POST" >
-                        <input type = "submit" value = "Guardar" id="datos" onclick = "this.form.action = 'guardar.php?hoja=datos&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'" />
                       	<div id="autores">Autores: 		<?php  global $id;  tabla("x_origin","30px",$id , $cv_principal,"Autores"); ?>  </div><br />
 							<table id="tabla_1" width="869">
                             	<tr> 
@@ -463,14 +612,17 @@ function habilitar() {
                                                           
                                     </td>
                               </tr>
+<p class="txtN1"><b>Información básica</b></p>
+<br />
+<h3>Datos Generales</h3>
                                  <tr >
                                     <td>T&iacute;tulo del mapa:</td>
-                                    <td colspan="6"><?php 	$tooltipTitulo = "Título del mapa";
+                                    <td colspan="6"><?php 	$tooltipTitulo = "Título del mapa, el cual se motrará en el Geoportal. Aparece de forma automática al comenzar a editar, y corresponde al nombre del registro que dimos de alta.";
                                                  global $id; genera("c_nombre","extenso",$id , $cv_principal , "txt" , $tooltipTitulo);?></td>
                                  </tr>
                                  <tr >
                                     <td>Nombre del archivo:</td>
-                                                 <td colspan="6"><?php  	$tooltipNomArchivo = "Nombre del dato geoespacial o capa digital"; 
+                                    <td colspan="6"><?php  	$tooltipNomArchivo = "Nombre del dato geoespacial o capa digital.Nombre del archivo que corresponde al dato geoespacial (capa digital). Este nombre no debe tener más de once caracteres y debe ser escrito en mayúsculas. Y debe contener en el sufijo las letras de la proyección. Por ejemplo: FNNGA01GW.)"; 
                                                  global $id;  genera("c_cobertura","extenso",$id , $cv_principal , "txt" , $tooltipNomArchivo); ?></td>
                                  </tr>
                                  <tr valign="top">
@@ -478,11 +630,11 @@ function habilitar() {
                                     <td width="125"><?php 	$tooltipFechaIngres = "Fecha de captura de metadato";
                                                       		global $id;  genera("c_fecha_inicial","corto",$id , $cv_principal, "calendario" , $tooltipFechaIngres); ?></td>
                                                             
-                                    <td width="166">Fecha de actualizaci&oacute;n:</td>
-                                    <td width="125"><?php 	$tooltipFechaAct = "";
+                                    <td width="166">Fecha de actualización:</td>
+                                    <td width="125"><?php 	$tooltipFechaAct = "Fecha en la que se realiza una actualización o un duplicado del metadato. Ésta, en un principio, será la misma que la fecha de ingreso. Solo se modificará si se efectúa una actualización en el dato geoespacial, como la eliminación o adición de elementos geográficos, o eliminación o adición de atributos, por ejemplo. Nunca en los casos en los que se reinicie la edición de un registro por no haberse terminado o por correcciones ortográficas o de redacción del metadato.";
                                                       		global $id;  genera("c_fecha","corto",$id , $cv_principal, "calendario" , $tooltipFechaAct);?></td>
                                     <td width="120">Versi&oacute;n FGDC:</td>
-                                    <td width="125" colspan="2"><?php $tooltipVerFGDC = "";
+                                    <td width="125" colspan="2"><?php $tooltipVerFGDC = "Versión del estándart de metadato geoespacial en base de la Federal Geographic Data Committee (FGDC). Se sugiere que sea 2.";
                                                                   global $id;  genera("c_version","corto",$id , $cv_principal, "numeros" , $tooltipVerFGDC);?></td>
             					</tr>
                            	</table>
@@ -491,13 +643,13 @@ function habilitar() {
                                 	<td colspan="6"><h3>Cita de la informaci&oacute;n</h3></td>
                               	</tr>
                                 <tr>
-                                    <td width="180">Instituci&oacute;n responsable:</td>
-                                    <td colspan="6"><?php 	$tooltipInsti = "";
+                                    <td width="180">Institución responsable:</td>
+                                    <td colspan="6"><?php 	$tooltipInsti = "Es la institución responsable de publicar el dato geoespacial y puede ser la institución donde labora el responsable del proyecto, o bien la CONABIO. Queda a criterio del autor o autores la designación de dicha institución.";
                                                       		global $id;  genera("c_publish","extenso",$id , $cv_principal , "txt", $tooltipInsti); ?></td>
                               	</tr>
                                 <tr>
                                     <td>Siglas de la instituci&oacute;n:</td>
-                                    <td colspan="6"><?php 	$tooltipSigla = ""; 
+                                    <td colspan="6"><?php 	$tooltipSigla = "Siglas de la institución designada por el autor o autores como la institución responsable de la publicación"; 
                                                       		global $id;  genera("c_publish_siglas","extenso",$id , $cv_principal , "txt" , $tooltipSigla);?></td>
                                 </tr>
                                 <tr>
@@ -526,14 +678,14 @@ function habilitar() {
 									 		global $id;  genera("c_pubplace","extenso",$id , $cv_principal , "txt", $tooltipOtro); ?> </div></td>
                               </tr>
                                  <tr>
-                                    <td>Fecha de publicaci&oacute;n:</td>
+                                    <td>Fecha de publicación:</td>
                                     <td><?php  	$tooltipFechaPub = "Fecha de elaboración o modificación de dato geoespacial";
                                           		global $id;  genera("c_pubdate","corto",$id , $cv_principal , "calendario" , $tooltipFechaPub); ?></td>
                                     <td colspan="5">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td>Versi&oacute;n:</td>
-                                    <td><?php 	$tooltipVersion = "Sinónimo de edición";
+                                    <td>Versión:</td>
+                                    <td><?php 	$tooltipVersion = "Es sinónimo de edición y como sucede con un libro la primera publicación corresponderá a la primera edición, por lo que el valor de este campo dependerá de la edición del dato geoespacial que se está publicando. Si es de primera vez, el valor será 1.";
                                           		global $id;  genera("c_edition","corto",$id , $cv_principal , "txt" , $tooltipVersion);  ?></td>
                                     <td colspan="5">&nbsp;</td>
                                 </tr>
@@ -552,7 +704,7 @@ function habilitar() {
                                 
                                 
                                  <tr valign="top">
-                                     <td>Descripci&oacute;n del metadato:</td>
+                                     <td>Descripción del metadato:</td>
                                      <td colspan="6"><?php  $tooltipDescMetad = "Información complementaria a la cita del dato geoespacial";
                                                         	global $id;  genera("c_issue","95px",$id , $cv_principal , "txtarea", $tooltipDescMetad); ?></td>
                                  </tr>
@@ -563,7 +715,7 @@ function habilitar() {
                                  </tr>
                                  <tr valign="top">
                                      <td>Abstract:</td>
-                                     <td colspan="6"><?php 	$tooltipAbst = "";
+                                     <td colspan="6"><?php 	$tooltipAbst = "(Resumen en inglés) Opcional.";
                                                       		global $id;  genera("c_abstract","95px",$id , $cv_principal , "txtarea", $tooltipAbst);  ?></td>
                                  </tr>
                                  <tr valign="top">
@@ -581,14 +733,14 @@ function habilitar() {
                             	<tr>
                                   	<td width="279">Tiempo comprendido:</td>
                                   	<td width="30">del: </td>
-                                  	<td width="138"><?php global $id;  genera("c_tiempo","corto",$id , $cv_principal , "calendario",  ""); ?></td>
+                                    <td width="138"><?php $tooltipTiempoB = "Información acerca del tiempo que se tomó para elaborar el dato geoespacial."; global $id;  genera("c_tiempo","corto",$id , $cv_principal , "calendario", $tooltipTiempoB); ?></td>
                                   	<td width="30">al:</td>
-                                  	<td width="138"><?php global $id;  genera("c_tiempo2","corto",$id , $cv_principal , "calendario",  ""); ?></td>
+                                  	<td width="138"><?php $tooltipTiempoC = "Información acerca del tiempo que se tomó para elaborar el dato geoespacial."; global $id;  genera("c_tiempo2","corto",$id , $cv_principal , "calendario",  $tooltipTiempoC); ?></td>
                                   	<td width="226" colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
                                   	<td >Nivel de avance:</td>
-                                  	<td colspan="6"> <?php 	$tooltipNive = ""; 
+                                    <td colspan="6"> <?php 	$tooltipNive = "Grado de avance del dato geoespacial con base en los siguientes vocablos: planeado, en proceso o completo."; 
                                                        		global $id;  genera("c_avance","extenso",$id , $cv_principal , "txt" , $tooltipNive); ?> </td>
                                 </tr>
                                 <tr>
@@ -612,6 +764,15 @@ function habilitar() {
                                 </tr>
                                 <tr>
                                   	<td colspan="7"><?php  global $id;  tabla("l_liga_www","100px",$id , $cv_principal ,"Ligas_www"); ?></td>
+                                 <tr>
+                                    <td colspan="6">
+
+                        <input type = "submit" value = "Guardar" id="datos" onclick = "this.form.action = 'guardar.php?hoja=datos&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'" />
+
+
+ </td>
+                                </tr>
+       </tr>
                                 </tr>
                           	</table>
 					</form>
@@ -659,8 +820,9 @@ function habilitar() {
                 </div>
              </div>
              <div id="div3"  class="element">
-             	<div id="contenido">
-                    <form name="datos" method="POST" >
+                <iframe name="div_3"  ></iframe>
+                <div id="contenido"> 
+                    <form name="datos" method="POST" target="div_3">
                         <input type = "submit" value = "Guardar"  id="restricciones" onclick = "this.form.action = 'guardar.php?hoja=restricciones&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr>
@@ -668,6 +830,7 @@ function habilitar() {
                                     <td>&nbsp;</td>
                             	</tr>
                                 <tr>
+<p class="txtN1"><b>Información básica</b></p>
                                    	<td colspan="2"><h3>Restricciones</h3></td>
                                 </tr>
                                 <tr>
@@ -682,16 +845,17 @@ function habilitar() {
                                 </tr>
                                 <tr>
                                   <td>Observaciones:</td>
-                                  <td><?php $tooltipObser = "";
-                                        	global $id;genera("c_observaciones","100px",$id , $cv_principal , "txtarea" , $tooltipObser);?></td>
+                                  <td><?php $tooltipObser = "En este campo se puede agregar información adicional.";
+                                        	global $id;genera("c_observaciones","extenso",$id , $cv_principal , "txt" , $tooltipObser);?></td>
                                 </tr>
                            	</table>
                     </form>
                 </div>
              </div>
              <div id="div4"  class="element">
+                <iframe name="div_4"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_4">
                         <input type = "submit" value = "Guardar"  id="palabrasClave" onclick = "this.form.action = 'guardar.php?hoja=palabrasClave&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							 <table width="869">
                                  <tr >
@@ -699,6 +863,7 @@ function habilitar() {
                                     <td width="750">&nbsp;</td>
                         		</tr>
                                 <tr valign="top">
+<p class="txtN1"><b>Información básica</b></p>
                                    <td><h3>Temas:</h3>	</td>
                                    <td><?php  global $id;  tabla("m_Palabra_Clave","100px",$id , $cv_principal,"Temas",""); ?></td>
                                 </tr>
@@ -712,8 +877,9 @@ function habilitar() {
                 </div>
              </div> 
              <div id="div5"  class="element">
+                <iframe name="div_5"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_5" >
                         <input type = "submit" value = "Guardar"  id="ambienteDeTrabajo" onclick = "this.form.action = 'guardar.php?hoja=ambienteDeTrabajo&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr >
@@ -721,6 +887,7 @@ function habilitar() {
                                     <td width="657">&nbsp;</td>
                         		</tr>
                                 <tr >
+<p class="txtN1"><b>Información básica</b></p>
                                    <td>Software y hardware:</td>
                                    <td><?php 	$tooltipSoft = "Programa de cómputo utilizado, incluyendo versión y equipo para elaboración del dato geoespacial";
                                         		global $id;  genera("c_software_hardware","extenso",$id , $cv_principal, "txt" , $tooltipSoft);  ?></td>
@@ -737,7 +904,7 @@ function habilitar() {
                                  </tr>
                                  <tr >
                                    <td>Ruta y nombre de archivo:</td>
-                                   <td><?php 	$tooltipRuta = ""; 
+                                   <td><?php 	$tooltipRuta = "Ruta en el que queda el archivo en el servidor de la CONABIO."; 
                                           		global $id;  genera("c_path","extenso",$id , $cv_principal, "txt", $tooltipRuta);  ?></td>
                                  </tr>
                            	</table>
@@ -746,25 +913,19 @@ function habilitar() {
              </div>
 
              <div id="div12"  class="element">
+                <iframe name="div_12"  ></iframe>
 
                 <div id="contenido">
 
-
-
-
-
-
-
-
-
-
-
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_12">
                         <input type = "submit" value = "Guardar"  id="RegistroColaborador" onclick = "this.form.action = 'guardar.php?hoja=RegistroColaborador&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr >
                                    	<td width="200">&nbsp;</td>
                                     <td width="657">&nbsp;</td>
+<p class="txtN1"><b>Cartografíá</b></p>
+<br />
+                                       <p class="txtN1">Registro de colaborador</p>
                         		</tr>
                                 <tr >
                                    <td>Nombre</td>
@@ -818,10 +979,11 @@ function habilitar() {
 
 
              <div id="div13"  class="element">
+                <iframe name="div_13"  ></iframe>
 
                 <div id="contenido">
 
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_13">
                         <input type = "submit" value = "Guardar"  id="aprobarMetadato" onclick = "this.form.action = 'guardar.php?hoja=aprobarMetadato&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr >
@@ -857,6 +1019,8 @@ function habilitar() {
 
 <div id="nameOfFile">
                                       <form>                                                  
+<p class="txtN1"><b>Cartografíá</b></p>
+<br />
                                        <p class="txtN1">Adjunta tu archivo: <?php echo $nameFileSession;?>.zip</p>
                                        </form>
                                       
@@ -989,24 +1153,39 @@ map.renderSync();
 
 
 <form>                                                  
+<p class="txtN1"><b>Cartografía</b></p>
+<br />
                                        <p class="txtN1">Generar Plantilla</p>
                                        </form>
                                       
   <form class="mapTemplate" id="mapTemplate" action="mapTemplate/mapTemplate.php"  method="post" enctype="multipart/form-data">
-    <input type="submit" id="btn_mapTemplate" name="btn_mapTemplate" value="Generar">   
+    <input type="submit" id="btn_mapTemplate" name="btn_mapTemplate" value="<?php echo $id;?>">   
                             <table width="869">
                             	<tr >
                                    	<td width="200">&nbsp;</td>
                                     <td width="657">&nbsp;</td>
-                                                       <tr><td>Nombre de proyecto</td>
+
+
+<?php if($nom != $nombreUsuario){echo '<tr><td>Nombre de proyecto</td>
                                    <td><select id="nombreProy" name="nombreProy">
-                                 <option value="jm013">jm013</option>
-                                 <option value="jm037">jm037</option>
-                                 <option value="jm055">jm055</option>
-                                 <option value="mang01">mang01</option>
+                                 <option value="jm001">jm001</option>
+                                 <option value="jm002">jm002</option>
+                                 <option value="jm003">jm003</option>
+                                 <option value="jm004">jm004</option>
+                                 <option value="jm005">jm005</option>
+                                 <option value="jm006">jm006</option>
+                                 <option value="jm007">jm007</option>
+                                 <option value="jm008">jm008</option>
+                                 <option value="jm009">jm009</option>
+                                 <option value="jm010">jm010</option>
+                                 <option value="jm011">jm011</option>
+                                 <option value="jm013">jm012</option>
+                                 <option value="jm014">jm014</option>
+                                 <option value="jm015">jm015</option>
                                  <option value="jm016">jm016</option>
                                  <option value="jm017">jm017</option>
                                  <option value="jm018">jm018</option>
+                                 <option value="mang01">mang01</option>
                                  <option value="jm019">jm019</option>
                                  <option value="jm022">jm022</option>
                                  <option value="jm024">jm024</option>
@@ -1042,7 +1221,9 @@ map.renderSync();
                                    <td><select id="tipoProy" name="tipoProy">
                                  <option value="dist">Distribución</option>
                                  <option value="sitios">Sitios de recolecta</option>
-                                </tr>
+                                 </tr>';
+
+}?>
                                                        <tr><td>Software</td>
                                    <td><select id="software" name="software">
                                  <option value="arc">ArcGis</option>
@@ -1057,7 +1238,7 @@ map.renderSync();
 <p>Instrucciones:</p>
 <p>1. Elige el proyecto que se te asignó.</p>
 <p>2. Genera la plantilla. Ésta se descargará en tu máquina.</p>
-<p>3. En tu ArcGis abre tu consula de Python y ejecuta el script que acabas de descargar. Solo escribe correctamente el código que se muestra como en el ejemplo de abajo:</p>
+<p>3. En tu QuantumGis (o ArcGis) abre tu consula de Python y ejecuta el script que acabas de descargar. Solo escribe correctamente el código que se muestra como en el ejemplo de abajo:</p>
 </form>
 <form>
 
@@ -1079,11 +1260,13 @@ map.renderSync();
 
 
 <form>                                                  
+<p class="txtN1"><b>Cartografía</b></p>
+<br />
                                        <p class="txtN1">Generar XML</p>
                                        </form>
                                       
   <form class="mapTemplate" id="mapTemplate" action="map_xml/map_xml.php"  method="post" enctype="multipart/form-data">
-    <input type="submit" id="btn_map_xml" name="btn_map_xml" value="Generar">   
+  <input type="submit" id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">   
                     
 <p>Mediante esta interfaz puedes descargar los tres archivos xml que acompañan la cartografía</p>
 <p>que será incluida en el Geoportal de la CONABIO.</p>
@@ -1099,9 +1282,43 @@ map.renderSync();
 </div>
 
 <!------------------------------Cierra zona de xml---------------------->
+
+
+
+<!------------------------------Cierra zona de Generar sld    ---------------------->
+
+             <div id="div17"  class="element">
+
+                <div id="contenido">
+
+
+<form>                                                  
+<p class="txtN1"><b>SLD</b></p>
+<br />
+                                       <p class="txtN1"> SLD</p>
+
+                                       </form>
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+<!------------------------------Cierra zona de xml---------------------->
+
+
+
+
+
              <div id="div6"  class="element">
+                <iframe name="div_6"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_6">
                         <input type = "submit" value = "Guardar"  id="calidadDeDatos" onclick = "this.form.action = 'guardar.php?hoja=calidadDeDatos&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr >
@@ -1109,6 +1326,7 @@ map.renderSync();
                                     <td width="627">&nbsp;</td>
                         		</tr>
                                 <tr valign="top">
+<p class="txtN1"><b>Calidad de los Datos</b></p>
                                    	<td>Metodolog&iacute;a:</td>
                                    	<td><?php  	$tooltipMetodo = "Tipo de investigación según el lugar de aplicación para obtener o generar los datos";
                                           		global $id;  genera("c_metodologia","extenso",$id , $cv_principal, "txt" , $tooltipMetodo); ?></td>
@@ -1132,8 +1350,9 @@ map.renderSync();
                	</div>
              </div>
              <div id="div7"  class="element">
+                <iframe name="div_7"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_7">
                         <input type = "submit" value = "Guardar"  id="taxonomia" onclick = "this.form.action = 'guardar.php?hoja=taxonomia&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr >
@@ -1141,6 +1360,7 @@ map.renderSync();
                                     <td width="627">&nbsp;</td>
                         		</tr>
                                  <tr >
+<p class="txtN1"><b>Calidad de los Datos</b></p>
                                    	<td colspan="2"><h3>TAXONOM&Iacute;A:</h3></td>
                                  </tr>
                                  <tr >
@@ -1155,8 +1375,9 @@ map.renderSync();
                	</div>
              </div>
              <div id="div8"  class="element">
+                <iframe name="div_8"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_8">
                         <input type = "submit" value = "Guardar"  id="estructuraRaster" onclick = "this.form.action = 'guardar.php?hoja=estructuraRaster&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869">
                             	<tr>
@@ -1204,14 +1425,17 @@ map.renderSync();
                 </div>
              </div>
  <div id="div9"  class="element">
+                <iframe name="div_9"  ></iframe>
              		<div id="contenido">
-                    <form name="datos" method="POST" class="formulario">
+                    <form name="datos" method="POST" class="formulario" target="div_9" >
                         <input type = "submit" value = "Guardar"  id="proyeccion" onclick = "this.form.action = 'guardar.php?hoja=proyeccion&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 <table width="867" border="0">
   <tr>
     <td ><input type="button" value="Descargar ejecutable" id="descarga"/></td>
     <td colspan="2" ><input name="userfile" type="file" class="box" id="userfile" /></td>
     <td align="center">&nbsp;</td>
+<p class="txtN1"><b>Información espacial y atributos</b></p>
+<br />
   </tr>
   <tr>
     <td colspan="2" ><h3>Información espacial:</h3></td>
@@ -1254,28 +1478,28 @@ map.renderSync();
   </tr>
   <tr>
     <td width="237">Coordenadas del extremo oeste:</td>
-    <td width="272"><?php 	$tooltipOeste="";
+    <td width="272"><?php 	$tooltipOeste="Coordenadas extremas del área geográfica que ocupa el dato geoespacial (oeste, este, norte y sur) y definido por el programa utilizado para su elaboración. Los valores indican la extensión del dato sobre la superficie de la tierra mediante coordenadas geográficas (grados decimales). Ejemplo: Oeste: -117.12; Este: -103.08; Norte: 32.64; y Sur: 22.87.l";
 															 global $id;genera("c_oeste","corto",$id , $cv_principal, "numeros", $tooltipOeste);?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Coordenadas del extremo este:</td>
-    <td><?php 	$tooltipEste = "";
+    <td><?php 	$tooltipEste = "Coordenadas extremas del área geográfica que ocupa el dato geoespacial (oeste, este, norte y sur) y definido por el programa utilizado para su elaboración. Los valores indican la extensión del dato sobre la superficie de la tierra mediante coordenadas geográficas (grados decimales). Ejemplo: Oeste: -117.12; Este: -103.08; Norte: 32.64; y Sur: 22.87.l";
 								   				 global $id;genera("c_este","corto",$id , $cv_principal, "numeros", $tooltipEste);?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Coordenadas del extremo norte:</td>
-    <td><?php	$tooltipNorte="";
+    <td><?php	$tooltipNorte="Coordenadas extremas del área geográfica que ocupa el dato geoespacial (oeste, este, norte y sur) y definido por el programa utilizado para su elaboración. Los valores indican la extensión del dato sobre la superficie de la tierra mediante coordenadas geográficas (grados decimales). Ejemplo: Oeste: -117.12; Este: -103.08; Norte: 32.64; y Sur: 22.87.l";
 								   				 global $id;genera("c_norte","corto",$id , $cv_principal, "numeros", $tooltipNorte);?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Coordenadas del extremo sur:</td>
-    <td><?php 	$tooltipSur="";
+    <td><?php 	$tooltipSur="Coordenadas extremas del área geográfica que ocupa el dato geoespacial (oeste, este, norte y sur) y definido por el programa utilizado para su elaboración. Los valores indican la extensión del dato sobre la superficie de la tierra mediante coordenadas geográficas (grados decimales). Ejemplo: Oeste: -117.12; Este: -103.08; Norte: 32.64; y Sur: 22.87.l";
 								   				 global $id;genera("c_sur","corto",$id , $cv_principal, "numeros", $tooltipSur);?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -1290,18 +1514,18 @@ map.renderSync();
   </tr>
   <tr>
     <td>Datum horizontal:</td>
-    <td><?php   global $id;  genera("c_datum","30px",$id , $cv_principal , "txt",  ""); ?></td>
+    <td><?php   $tooltipHoriz = "WGS84, de acuerdo con los lineamientos cartográficos."; global $id;  genera("c_datum","30px",$id , $cv_principal , "txt",  $tooltipHoriz); ?></td>
     <td colspan="2">&nbsp;</td>
   </tr>
   <tr>
     <td>Nombre del elipsoide:</td>
-    <td><?php   global $id;  genera("c_elipsoide","30px",$id , $cv_principal , "txt",  ""); ?></td>
+    <td><?php   $tooltipElip = "WGS84, de acuerdo con los lineamientos cartográficos."; global $id;  genera("c_elipsoide","30px",$id , $cv_principal , "txt", $tooltipElip); ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Proyecci&oacute;n cartogr&aacute;fica</td>
-    <td><?php   global $id;  genera("c_id_proyeccion","10px",$id , $cv_principal, "txt",  ""); ?></td>
+    <td><?php   $tooltipCar = "Este dato tiene que ser un número entero";  global $id;  genera("c_id_proyeccion","10px",$id , $cv_principal, "txt",  $tooltipCar) ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
@@ -1322,37 +1546,37 @@ map.renderSync();
   </tr>
   <tr>
     <td>N&uacute;mero de renglones:</td>
-    <td><?php  global $id;  genera("r_nun_renglones","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td><?php  $tooltipNumReng = "Número total de renglones a lo largo del eje Y."; global $id;  genera("r_nun_renglones","13px",$id , $cv_principal, "numeros",$tooltipNumReng); ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>N&uacute;mero de columnas:</td>
-    <td><?php  global $id;  genera("r_num_columnas","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td><?php  $tooltipNumCol = "Número total de columnas a lo largo del eje X."; global $id;  genera("r_num_columnas","13px",$id , $cv_principal, "numeros",$tooltipNumCol); ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Tama&ntilde;o del pixel de X en metros:</td>
-    <td><?php  global $id;  genera("r_pixel_X","15px",$id , $cv_principal, "numeros",""); ?></td>
+    <td><?php  $tooltipPixX = "Resolución espacial, en metros, del pı́xel sobre el eje X."; global $id;  genera("r_pixel_X","15px",$id , $cv_principal, "numeros",$tooltipPixX); ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Tama&ntilde;o del pixel de Y en metros:</td>
-    <td><?php  global $id;  genera("r_pixel_Y","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td><?php  $tooltipPixY = "Resolución espacial, en metros, del pı́xel sobre el eje Y. Es importante mencionar que para el tamaño del pixel en X y Y, el caso de que el dato geoespacial este referido a un sistema de coordenadas geográficas, el valor se obtiene multiplicando el tamaño del pixel en grados por un valor estándar aproximado en el Ecuador, en donde 1◦=111.111 km"; global $id;  genera("r_pixel_Y","13px",$id , $cv_principal, "numeros", $tooltipPixY); ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Coordenada X del origen del raster:</td>
-    <td><?php  global $id;  genera("r_COOR_X","13px",$id , $cv_principal, "numeros",""); ?>    </td>
+    <td><?php  $tooltipCoorX = "Coordenada en grados decimales o en metros, según la proyección, del punto de origen del raster sobre el eje X, que corresponde a la esquina superior izquierda del raster."; global $id;  genera("r_COOR_X","13px",$id , $cv_principal, "numeros",$tooltipCoorX); ?>    </td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Coordenada Y del origen del raster:</td>
-    <td><?php  global $id;  genera("r_COOR_Y","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td><?php  $tooltipCoorY = "Coordenada en grados decimales o en metros, según la proyección, del punto de origen del raster sobre el eje Y, que corresponde a la esquina superior izquierda del raster.";  global $id;  genera("r_COOR_Y","13px",$id , $cv_principal, "numeros",$tooltipCoorY); ?></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
@@ -1369,8 +1593,9 @@ map.renderSync();
                 </div>
              </div>
              <div id="div10" class="element">
+                <iframe name="div_10"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_10">
                         <input type = "submit" value = "Guardar"  id="atributos" onclick = "this.form.action = 'guardar.php?hoja=atributos&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
 							<table width="869" border="0">
                             	<tr>
@@ -1388,6 +1613,7 @@ map.renderSync();
                                         		global $id;  genera("c_descrip_tabla","80px",$id , $cv_principal , "txtarea" , $tooltipDescEnti);  ?></td>
                               	</tr>
                                 <tr>
+<p class="txtN1"><b>Información espacial y atributos</b></p>
                                 	<td colspan="2"><h3>Atributos</h3></td>
                                 </tr>
                            </table>
@@ -1405,8 +1631,9 @@ map.renderSync();
                 </div>
              </div>
              <div id="div11" class="element">
+                <iframe name="div_11"  ></iframe>
              	<div id="contenido">
-                    <form name="datos" method="POST" >
+                    <form name="datos" method="POST" target="div_11">
                         <input type = "submit" value = "Guardar"  id="arbol" onclick = "this.form.action = 'guardar.php?hoja=arbol&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
                         <br />
 							 <table width="869" border="0">
@@ -1415,6 +1642,7 @@ map.renderSync();
                                 	<td colspan="2">&nbsp;</td>
                                	</tr>
                               	<tr>
+<p class="txtN1"><b>Información espacial y atributos</b></p>
                                 	<td width="118"><h3>Clasificaci&oacute;n</h3></td>
                                 	<td width="657"><input type="text" name="c_clasif_ruta" class="extenso" /></td>
                               	    <td width="80"><?php  global $id;  genera("c_clasificacion","corto",$id , $cv_principal , "txt",""); ?></td>
