@@ -1,0 +1,37 @@
+<?php
+header("Content-type:image/png");
+
+$imagen_fondo = "images/ANP2005CW.png";
+
+$im = imagecreatefrompng($imagen_fondo);
+
+imagecopy($im, imagecreatefrompng("images/ANP2005CW_s.png"),500,300,0,0,170,135);
+
+$negro = imagecolorallocate($im,255,0,0);
+
+$texto = "Comisión Nacional para el Conocimiento\n y uso de la Biodiversidad";
+
+$fuente = "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf";
+
+imagettftext($im,20,0,130,60,$negro,$fuente,$texto);
+
+imagepng($im, "images/imagenPrueba.png");
+
+imagedestroy($im);
+
+chdir("images");
+
+$attachment_location = "imagenPrueba.png";
+if (file_exists($attachment_location)) {
+    header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+    header("Cache-Control: public"); // needed for internet explorer
+    header('Content-Type: application/octet-stream');
+    header('Content-Type: application/force-download');
+    header("Content-Transfer-Encoding: Binary");
+    header("Content-Length:".filesize($attachment_location));
+    header("Content-Disposition: attachment; filename=imagenPrueba.png");
+    readfile($attachment_location);
+    die();
+} else {
+    die("Error: File not found.");
+}

@@ -1,0 +1,103 @@
+html, body,div,dl,dt,dd,ul,ol,li,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+  margin:0;
+  padding:0;
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Oswald', sans-serif !important;
+}
+
+body {
+  background:url(images/img-fondo.jpg)top fixed no-repeat;
+  background-size:cover;
+	
+}
+
+body > div {
+  border-radius: 5px;
+	-webkit-box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
+	box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
+  width:1200px;
+  margin:30px auto 0 auto;
+  background:rgba(255,255,255,0.35);
+  border-radius: 310px 310px 310px 310px;
+}
+
+#cn {
+  	margin:10px;
+	padding-top:15px;
+}
+
+
+#cn > h1 {
+	text-align:center;
+	font-size:2em;
+	font-weight:500;
+	line-height:1;
+	color:#fff;
+	-webkit-text-shadow: 2px 2px rgba(0,0,0,0.5);
+	-moz-text-shadow: 2px 2px rgba(0,0,0,0.5);
+	text-shadow: 2px 2px rgba(0,0,0,0.5);
+	
+}
+#cn > h2 {
+  font-size:1.7em;
+  text-align:center;
+  font-weight:500;
+  line-height:1.5;
+  color:#1b2a17;
+
+}
+#cn > form > p{
+	text-align:right;
+	margin-top:10px;
+	
+}
+
+#cn table {
+	font-size:1em;
+}
+
+#cn input{
+	height:28px;
+}
+.cn{
+	display:block;
+	margin:auto;
+	margin-bottom:5px;
+	margin-top:5px;
+	padding:5px 20px;
+	width:1050px;
+}
+
+.Bttn{
+	display:block;
+	margin-bottom:15px;
+ 	margin-left:300px;
+ 	width:80px;
+	height:30px;
+	background-color: #1b2a17;
+	color:#fff;
+	font-size:.9em;
+	border:0!important;
+    border-radius:15px;
+		
+}
+input#usuario {
+	border-top:none!important;
+	border-right:none!important;
+	border-bottom:solid 1px #fff!important;
+	border-left:none!important;
+	background:rgba(255,255,255,0);
+}
+
+input#password {
+	border-top:none!important;
+	border-right:none!important;
+	border-bottom:solid 1px #fff!important;
+	border-left:none!important;
+	background:rgba(255,255,255,0);
+}
+

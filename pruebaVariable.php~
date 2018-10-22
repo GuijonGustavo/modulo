@@ -1,0 +1,9 @@
+<?php
+if(!isset($_GET['fileName'])) || empty($_GET['fileName'])
+                                     {
+                                         echo "Error";
+
+                                     }else{
+    echo "Exito";
+}
+?>

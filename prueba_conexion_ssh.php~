@@ -1,0 +1,25 @@
+<?php
+
+if(!function_exists('ssh2_connect')) {
+    die('No existe la función ssh2_connect');
+}
+
+if(!($connection = ssh2_connect('wattie@gmagallanes.conabio.gob.mx',22))) {
+    die('No se puede conectar al servidor');
+}
+/*
+if(!ssh2_auth_password($connection, 'wattie', 'W4tt13Gust4v0')){
+    die('No se pudo autentificar');
+}
+
+/*
+$connection = ssh2_connect('wattie@gmagallanes.conabio.gob.mx', 22);
+ssh2_auth_password($connection, 'wattie', 'W4tt13Gust4v0');
+$stream = ssh2_exec($connection, 'ls -l');
+
+if ($connection == true) {
+
+    print_r($stream);  
+}
+*/
+?>

@@ -1,0 +1,61 @@
+<?php
+
+//comprobamos que sea una petición ajax
+if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') 
+{
+
+//if(isset($_POST["archivo1"])){
+
+    $files = $_FILES['archivo']['name'];
+    $tipoFile = $_FILES['archivo']['type'];
+
+
+    $extension = end(explode(".", $_FILES['archivo']['name']));
+ 
+
+    if(($tipoFile == "application/x-esri-shape") && ($extension == "shx"))
+        {
+
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'],"files/".$_FILES['archivo']['name']) )
+                {
+                    $x = "EL archivo " . $_FILES['archivo']['name'] . " ha subido correctamente<br>";
+                    echo $x;
+
+                }
+        
+            else
+                {
+
+                    $x = "No se pudo subir su archivo. Error Processing Request";
+                    echo $x;
+                }
+        }
+    
+
+    else
+        {
+            $x = "Este archivo no es válido";
+            echo $x;
+        }
+}
+
+//}
+    
+//Sección para hacer el ZIP
+
+//$zip = new ZipArchive();
+
+//$filename = 'test.zip';
+
+//if($zip->open($filename,ZipArchive::CREATE)===true) {
+//    $zip->addFile("files/*.*");
+//    $zip->close();
+//    echo 'Creado '.$filename;
+//}
+//else {
+//    echo 'Error creando '.$filename;
+//}
+
+?>
+
+

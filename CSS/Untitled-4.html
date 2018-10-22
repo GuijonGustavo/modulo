@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+             <div id="div9"  class="element">
+             		<div id="contenido">
+                    <form name="datos" method="POST" class="formulario">
+                        <input type = "submit" value = "Guardar"  id="proyeccion" onclick = "this.form.action = 'guardar.php?hoja=proyeccion&id=<?php echo $id;?>&cv_principal=<?php echo $cv_principal;?>'"/>
+<table width="867" border="0">
+  <tr>
+    <td ><input type="button" value="Descargar" onclick="document.location='ficheros/metadatos.sfx"/></td>
+    <td colspan="2" ><input name="userfile" type="file" class="box" id="userfile" /></td>
+    <td align="center"><select name="campos" id="selectMetadato">
+      <option value="">Seleccione un archivo</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td colspan="2" ><h3>Información Espacial:</h3></td>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="237">Estructura del Dato:</td>
+    <td width="272"><?php  $tooltipEstruc ="Se especifica la estructura del dato geoespacial (Vector o Raster).";
+								  			  global $id;  genera("c_estructura_dato","extenso",$id , $cv_principal, "txt",$tooltipEstruc); ?></td>
+    <td width="145">&nbsp;</td>
+    <td width="195">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Tipo del Dato:</td>
+    <td><?php  	$tooltipDato = "Representado por: puntos, líneas y polígonos (si la estructura es vectorial); y píxel (si la estructura es raster).";
+												 global $id;  genera("c_tipo_dato","extenso",$id , $cv_principal, "txt", $tooltipDato); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Numero total del Dato:</td>
+    <td><?php  	$tooltiNumpDato = "Total de elementos si es vectorial, y si es raster se debe multiplicar las columnas por renglones.";
+								  				 global $id;  genera("c_total_datos","extenso",$id , $cv_principal, "numeros", $tooltiNumpDato); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" ><h3>Coordenadas del Extremo:</h3></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="237">Coordenadas del Extremo Oeste:</td>
+    <td width="272"><?php 	$tooltipOeste="";
+															 global $id;genera("c_oeste","corto",$id , $cv_principal, "numeros", $tooltipOeste);?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Coordenadas del Extremo Este:</td>
+    <td><?php 	$tooltipEste = "";
+								   				 global $id;genera("c_este","corto",$id , $cv_principal, "numeros", $tooltipEste);?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Coordenadas del Extremo Norte:</td>
+    <td><?php	$tooltipNorte="";
+								   				 global $id;genera("c_norte","corto",$id , $cv_principal, "numeros", $tooltipNorte);?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Coordenadas del Extremo Sur:</td>
+    <td><?php 	$tooltipSur="";
+								   				 global $id;genera("c_sur","corto",$id , $cv_principal, "numeros", $tooltipSur);?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" ><h3>Proyección Cartográfica:</h3></td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Datum Horizontal:</td>
+    <td><?php   global $id;  genera("c_datum","30px",$id , $cv_principal , "txt",  ""); ?></td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Nombre del Elipsoide:</td>
+    <td><?php   global $id;  genera("c_elipsoide","30px",$id , $cv_principal , "txt",  ""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Proyección Cartográfica</td>
+    <td><?php   global $id;  genera("c_id_proyeccion","10px",$id , $cv_principal, "txt",  ""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Área Geográfica:</td>
+    <td colspan="3"><?php 	$tooltipGeografica = "Descripción textual breve de la distribución geográfica del dato geoespacial";
+															 global $id;  genera("c_area_geo","100px",$id , $cv_principal , "txtarea", $tooltipGeografica); ?></td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" ><h3>Si la estructura es Raster :</h3></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Numero de renglones:</td>
+    <td><?php  global $id;  genera("r_nun_renglones","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Numero de columnas:</td>
+    <td><?php  global $id;  genera("r_num_columnas","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Tamaño del pixel de X  en metros:</td>
+    <td><?php  global $id;  genera("r_pixel_X","15px",$id , $cv_principal, "numeros",""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Tamaño del pixel de Y en metros:</td>
+    <td><?php  global $id;  genera("r_pixel_Y","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Coordenada X del origen del raster:</td>
+    <td><?php  global $id;  genera("r_COOR_X","13px",$id , $cv_principal, "numeros",""); ?>    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Coordenada Y del origen del raster:</td>
+    <td><?php  global $id;  genera("r_COOR_Y","13px",$id , $cv_principal, "numeros",""); ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Área Geográfica:</td>
+    <td colspan="3"><?php 	$tooltipGeografica = "Descripción textual breve de la distribución geográfica del dato geoespacial";
+															 global $id;  genera("c_area_geo","100px",$id , $cv_principal , "txtarea", $tooltipGeografica); ?></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="3">&nbsp;</td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+                    </form>
+                </div>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<?php
+session_start();
+
+$nameFileSession = $_SESSION['nameFileSession'];
+$nameFileSession .= ".zip";
+
+$nameOfFile = $_FILES['nameOfFile']['name'];
+$typeFile = $_FILES['nameOfFile']['type'];
+
+
+$mensaje_archivo_distinto = "El archivo " . $nameOfFile . " es distinto a : " . $nameFileSession . ", revisa porfavor que sea el archivo corrrecto para poder continuar.";
+//$k =  "Comienza la carga. ";
+
+if($nameFileSession == $nameOfFile)
+    {
+//                    echo "<script type=\"text/javascript\">alert(\"$k\");</script>";
+
+
+    $extensionFile = end(explode(".", $_FILES['nameOfFile']['name']));
+
+    if((($typeFile == "application/zip") || ($typeFile == "multipart/x-zip") || ($typeFile == "application/x-zip-compressed")) && ($extensionFile == "zip"))
+        
+        {
+
+                    echo "<script type=\"text/javascript\">alert(\"Espere por favor se está subiendo su archivo  \");</script>"; 
+            if (move_uploaded_file($_FILES['nameOfFile']['tmp_name'],"files/".$_FILES['nameOfFile']['name']) )
+                {
+                    
+                    $aviso_exito = "EL archivo " . $_FILES['nameOfFile']['name'] . " ha subido correctamente.";
+
+                    echo "<script type=\"text/javascript\">alert(\"$aviso_exito\");</script>"; 
+
+//                    echo "<script type=\"text/javascript\">$(\"#dialog_zip\").dialog({autoOpen: false,resizable: false,height: 200,width: 450,modal: true});</script>"; Sigo trabajando en este estilo
+
+                }
+        
+            else
+                {
+
+                    echo "<script type=\"text/javascript\">alert(\"No se pudo subir su archivo\" . $nameOfFile . \"Error Processing Request\");</script>"; 
+                   
+                }
+        }
+    else
+        {
+            echo "<script type=\"text/javascript\">alert(\"Este archivo no es válido. Intenta de nuevo.\");</script>";
+
+        }
+
+getcwd();
+chdir("files");
+
+                        $nameWithoutExtension = reset(explode(".", $nameOfFile));
+
+//$url_enviar='curl -u admin:vS9UI355#ea9 -H "Content-type: application/zip" -T ${TRAINING_ROOT}/var/www/html/modulo_cbm/files/'. $nameOfFile . ' http://ssig0.conabio.gob.mx:8080/geoserver/rest/workspaces/myworkspace/datastores/' . $nameWithoutExtension . '/file.shp';
+$url_enviar='curl -u admin:vS9UI355#ea9 -H "Content-type: application/zip" -T ${TRAINING_ROOT}/var/www/html/modulo_cbm/files/'. $nameOfFile . ' 172.16.1.179:8080/geoserver/rest/workspaces/myworkspace/datastores/' . $nameWithoutExtension . '/file.shp';
+
+shell_exec($url_enviar);
+
+
+$orden_crear_directorio = 'mkdir ' .$nameWithoutExtension;
+
+shell_exec($orden_crear_directorio);
+
+$orden_mover='mv '.$nameOfFile.' '.$nameWithoutExtension.'/';
+
+shell_exec($orden_mover);
+
+chdir($nameWithoutExtension);
+
+$orden_unzip = 'unzip '.$nameOfFile;
+
+shell_exec($orden_unzip);
+
+chdir($nameWithoutExtension);
+
+$nameWithExtension_sql = $nameWithoutExtension.'.sql'; 
+
+$orden_shp2pgsql = 'shp2pgsql '.$nameWithoutExtension. ' > '.$nameWithExtension_sql;
+
+shell_exec($orden_shp2pgsql);
+
+//$propietario = 'chown gmagallanes:gmagallanes '.$nameWithExtension_sql;
+
+//shell_exec($propietario);
+
+chmod($nameWithExtension_sql,0777);
+
+//$nuevo_propietario = "gmagallanes";
+//$nuevo_grupo = "gmagallanes";
+
+//$ruta = "/var/www/html/modulo_cbm/".$nameWithExtension_sql;
+
+//chown($ruta,$nuevo_propietario);
+//chown($nameWithExtension_sql,$nuevo_propietario);
+//chgrp($nameWithExtension_sql,$nuevo_grupo);
+
+//shell_exec("chown -R " .$nuevo_propietario.":".$nuevo_grupo." ".$nameWithExtension_sql);
+
+$direccion_enviar = "wattie@gmagallanes.conabio.gob.mx:/home/wattie/ssig0";
+
+$orden_enviar_ssh = 'scp '.$nameWithExtension_sql.' '.$direccion_enviar;  
+
+$orden_enviar_ssh = escapeshell($orden_enviar_ssh);
+////////////////////
+/*
+$archivo_tmp = 'touch enviar_por_ssh.php';
+
+shell_exec($archivo_tmp);
+
+//$script = "<?php $direccion_enviar = 'wattie@gmagallanes.conabio.gob.mx'; $orden_enviar_ssh = 'scp '.$nameWithExtension_sql.' '.$direccion_enviar;";
+$script = "<?php scp $nameWithExtension_sql $direccion_enviar ?\>"; 
+
+
+$orden = 'echo '.$script.' >> enviar_por_ssh.php';
+
+
+                    echo "<script type=\"text/javascript\">alert(\"$orden\");</script>"; 
+shell_exec($orden);
+
+*/
+
+
+
+//////////////////////////
+//$orden_enviar_ssh = 'scp ANP2005CW.sql '.$direccion_enviar;  
+
+shell_exec($orden_enviar_ssh);
+if(shell_exec($orden_enviar_ssh)){
+
+                    echo "<script type=\"text/javascript\">alert(\"$orden_enviar_ssh\");</script>"; 
+}
+
+
+
+/*
+$connection = ssh2_connect('wattie@gmagallanes.conabio.gob.mx', 22);
+//ssh2_auth_password($connection, 'wattie', 'W4tt13Gust4v0');
+
+ssh2_scp_send($connection, $nameWithExtension_sql, '/home/wattie/ssig0/', 0777);
+ssh2_exec($connection, 'exit');
+
+*/
+echo "<script type=\"text/javascript\">alert(\"Se han enviado los archivos a la CONABIO\");</script>"; 
+
+}
+
+else{
+                    echo "<script type=\"text/javascript\">alert(\"$mensaje_archivo_distinto\");</script>"; 
+}
+
+?>

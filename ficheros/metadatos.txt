@@ -1,0 +1,55 @@
+"CONABIO Metadatos" 
+----- Archivo SHP ----  
+INFO: Open of `H:\CONABIO\MUNICIPIOS18'
+      using driver `ESRI Shapefile' successful.
+
+Layer name: MUNICIPIOS18
+Geometry: Polygon
+Feature Count: 344
+Extent: (-92.240248, 13.739445) - (-88.089532, 18.496018)
+Layer SRS WKT:
+GEOGCS["GCS_WGS_1984",
+    DATUM["WGS_1984",
+        SPHEROID["WGS_1984",6378137.0,298.257223563]],
+    PRIMEM["Greenwich",0.0],
+    UNIT["Degree",0.0174532925199433]]
+COD_DEPT_1: String (5.0)
+COD_MUNI_1: String (5.0)
+NOMBRE_1: String (75.0)
+DEPTO_1: String (50.0)
+AREA_KM²_: Real (19.11)
+--------------  
+----- Archivo TIF----  
+Driver: GTiff/GeoTIFF
+Files: H:\CONABIO\MUNICIPIOS18\gdal\a.tif
+Size is 1253, 1005
+Coordinate System is `'
+Origin = (-106.969600599270000,26.175198246442999)
+Pixel Size = (0.008333333768000,-0.008333333768000)
+Image Structure Metadata:
+  INTERLEAVE=BAND
+Corner Coordinates:
+Upper Left  (-106.9696006,  26.1751982) 
+Lower Left  (-106.9696006,  17.8001978) 
+Upper Right ( -96.5279334,  26.1751982) 
+Lower Right ( -96.5279334,  17.8001978) 
+Center      (-101.7487670,  21.9876980) 
+Band 1 Block=1253x1 Type=Float32, ColorInterp=Gray
+  NoData Value=-9999
+--------------  
+----- Archivo Arc ASCII grid ----  
+Driver: AAIGrid/Arc/Info ASCII Grid
+Files: H:\CONABIO\MUNICIPIOS18\gdal\SCEANAHUACU.asc
+Size is 1253, 1005
+Coordinate System is `'
+Origin = (-106.969600599270000,26.175198246442999)
+Pixel Size = (0.008333333768000,-0.008333333768000)
+Corner Coordinates:
+Upper Left  (-106.9696006,  26.1751982) 
+Lower Left  (-106.9696006,  17.8001978) 
+Upper Right ( -96.5279334,  26.1751982) 
+Lower Right ( -96.5279334,  17.8001978) 
+Center      (-101.7487670,  21.9876980) 
+Band 1 Block=1253x1 Type=Float32, ColorInterp=Undefined
+  NoData Value=-9999
+--------------  
