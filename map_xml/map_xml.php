@@ -13,7 +13,7 @@ require('../PHP/conn.php');
 		$sql = 'SELECT * FROM coberturas where record_id='.$id.';';
 		$result = pg_query($db, $sql); 
 		if( $fila = pg_fetch_array($result) )
-            $cobertura = $fila['cobertura']; 
+        {  $cobertura = $fila['cobertura']; }
         $cobertura = strtolower($cobertura);
 		$cita = $fila['cita']; 	
 		$fecha_inicial = $fila['fecha_inicial']; 	
@@ -32,7 +32,7 @@ require('../PHP/conn.php');
         $datum = $fila['datum'];
         $elipsoide = $fila['elipsoide'];
         if (NULL == $fila['tiempo'])
-            $tiempo = "000000"; // Hay que preguntar que hacer si el dato esta vacio. En este caso estoy rellenando con 00 pero tal vez podria no llevar algo
+        {  $tiempo = "000000";} // Hay que preguntar que hacer si el dato esta vacio. En este caso estoy rellenando con 00 pero tal vez podria no llevar algo
         $tiempo2 = $fila['tiempo2'];
 
 //-----------------
