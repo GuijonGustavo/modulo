@@ -1169,6 +1169,7 @@ map.renderSync();
 <?php if($nom != $nombreUsuario){echo '<tr><td>Nombre de proyecto</td>
                                    <td><select id="nombreProy" name="nombreProy">
                                  <option value="dist_jm071">dist_jm071</option>
+                                 <option value="conect_mang">conect_mang</option>
                                  <option value="jm001">jm001</option>
                                  <option value="jm002">jm002</option>
                                  <option value="jm003">jm003</option>
