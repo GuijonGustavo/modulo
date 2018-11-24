@@ -17,6 +17,15 @@ require('../PHP/conn.php');
         $cobertura = strtolower($cobertura);
 		$cita = $fila['cita']; 	
 		$fecha_inicial = $fila['fecha_inicial']; 	
+        $fecha_pub = $fila['pubdate']; 
+        list($dia, $mes, $anio) = split('[/.-]', $fecha_pub);
+        $edicion = $fila['edition'];
+        $issue_d = $fila['issue'];
+        $timepo1 = $fila['tiempo'];
+        $timepo2 = $fila['tiempo2'];
+
+
+
 		$nombre = $fila['nombre']; 	
 		$resumen = $fila['resumen']; 	
         $geoform = $fila['geoform'];
@@ -34,16 +43,27 @@ require('../PHP/conn.php');
         if (NULL == $fila['tiempo'])
             $tiempo = "000000"; // Hay que preguntar que hacer si el dato esta vacio. En este caso estoy rellenando con 00 pero tal vez podria no llevar algo
         $tiempo2 = $fila['tiempo2'];
+        //--------------------
+        
+        $autores = 'select origin from autores where dataset_id=(select record_id from coberturas where record_id='.$id.');';
+        $autores_k= pg_query($db, $autores);
+        $num_autores = pg_num_rows($autores_k); 
 
-//-----------------
+        for ($l = 0; $l < $num_autores; $l++){
+            $autores_p = pg_fetch_result($autores_k, $l, 0);
+            $autores_list .= $autores_p.', ';
+        };
+
+        
+        
+        //-----------------
         $links ='SELECT liga_www FROM ligas_www where dataset_id='.$id.';';     
         $links_k = pg_query($db, $links);
         $num_link = pg_num_rows($links_k); 
 
         for ($l = 0; $l < $num_link; $l++){
             $links_p = pg_fetch_result($links_k, $l, 0);
-            //$ligas_www = $ligas_www.'<onlink>'.$links_p.'</onlink>';
-            $ligas_www .= '<onlink>'.$links_p.'</onlink>';
+            $ligas_www .= $links_p.' ';
         };
 
 //-----------------
@@ -124,7 +144,13 @@ require('../PHP/conn.php');
                 if (NULL == $fila_dato_o['escala_original']){
                     $escala_original = "No conocido";}
                 else {
-                    $escala_original = $fila_dato_o['escala_original'];} 
+                    $escala_original = $fila_dato_o['escala_original'];}
+                    list($pre, $suf) = split('[:]', $escala_original);
+
+
+
+
+
                 if (NULL == $fila_dato_o['formato_original']){
                     $formato_original = "No conocido";}
                 else {
@@ -264,17 +290,17 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
     <idinfo>
         <citation>
             <citeinfo>
-                <origin>José Gálvez, (23/10/2018). "Cuencas Hidrográficas en la República de Guatemala", escala: 1:500000. edición: Primera. Ministerio de Agricultura, Ganadería y Alimentación. Datos extraídos y digitalizados por el MAGA del Atlas Hidrográfico de Guatemala, elaborado por el IGN.. Guatemala. </origin>
-                <pubdate>20181023</pubdate>
-                <title>Cuencas Hidrográficas en la República de Guatemala</title>
-                <geoform>Shapefile. Formato vectorial compuesto por 4 archivos (shp, shx, dbf,prj)</geoform>
+                <origin>'.$autores_list.'('.$fecha_pub.'). "'.$nombre.'", escala: '.$escala_original.'. edición: '.$edicion.'. '.$publish_d.'. '.$issue_d.' '.$pubplace_d.'</origin>
+                <pubdate>'.$anio.$mes.$dia.'</pubdate>
+                <title>'.$nombre.'</title>
+                <geoform>'.$geoform.'</geoform>
                 <onlink>http://www.conabio.gob.mx/informacion/metadata/gis/cencashidgw.xml?_httpcache=yes&amp;_xsl=/db/metadata/xsl/fgdc_html.xsl&amp;_indent=no</onlink>
             </citeinfo>
         </citation>
         <descript>
-            <abstract>Cuencas Hidrográficas de la República de Guatemala.</abstract>
-            <purpose>Este mapa fue creado para poder realizar análisis del territorio Guatemalteco enfocado a las Cuencas Hidrográficas como territorio.</purpose>
-            <supplinf>Algunos proyectos nacionales se han desarrollado en base a esta base de datos, que son fuente importante de información del comportamiento del territorio nacional Referencias en la web: http://web.maga.gob.gt</supplinf>
+            <abstract>'.$nombre.'</abstract>
+            <purpose>'.$objetivo.'</purpose>
+            <supplinf>'.$datos_comp.' Referencias en la web: '.$ligas_www.'</supplinf>
         </descript>
         <timeperd>
             <timeinfo>
@@ -282,11 +308,11 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
                     <caldate>00000000</caldate>
                 </sngdate>
             </timeinfo>
-            <current>02/02/1979 al 02/04/2001</current>
+            <current>'.$timepo1.' al '.$tiempo2.'</current>
         </timeperd>
         <status>
-            <progress>Complete</progress>
-            <update>No planeado</update>
+            <progress>'.$avance.'</progress>
+            <update>'.$mantenimiento.'</update>
         </status>
         <spdom>
             <bounding>
@@ -315,11 +341,11 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
                 <themekey>biodiv</themekey>
                 <themekey>bidcbmm</themekey>
                 <themekey>bidcbguate</themekey>
-                <themekey>cencashidgw</themekey>
+                <themekey>'.$cobertura.'</themekey>
             </theme>
             <theme>
                 <themekt>CNB.ESCALA</themekt>
-                <themekey>500000</themekey>
+                <themekey>'.$suf.'</themekey>
             </theme>
             <theme>
                 <themekt>CONABIO</themekt>
@@ -347,7 +373,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
             </theme>
             <theme>
                 <themekt>CNB2:THEME:IDENTIFIER</themekt>
-                <themekey>cencashidgw</themekey>
+                <themekey>'.$cobertura.'</themekey>
             </theme>
             <theme>
                 <themekt>CNB2:THEME:KEYWORDS</themekt>
@@ -355,7 +381,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
             </theme>
             <theme>
                 <themekt>CNB2:THEME:AUTHOR</themekt>
-                <themekey>José Gálvez, (23/10/2018). "Cuencas Hidrográficas en la República de Guatemala", escala: 1:500000. edición: Primera. Ministerio de Agricultura, Ganadería y Alimentación. Datos extraídos y digitalizados por el MAGA del Atlas Hidrográfico de Guatemala, elaborado por el IGN.. Guatemala. </themekey>
+                <themekey>'.$autores_list.'('.$fecha_pub.'). "'.$nombre.'", escala: '.$escala_original.'. edición: '.$edicion.'. '.$publish_d.'. '.$issue_d.' '.$pubplace_d.'</themekey>
             </theme>
             <place>
                 <placekt>CONABIO</placekt>
@@ -367,11 +393,11 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
             </place>
             <temporal>
                 <tempkt>CNB2:DATE:PUBLISHED</tempkt>
-                <tempkey>2018-10-23</tempkey>
+                <tempkey>'.$anio.'-'.$mes.'-'.$dia.'</tempkey>
             </temporal>
             <temporal>
                 <tempkt>CNB2:DATE:UPDATED</tempkt>
-                <tempkey>2018-10-23</tempkey>
+                <tempkey>'.$anio.'-'.$mes.'-'.$dia.'</tempkey>
             </temporal>
         </keywords>
         <accconst>Sin restricciones</accconst>
