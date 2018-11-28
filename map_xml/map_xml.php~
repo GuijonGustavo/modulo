@@ -13,7 +13,7 @@ require('../PHP/conn.php');
 		$sql = 'SELECT * FROM coberturas where record_id='.$id.';';
 		$result = pg_query($db, $sql); 
 		if( $fila = pg_fetch_array($result) )
-            $cobertura = $fila['cobertura']; 
+            $cobertura= $fila['cobertura']; 
         $cobertura = strtolower($cobertura);
 		$cita = $fila['cita']; 	
 		$fecha_inicial = $fila['fecha_inicial']; 	
@@ -23,8 +23,6 @@ require('../PHP/conn.php');
         $issue_d = $fila['issue'];
         $timepo1 = $fila['tiempo'];
         $timepo2 = $fila['tiempo2'];
-
-
 
 		$nombre = $fila['nombre']; 	
 		$resumen = $fila['resumen']; 	
@@ -36,6 +34,7 @@ require('../PHP/conn.php');
         $sistema_operativo = $fila['sistema_operativo'];
         $metodologia = $fila['metodologia'];
         $descrip_proceso = $fila['descrip_proceso'];
+        $descrip_tabla = $fila['descrip_tabla'];
         $descrip_metodologia = $fila['descrip_metodologia'];
         $tabla = $fila['tabla'];
         $datum = $fila['datum'];
@@ -82,7 +81,7 @@ require('../PHP/conn.php');
 
         for ($i = 0; $i < $num_clave; $i++){
             $clave_p = pg_fetch_result($palabras_k, $i, 0);
-            $palabra_clave .= '<themekt>'.$clave_p.'</themekt>';
+            $palabra_clave .= '<themekey>'.$clave_p.'</themekey>';
         };
 
 //-----------------
@@ -210,9 +209,10 @@ require('../PHP/conn.php');
             if( $fila_attr = pg_fetch_array($d_atributo) )
                     $nombre_atributo = $fila_attr['nombre']; 
                     $tipo_atributo = $fila_attr['tipo'];
-                    $descripcion_atributo = $fila_attr['descripcion_atributo']; 
+                    $descripcion_atributo = $fila_attr['descipcion_atributo']; 
                     $fuente = $fila_attr['fuente']; 
-        $atributo .= '<attr><attrlabl>'.$nombre_atributo.'</attrlabl><attrdef>'.$tipo_atributo.'</attrdef><attrdefs>'.$fuente.'</attrdefs><attrdomv><udom>'.$descripcion_atributo.'</udom></attrdomv></attr>';
+                    $unidades = $fila_attr['unidades']; 
+        $atributo .= '<attr><attrlabl>'.$nombre_atributo.'</attrlabl><attrdef>'.$tipo_atributo.'</attrdef><attrdefs>'.$fuente.'</attrdefs><attrdomv><udom>'.$descripcion_atributo.'</udom></attrdomv><attrvai><attrva>1</attrva><attrvae>'.$unidades.'</attrvae></attrvai></attr>';
         }
 
         $analista_query = 'select * from analistas where "idAnalista" = (select id_analista from coberturas where record_id ='.$id.');';
@@ -294,7 +294,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
                 <pubdate>'.$anio.$mes.$dia.'</pubdate>
                 <title>'.$nombre.'</title>
                 <geoform>'.$geoform.'</geoform>
-                <onlink>http://www.conabio.gob.mx/informacion/metadata/gis/cencashidgw.xml?_httpcache=yes&amp;_xsl=/db/metadata/xsl/fgdc_html.xsl&amp;_indent=no</onlink>
+                <onlink>http://www.conabio.gob.mx/informacion/metadata/gis/'.$cobertura.'.xml?_httpcache=yes&amp;_xsl=/db/metadata/xsl/fgdc_html.xsl&amp;_indent=no</onlink>
             </citeinfo>
         </citation>
         <descript>
@@ -349,11 +349,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
             </theme>
             <theme>
                 <themekt>CONABIO</themekt>
-                <themekey>Cuencas</themekey>
-                <themekey>Hidrográficas</themekey>
-                <themekey>Guatemala</themekey>
-                <themekey>Ríos</themekey>
-                <themekey>Territorio</themekey>
+                '.$palabra_clave.'
             </theme>
             <theme>
                 <themekt>CNB2:THEME:LICENCE</themekt>
@@ -385,7 +381,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
             </theme>
             <place>
                 <placekt>CONABIO</placekt>
-                <placekey>República de Guatemala</placekey>
+                <placekey>'.$area_geo.'</placekey>
             </place>
             <place>
                 <placekt>CNB2:PLACE:BOX</placekt>
@@ -403,12 +399,12 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
         <accconst>Sin restricciones</accconst>
         <useconst>No se permite utilizar estos datos con fines lucrativos y se debe citar la fuente del mapa y a CONABIO. Ver la licencia completa en http://creativecommons.org/licenses/by-nc/2.5/mx/</useconst>
         <browse>
-            <browsen>http://geoportal.conabio.gob.mx/descargas/mapas/imagen/20/cencashidgw</browsen>
+            <browsen>http://geoportal.conabio.gob.mx/descargas/mapas/imagen/20/'.$cobertura.'cencashidgw</browsen>
             <browsed>171 x 132 píxeles</browsed>
             <browset>image/png</browset>
         </browse>
         <browse>
-            <browsen>http://geoportal.conabio.gob.mx/descargas/mapas/imagen/96/cencashidgw</browsen>
+            <browsen>http://geoportal.conabio.gob.mx/descargas/mapas/imagen/96/'.$cobertura.'cencashidgw</browsen>
             <browsed>1002 x 774 píxeles</browsed>
             <browset>image/png</browset>
         </browse>
@@ -427,7 +423,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
                         <geoform>No conocido</geoform>
                     </citeinfo>
                 </srccite>
-                <srcscale>500000</srcscale>
+                <srcscale>'.$suf.'</srcscale>
                 <typesrc>shapefile</typesrc>
                 <srctime>
                     <timeinfo>
@@ -449,7 +445,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
                         <geoform>No conocido</geoform>
                     </citeinfo>
                 </srccite>
-                <srcscale>500000</srcscale>
+                <srcscale>'.$suf.'</srcscale>
                 <typesrc>shapefile</typesrc>
                 <srctime>
                     <timeinfo>
@@ -471,7 +467,7 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
                         <geoform>No conocido</geoform>
                     </citeinfo>
                 </srccite>
-                <srcscale>500000</srcscale>
+                <srcscale>'.$suf.'</srcscale>
                 <typesrc>shapefile</typesrc>
                 <srctime>
                     <timeinfo>
@@ -517,58 +513,11 @@ $xml_text_1='<?xml version="1.0" encoding="UTF-8"?>
     <eainfo>
         <detailed>
             <enttyp>
-                <enttypl>CENCASHIDGW.DBF</enttypl>
-                <enttypd>Atributos de la Base de Datos de las Cuencas Hidrográficas.</enttypd>
+                <enttypl>'.$tabla.'</enttypl>
+                <enttypd>'.$descrip_tabla.'</enttypd>
                 <enttypds>No conocido</enttypds>
             </enttyp>
-            <attr>
-                <attrlabl>CODCUENCA</attrlabl>
-                <attrdef>String</attrdef>
-                <attrdefs>Asignado por el Operador</attrdefs>
-                <attrdomv>
-                    <udom>Codigo de cada poligono</udom>
-                </attrdomv>
-                <attrvai>
-                    <attrva>1</attrva>
-                    <attrvae>no aplica</attrvae>
-                </attrvai>
-            </attr>
-            <attr>
-                <attrlabl>NCUENCA</attrlabl>
-                <attrdef>String</attrdef>
-                <attrdefs>Asignado por el Operador</attrdefs>
-                <attrdomv>
-                    <udom>Nombre de la Cuenca Hidrográfica</udom>
-                </attrdomv>
-                <attrvai>
-                    <attrva>1</attrva>
-                    <attrvae>no aplica</attrvae>
-                </attrvai>
-            </attr>
-            <attr>
-                <attrlabl>NVERTIENTE</attrlabl>
-                <attrdef>String</attrdef>
-                <attrdefs>Asignado por el Operador</attrdefs>
-                <attrdomv>
-                    <udom>Nombre de la Vertiente donde desfogan las cuencas</udom>
-                </attrdomv>
-                <attrvai>
-                    <attrva>1</attrva>
-                    <attrvae>no aplica</attrvae>
-                </attrvai>
-            </attr>
-            <attr>
-                <attrlabl>ha</attrlabl>
-                <attrdef>Double</attrdef>
-                <attrdefs>Calculado por ArcGIS</attrdefs>
-                <attrdomv>
-                    <udom>Superficie del poligono en hectareas</udom>
-                </attrdomv>
-                <attrvai>
-                    <attrva>1</attrva>
-                    <attrvae>Hectáreas cuadradas</attrvae>
-                </attrvai>
-            </attr>
+            '.$atributo.'
         </detailed>
     </eainfo>
     <distinfo>
