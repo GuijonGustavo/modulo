@@ -58,7 +58,7 @@ if ($tipo_proy == dist){
     $lista_shapes = "lista_shapes = os.listdir(r'T:\\\\jm\\\\".$nom_proy."\\\\dist\\\\shp')";
     $layer = "    newlayer1 = arcpy.mapping.Layer(r'T:\\\\jm\\\\".$nom_proy."\\\\dist\\\\'+shapefile+'')";
     $desc = "    desc = arcpy.Describe(r'T:\\\\jm\\\\".$nom_proy."\\\\dist\\\\'+shapefile+'')";
-    $conn = "conn = pg.connect(dbname='dist_".$nom_proy."', user='postgres', passwd='sig123456', host='200.12.166.29')";
+    $conn = "conn = pg.connect(dbname=".$nom_proy.", user='postgres', passwd='sig123456', host='200.12.166.29')";
 
 } 
 
@@ -68,7 +68,7 @@ if ($tipo_proy == sitios){
     $lista_shapes = "lista_shapes = os.listdir(r'T:\\\\jm\\\\".$nom_proy."\\\\sitios\\\\shp')";
     $layer = "    newlayer1 = arcpy.mapping.Layer(r'T:\\\\jm\\\\".$nom_proy."\\\\sitios\\\\'+shapefile+'')";
     $desc = "    desc = arcpy.Describe(r'T:\\\\jm\\\\".$nom_proy."\\\\sitios\\\\'+shapefile+'')";
-    $conn = "conn = pg.connect(dbname='sitios_".$nom_proy."', user='postgres', passwd='sig123456', host='200.12.166.29')";
+    $conn = "conn = pg.connect(dbname=".$nom_proy.", user='postgres', passwd='sig123456', host='200.12.166.29')";
 }
 
 
