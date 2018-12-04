@@ -28,6 +28,11 @@ $nombreUsuario = $_SESSION['nombreUsuario'];
 
 $tipo_proy = $_POST['tipoProy'];
 $nom_proy = $_POST['nombreProy'];
+
+
+        list($tipoProy, $baseProy) = split('[_]', $nom_proy);
+
+
 $tipo_soft = $_POST['software'];
 
 //Este script comienza como todo array desde cero, y el ciclo foreach agrega un lugar de mas. Con esto indicar el lugar n quedara en el lugar n+2
@@ -55,20 +60,20 @@ copy($fichero,$dir);
 
 if ($tipo_proy == dist){
 
-    $lista_shapes = "lista_shapes = os.listdir(r'T:\\\\jm\\\\".$nom_proy."\\\\dist\\\\shp')";
-    $layer = "    newlayer1 = arcpy.mapping.Layer(r'T:\\\\jm\\\\".$nom_proy."\\\\dist\\\\'+shapefile+'')";
-    $desc = "    desc = arcpy.Describe(r'T:\\\\jm\\\\".$nom_proy."\\\\dist\\\\'+shapefile+'')";
-    $conn = "conn = pg.connect(dbname=".$nom_proy.", user='postgres', passwd='sig123456', host='200.12.166.29')";
+    $lista_shapes = "lista_shapes = os.listdir(r'T:\\\\jm\\\\".$baseProy."\\\\dist\\\\shp')";
+    $layer = "    newlayer1 = arcpy.mapping.Layer(r'T:\\\\jm\\\\".$baseProy."\\\\dist\\\\'+shapefile+'')";
+    $desc = "    desc = arcpy.Describe(r'T:\\\\jm\\\\".$baseProy."\\\\dist\\\\'+shapefile+'')";
+    $conn = "conn = pg.connect(dbname='".$nom_proy."', user='postgres', passwd='sig123456', host='200.12.166.29')";
 
 } 
 
 
 if ($tipo_proy == sitios){
 
-    $lista_shapes = "lista_shapes = os.listdir(r'T:\\\\jm\\\\".$nom_proy."\\\\sitios\\\\shp')";
-    $layer = "    newlayer1 = arcpy.mapping.Layer(r'T:\\\\jm\\\\".$nom_proy."\\\\sitios\\\\'+shapefile+'')";
-    $desc = "    desc = arcpy.Describe(r'T:\\\\jm\\\\".$nom_proy."\\\\sitios\\\\'+shapefile+'')";
-    $conn = "conn = pg.connect(dbname=".$nom_proy.", user='postgres', passwd='sig123456', host='200.12.166.29')";
+    $lista_shapes = "lista_shapes = os.listdir(r'T:\\\\jm\\\\".$baseProy."\\\\sitios\\\\shp')";
+    $layer = "    newlayer1 = arcpy.mapping.Layer(r'T:\\\\jm\\\\".$baseProy."\\\\sitios\\\\'+shapefile+'')";
+    $desc = "    desc = arcpy.Describe(r'T:\\\\jm\\\\".$baseProy."\\\\sitios\\\\'+shapefile+'')";
+    $conn = "conn = pg.connect(dbname='".$nom_proy."', user='postgres', passwd='sig123456', host='200.12.166.29')";
 }
 
 
@@ -191,8 +196,8 @@ case "Estrella Cruz":
     $autores = "    autores = 'select origin from \"Autores\" where \"DATASET ID\"=(select \"RECORD ID\" from coberturas where cobertura='+\"'\"+filename+\"')\"+\"\"";
     break;
 case "Laura Herrera":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";

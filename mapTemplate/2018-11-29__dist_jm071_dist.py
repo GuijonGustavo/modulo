@@ -8,7 +8,7 @@
 
 
 #############Script que anade una capa mas############
-
+import re
 import arcpy
 from arcpy import env
 import os
@@ -46,34 +46,34 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
     except:
         pass
     consulta = "select nombre from coberturas where cobertura="+"'"+filename+"'"+""
-    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos."DATASET ID" = coberturas."RECORD ID" where cobertura='+"'"+filename+"'"+""    
+    
     consulta_escala = "select escala from coberturas where cobertura="+"'"+filename+"'"+""
     consulta_publish = "select publish from coberturas where cobertura="+"'"+filename+"'"+""
 #    consulta_publish = "select publish from coberturas where cobertura="+"'"+filename+"'"+""
     consulta_pubplace = "select pubplace from coberturas where cobertura="+"'"+filename+"'"+""
-
+    consulta_cita = "select cita from coberturas where cobertura="+"'"+filename+"'"+""
     consulta_fecha = 'select pubdate from coberturas where cobertura='+"'"+filename+"'"+""
     consulta_siglas = 'select publish_siglas from coberturas where cobertura='+"'"+filename+"'"+""
-    consulta_areageo = 'select "area-geo" as areageo from coberturas where cobertura='+"'"+filename+"'"+""
-    consulta_cita = "select cita from coberturas where cobertura="+"'"+filename+"'"+""
+    b = consulta_cita.find(Distribución)
+    titulo_shape = [:b-1]
     resultado = conn.query(consulta)
     rows = resultado.namedresult()
-
+    subtitulo_shape = [b:]
     titulo_query = rows[0].nombre
 
     titulo_query = titulo_query.rstrip(".")
 
     titulo_shapeEstilo = titulo_query.split("(")
 
-    try:
-        titulo_shape = "<CLR red='204' green='204' blue='204'><ita>"+titulo_shapeEstilo[0]+"</ita>("+titulo_shapeEstilo[1]+"</CLR>"
-    except:
-        titulo_shape = "<CLR red='204' green='204' blue='204'><ita>"+titulo_shapeEstilo[0]+"</ita></CLR>"
+   # try:
+     #   titulo_shape = "<CLR red='204' green='204' blue='204'><ita>"+titulo+"</CLR>"
+  #  except:
+     #   subtitulo = "<CLR red='204' green='204' blue='204'><ita>"+titulo_shapeEstilo[0]+"</ita></CLR>"
 
     cita_shape = "<ita>"+titulo_query+"</ita>"
-    titulo_shape = titulo_shape.replace("Distribución potencial", "") #Cambia el primer parametro por el segundo
-    titulo_shape = titulo_shape.replace("Registros de presencia", "") #Cambia el primer parametro por el segundo
-    titulo_shape = titulo_shape.replace(".", "") #Cambia el primer parametro por el segundo
+ #   titulo_shape = titulo_shape.replace("Distribución potencial", "") #Cambia el primer parametro por el segundo
+ #   titulo_shape = titulo_shape.replace("Registros de presencia", "") #Cambia el primer parametro por el segundo
+ #   titulo_shape = titulo_shape.replace(".", "") #Cambia el primer parametro por el segundo
     resultado_areageo = conn.query(consulta_areageo)
     rows_areageo = resultado_areageo.namedresult()
     areageo_query = rows_areageo[0].areageo
@@ -97,14 +97,14 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
     resultado_fecha = conn.query(consulta_fecha)
     rows_fecha = resultado_fecha.namedresult()
     fecha_query = rows_fecha[0].pubdate
-    a = consulta_cita.find("Distribución")
+
     fecha = fecha_query.split('/')
 
     siglas_id = conn.query(consulta_siglas)
     rows_siglas_id = siglas_id.namedresult()
     siglas_query = rows_siglas_id[0].publish_siglas
-    titulo_nuevo = consulta_cita[:a-1] 
-    autores = 'select origin from "Autores" where "DATASET ID"=(select "RECORD ID" from coberturas where cobertura='+"'"+filename+"')"+""    subtitulo_nuevo = consulta_cita[a:] 
+
+    
     resultado_id = conn.query(autores)
     autores_id = resultado_id.namedresult()
     filename = filename.lower()
@@ -250,7 +250,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
         if atributo_query == "Value":
             symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp_v.lyr')
         else:
-            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')
+
 
 #            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')
         arcpy.ApplySymbologyFromLayer_management(newlayer1, symbologyLayer)
@@ -313,14 +313,14 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
         for elm in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
             if elm.text == 'titulo':
-                elm.text = titulo_nuevo
+                elm.text = titulo_shape
 
 
 
         for fechaDp in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
             if fechaDp.text == 'subtitulo':
-                fechaDp.text = "Distribución potencial ("+autores_query+". "+fecha[2]+")"
-                fechaDp.text = subtitulo_nuevo
+        #        fechaDp.text = "Distribución potencial ("+autores_query+". "+fecha[2]+")"
+                fechaDp.text = subtitulo_shape
 
 
 
@@ -379,7 +379,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        mxd.saveACopy(r'C:\\Users\\oherrera\\Desktop\\jm071\\dist\\mxd\\'+filename+'.mxd')
+No hay usuario dado de alta
 
 
 
@@ -399,7 +399,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        arcpy.mapping.ExportToPNG(mxd, r'C:\\Users\\oherrera\\Desktop\\jm071\\dist\\png\\'+filename+'.png', resolution = 300)
+No hay usuario dado de alta
 
 
 
@@ -450,7 +450,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')
+
 
 #        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')
 
@@ -529,7 +529,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        mxd_P.saveACopy(r'C:\\Users\\oherrera\\Desktop\\dist_jm071\\dist\\mxd\\'+filename+'.mxd')
+No hay usuario dado de alta
 
 
 
@@ -541,7 +541,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\Users\\oherrera\\Desktop\\dist_jm071\\dist\\png\\'+filename+'.png', resolution = 300)
+No hay usuario dado de alta
 
 
 
