@@ -22,31 +22,31 @@ import os
 
 
 import pg
-
+conn = pg.connect(dbname='metadatos', user='postgres', passwd='geosig0-2016', host='172.16.1.179')
 
 
 import subprocess
 
-
+lista_shapes = os.listdir(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\shp\\shp')
 
 from PIL import Image
 ########inicia conexion base de datos y query#################
 
 
 
-
+$ln_conn = 23;
 
 
 
 ###########Aqui va la lista de shapes#################3
 
 
+        im = Image.open(r'T:\\jm\\\\\img\\'+nombreImg+'.JPG')
+$ln_lista_shapes = 28;
 
 
 
-
-
-lista_shapes.sort()
+    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos."dataset_id" = coberturas."record_id" where cobertura='+"'"+filename+"'"+""lista_shapes.sort()
 
 
 
@@ -54,7 +54,7 @@ for i,j in enumerate(lista_shapes):
 
 
     
-    print i,j
+    consulta_areageo = 'select "area_geo" as areageo from coberturas where cobertura='+"'"+filename+"'"+""    print i,j
 
 
 
@@ -78,7 +78,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
         
        
-
+        $ln_img = 42;
 
 
 
@@ -98,13 +98,13 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+$ln_consulta = 47;
 
 
 
     consulta_escala = "select escala from coberturas where cobertura="+"'"+filename+"'"+""
 
-
+    autores = 'select origin from "autores" where "dataset_id"=(select "record_id" from coberturas where cobertura='+"'"+filename+"')"+""
 
     consulta_publish = "select publish from coberturas where cobertura="+"'"+filename+"'"+""
 
@@ -122,7 +122,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+$ln_area = 55;
 
 
 
@@ -219,12 +219,12 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     rows_publish = resultado_publish.namedresult()
-
+    newlayer1 = arcpy.mapping.Layer(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\shp\\'+shapefile+'')
 
 
     publish_query = rows_publish[0].publish
 
-
+    desc = arcpy.Describe(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\shp\\'+shapefile+'')
 
     resultado_pubplace = conn.query(consulta_pubplace)
 
@@ -250,7 +250,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-    fecha = fecha_query.split('/')
+            symbologyLayer = (r'C:\\Users\\tcamacho\\Desktop\\plantilla\\simb\\'+filename+'.lyr')    fecha = fecha_query.split('/')
 
 
 
@@ -264,7 +264,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+$ln_autores = 105;
 
 
 
@@ -282,332 +282,124 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 ####zone for order the list with firt autor in first place
 
-
-
     for indice in autores_id:
-
-
-
         for caracter in indice:
-
-
-
             if caracter[1] != ".":
-
-
-
                 autor_principal = indice
-
-
-
                 autores_id.index(indice)
-
-
-
                 autores_id.remove(indice)
-
-
-
                 autores_id.reverse()
-
-
-
                 autores_id.append(indice)
-
-
-
                 autores_id.reverse()
-
-
-
                 break
 
-
-
     if len(autores_id) == 1:
-
-
-
         if autores_id[0].origin.isupper():
-
-
-
             autores_query = autores_id[0].origin
-
-
-
         else:
-
-
-
             separadoXguion_1 = autores_id[0].origin.split("-")
-
-
-
     elif len(autores_id) == 2:
-
-
-
         separadoXguion_1 = autores_id[0].origin.split("-")
-
-
-
         separadoXguion_2 = autores_id[1].origin.split("-")
-
-
-
         autores_query = str(separadoXguion_1[0])+" y "+str(separadoXguion_2[0])
-
-
-
     elif len(autores_id) > 2:
-
-
-
         separadoXguion_1 = autores_id[0].origin.split("-")
-
-
-
         if "," in separadoXguion_1[0]:
-
-
-
             separadoXcoma = separadoXguion_1[0].split(",")
-
-
-
             autores_query = str(separadoXcoma[0])+" <FNT><ita>et al</ita></FNT>"
-
-
-
         else:
-
-
-
             autores_query = str(separadoXguion_1[0])+" <FNT><ita>et al</ita></FNT>"
-
-
-
     else:
-
-
-
         autores_query = siglas_query
 
-
-
     if len(autores_id) == 1:
-
-
-
         separadoXcoma = autores_id[0].origin.split(",")
-
-
   
         if len(separadoXcoma) > 1:
-
-
-
             autores_cita_1 = separadoXcoma[0].strip()
-
-
-
             autores_cita_2 = separadoXcoma[1].strip()
-
-
-
             cita = autores_cita_1+", "+autores_cita_2
-
-
 
         if len(separadoXcoma) == 1:
 
-
-
             autores_cita_1 = autores_id[0].origin
 
-
-
             cita = autores_cita_1+"."
-
-
             
     elif len(autores_id) > 1:
-
-
-
         separadoXcoma = autores_id[0].origin.split(",")
-
-
-
         separadoXpunto = autores_id[0].origin.split(".")
 
-
-
-
         if len(separadoXcoma) > 1:
-
-
-
             autores_cita_1 = separadoXcoma[0].strip()
-
-
-
             autores_cita_2 = separadoXcoma[1].strip()
-
-
-
             cita = autores_cita_1+", "+autores_cita_2+", "
-
-
   
             i = 1
-
-
-
             autores_cita = ""
-
-
-
             while i<len(autores_id):
-
-
-
                 separadoXpunto = autores_id[i].origin.split(".")
 
-
-
                 j = 1
-
-
-
                 while j<=len(separadoXpunto):
-
-
-
                     autores_cita = autores_cita+ separadoXpunto[j-1]+"."
-
-
-
                     j+=1
-
-
-
                 autores_cita = autores_cita.rstrip(".")
-
-
-
                 autores_cita = autores_cita+", "
-
-
-
                 i+=1
-
-
-
             cita = cita + autores_cita.rstrip(", ")
-
-
-
     elif len(autores_id) == 0:
-
-
-
         cita = siglas_query
+
+
+
 
 
 
     print cita_shape
 
-
-
-#Cita para distribución potencial
-
-
+                    img.sourceImage = r'T:\\jm\\\\img\\'+nombreImg+'.JPG'#Cita para distribución potencial
 
     if type(escala_query) == type(None):
-
-
-
         cita1 = cita+". "+fecha[2]+". "+cita_shape+", "  
-
-
-
         cita2 = publish_query+", "+pubplace_query[0:7]+"." 
-
-
-
         cita1+=cita2
-
-
 
 #Cita para sitios de recolecta
-
-
-
     else:
-
-
-
         cita1 = cita+". "+fecha[2]+". "+cita_shape+". "   
-
-
-
         cita2 = "escala "+escala_query+". "+publish_query+", "+pubplace_query[0:7]+"."
-
-
-
         cita1+=cita2
-
 
 
     print "Área geográfica: "+areageo_query 
-
-
-
     if areageo_query in ("México y Centroámerica", "México, Centroamérica y Sudamérica", "México, Centroamérica, Sudamérica y El Caribe"):
-
-
-
         mxd = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\baseSeptiembre3GW84.mxd")   #mxds base  distribucion GW84
-
-
-
         mxd_P = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\baseAgostoSR_v3GW84.mxd")   #mxds base sitios de recolecta GW84
-
-
-
     if areageo_query in ("Oaxaca","Chiapas", "Guerrero"):
-
-
-
         mxd = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\nuevo.mxd")   #mxds base para plantilla en estados 
-
-
-
         mxd_P = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\nuevo.mxd")   #mxds base para plantilla en estados
-
-
-
-    else:
-
-
-
+        mxd.saveACopy(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\mxd\\'+filename+'.mxd')    else:
         mxd = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\baseSeptiembre3.mxd")   #mxds base  distribucion
-
-
-
         mxd_P = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\baseAgostoSR_v3.mxd")   #mxds base sitios de recolecta
 
-
-
     df = arcpy.mapping.ListDataFrames(mxd)[0]
-
-
-
     df_P = arcpy.mapping.ListDataFrames(mxd_P)[0]
 
 
+
+
+
+
+$ln_layer = 220;
+
+
+
+
+$ln_desc = 225;
+
+
+        arcpy.mapping.ExportToPNG(mxd, r'C:\\Users\\tcamacho\\Desktop\\plantilla\\png\\'+filename+'.png', resolution = 300)
 
 
 
@@ -625,50 +417,22 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
+
+
         if atributo_query == "Value":
-
-
-
             symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp_v.lyr')
-
-
-
         else:
-
-
-
-
-
-
+$ln_simbolo_dp = 251;
 
 #            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')
-
-
-
         arcpy.ApplySymbologyFromLayer_management(newlayer1, symbologyLayer)
-
-
-
         arcpy.mapping.AddLayer(df, newlayer1, "BOTTOM")
-
-
 
         for capa in arcpy.mapping.ListLayers(mxd, "", df):
 
-
-
             if capa.name == "dest_2010gw": 
-
-
-
                 dest_2010gw = capa
-
-
-
             if capa.name == desc.baseName:
-
-
-
                 newLayer = capa
         
 
@@ -677,107 +441,164 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
+
+
+
+
+
+
         ext = newlayer1.getExtent()
-
-
-
         df.extent = ext
+
+        symbologyLayer = (r'C:\\Users\\tcamacho\\Desktop\\plantilla\\simb\\'+filename+'.lyr')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
         for elm in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
-
-
-
             if elm.text == 'titulo':
-
-
-
                 elm.text = titulo_shape
 
 
 
         for fechaDp in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
-
-
-
             if fechaDp.text == 'subtitulo':
-
-
-
                 fechaDp.text = "Distribución potencial ("+autores_query+". "+fecha[2]+")"
 
 
 
+
+
+
         for elmPie in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
-
-
-
             if elmPie.text == 'cita1':
-
-
-
                 elmPie.text = cita1
 
 
 
+                    img.sourceImage = r'T:\\jm\\\\img\\'+nombreImg+'.JPG'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         try:
-
-
-
             for img in arcpy.mapping.ListLayoutElements(mxd, "PICTURE_ELEMENT"):
-
-
-
                 if img.name == "noHayImagen":
 
-
-
-
-
-
-
+        mxd_P.saveACopy(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\mxd\\'+filename+'.mxd')
+$ln_sourseImage_dp = 359;
                     img.elementPositionX = 0.5082
-
-
-
                     img.elementPositionY = 10.17
-
-
-
                     img.elementWidth = 4.09
-
-
-
                     if h>w:
-
-
-
                         img.elementPositionY = 8.174
-
-
-
                     else:
-
-
-
                         img.elementPositionY = 10.174
-
-
-
                 else:
-
-
-
                     print 'Buscando la imagen '+nombreImg+'.JPG'
-
-
-
         except:
+        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\Users\\tcamacho\\Desktop\\plantilla\\png\\'+filename+'.png', resolution = 300)            pass
 
 
 
-            pass
+
+
+
+
+
+
+$ln_mxd_d = 380;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$ln_png_d = 400;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -790,15 +611,9 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
         arcpy.mapping.RemoveLayer(df, newlayer1)
-
-
-
 #################################################################################
 #                         Comienza la parte de puntos                           #
 #################################################################################
-
-
-
     else:
 
 
@@ -807,143 +622,133 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
+$ln_simbolo_sr = 451;
+
 #        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')
 
-
-
         arcpy.ApplySymbologyFromLayer_management(newlayer1, symbologyLayer)
-
-
-
         arcpy.mapping.AddLayer(df_P, newlayer1, "AUTO_ARRANGE")
-
-
 
         for capas in arcpy.mapping.ListLayers(mxd, "", df_P):
 
-
-
             if capas.name == "dest_2010gw": 
-
-
-
                 dest_2010 = capas
-
-
-
             if capas.name == desc.baseName:
-
-
-
                 nuevaLayer = capas
 
-
-
         arcpy.mapping.MoveLayer(df_P, dest_2010, nuevaLayer,  "AFTER")
-
-
-
         ext = newlayer1.getExtent()
-
-
 
         df_P.extent = ext
 
-
-
         for elm in arcpy.mapping.ListLayoutElements(mxd_P, "TEXT_ELEMENT"):
-
-
-
             if elm.text == 'titulo':
-
-
-
                 elm.text = titulo_shape
 
-
-
         for fechaDp in arcpy.mapping.ListLayoutElements(mxd_P, "TEXT_ELEMENT"):
-
-
-
             if fechaDp.text == 'subtitulo':
-
-
-
                 fechaDp.text = "Registros de presencia ("+autores_query+". "+fecha[2]+")"
 
 
 
         for elmPie in arcpy.mapping.ListLayoutElements(mxd_P, "TEXT_ELEMENT"):
-
-
-
             if elmPie.text == 'cita1':
-
-
-
                 elmPie.text = cita1
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
         try:
 
-
-
             for img in arcpy.mapping.ListLayoutElements(mxd_P, "PICTURE_ELEMENT"):
-
-
 
                 if img.name == "noHayImagen":
 
-
-
-
-
-
-
+$ln_sourseImage_sr = 505;
                     img.elementPositionX = 0.5082
-
-
-
                     img.elementPositionY = 10.174
-
-
-
                     img.elementWidth = 4.09
-
-
-
                     if h>w:
-
-
-
                         img.elementPositionY = 8.174
-
-
-
                     else:
-
-
-
                         img.elementPositionY = 10.174
-
-
-
                 else:
-
-
-
                     print 'Buscando la imagen '+nombreImg+'.JPG'
-
-
-
         except:
-
-
-
             pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+$ln_mxd_s = 530;
+
+
+
+
+
+
+
+
+
+
+
+$ln_png_s = 542;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -957,10 +762,6 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
         arcpy.mapping.RemoveLayer(df_P, newlayer1)
 
-
-
 ################Fin script que anade una capa mas######################
-
-
 
 conn.close()

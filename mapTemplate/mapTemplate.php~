@@ -1,4 +1,4 @@
-<?php
+<?PHp
 
 ob_start();
 session_start();
@@ -126,11 +126,11 @@ case "Tonantzin":
     break;
 
 case "José Galvez":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\CPR\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
     $lista_shapes = "lista_shapes = os.listdir(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\shp')";
     $layer = "    newlayer1 = arcpy.mapping.Layer(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
@@ -145,11 +145,11 @@ case "José Galvez":
     break;
 
 case "Shareni Lara":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
     $simbolo_dp = "            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -158,11 +158,11 @@ case "Shareni Lara":
     break;
 
 case "Verena Ekaterina Benítez":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
     $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -171,11 +171,11 @@ case "Verena Ekaterina Benítez":
     break;
 
 case "ssocialsig":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
     $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -184,11 +184,11 @@ case "ssocialsig":
     break;
 
 case "Estrella Cruz":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
     $simbolo_dp = "            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -199,8 +199,8 @@ case "Laura Herrera":
     $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
     $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -208,11 +208,11 @@ case "Laura Herrera":
     $autores = "    autores = 'select origin from \"Autores\" where \"DATASET ID\"=(select \"RECORD ID\" from coberturas where cobertura='+\"'\"+filename+\"')\"+\"\"";
     break;
 case "Rocío López":
-    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_d = "        mxd.saveACopy(r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_d = "        arcpy.mapping.ExportToPNG(mxd, r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
 
-    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
-    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
+    $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
+    $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$baseProy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
     $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -237,24 +237,24 @@ $img = "        im = Image.open(r'T:\\\\jm\\\\".$nom_proy."\\\\\\img\\\\'+nombre
 
 
 // Lineas en las que se inyectan las instrucciones
-$ln_conn = 23;
-$ln_lista_shapes = 28;
-$ln_img = 42;
-$ln_consulta = 47;
-$ln_area = 55;
-$ln_autores = 105;
-$ln_layer = 220;
-$ln_desc = 225;
+$ln_conn = 35;
+$ln_lista_shapes = 43;
+$ln_img = 79;
+$ln_consulta = 99;
+$ln_area = 123;
+$ln_autores = 263;
+$ln_layer = 600;
+$ln_desc = 623;
 //$ln_existImage_dp = 341;
-$ln_sourseImage_dp = 359;
-$ln_mxd_d = 380;
-$ln_png_d = 400;
-$ln_simbolo_dp = 251;
-$ln_simbolo_sr = 451;
+$ln_sourseImage_dp = 734;
+$ln_mxd_d = 782;
+$ln_png_d = 786;
+$ln_simbolo_dp = 638;
+$ln_simbolo_sr = 804;
 //$ln_existImage_sr = 490;
-$ln_sourseImage_sr = 505;
-$ln_mxd_s = 530;
-$ln_png_s = 542;
+$ln_sourseImage_sr = 900;
+$ln_mxd_s = 948;
+$ln_png_s = 952;
 
 //Fin de lineas
 
