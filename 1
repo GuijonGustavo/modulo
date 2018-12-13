@@ -87,21 +87,7 @@ function sql ($campo, $id , $cv_principal , $cve)
 													'SELECT c."abstract" 			FROM coberturas AS c GROUP BY c."abstract" 		HAVING c."abstract" 		Is Not Null ;',
 													'SELECT coberturas."abstract" 	FROM analistas inner join coberturas on coberturas."id_analista" = analistas."idAnalista" 
 														where coberturas."id_analista" = '. $cv_principal.' AND coberturas."record_id" = '.$id.';'	); break;	
-
-
-	 	case "c_cita": 			$array = array(	'SELECT c."cita" 			FROM coberturas AS c WHERE c."record_id" = '.$id.' ;',
-													'SELECT c."cita" 			FROM coberturas AS c GROUP BY c."cita" 		HAVING c."cita" 		Is Not Null ;',
-													'SELECT coberturas."cita" 	FROM analistas inner join coberturas on coberturas."id_analista" = analistas."idAnalista" 
-														where coberturas."id_analista" = '. $cv_principal.' AND coberturas."record_id" = '.$id.';'	); break;	
-
-
-
-
-
-
-
-
-
+     
 	 	case "c_objetivo": 			$array = array(	'SELECT c."objetivo" 			FROM coberturas AS c WHERE c."record_id" = '.$id.' ;',
 													'SELECT c."objetivo" 			FROM coberturas AS c GROUP BY c."objetivo" 		HAVING c."objetivo" 		Is Not Null ;',
 													'SELECT coberturas."objetivo" 	FROM analistas inner join coberturas on coberturas."id_analista" = analistas."idAnalista" 

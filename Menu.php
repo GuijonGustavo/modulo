@@ -718,6 +718,15 @@ if($id == 0) {echo "<script>$(document).ready(function(){ customDialog({message:
                                      <td colspan="6"><?php 	$tooltipAbst = "(Resumen en inglés) Opcional.";
                                                       		global $id;  genera("c_abstract","95px",$id , $cv_principal , "txtarea", $tooltipAbst);  ?></td>
                                  </tr>
+
+<tr valign="top">
+                                     <td>Cita:</td>
+                                     <td colspan="6"><?php 	$tooltipCita = "Cita";
+                                                      		global $id;  genera("c_cita","95px",$id , $cv_principal , "txtarea", $tooltipCita);  ?></td>
+                                 </tr>
+
+
+
                                  <tr valign="top">
                                      <td>Objetivos generales:</td>
                                      <td colspan="6"><?php 	$tooltipObje = "Propósito de la creación del dato"; 
