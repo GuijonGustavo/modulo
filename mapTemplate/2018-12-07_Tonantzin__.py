@@ -8,33 +8,33 @@
 
 
 #############Script que anade una capa mas############
-#importamos las bibliotecas necesarias. Comenzamos por la que corresponde a ArcGis
+
 import arcpy
 
-#Esta otra tambien es de ArcGis
+
 
 from arcpy import env
 
-#Esta corresponde al sistema operativo
+
 
 import os
 
-#Esta es para la conexion a la base de datos
+
 
 import pg
 
-#Para procesos
+
 
 import subprocess
 
-#Biblioteca que se encarga de la manipulacion de imagenes
+
 
 from PIL import Image
 ########inicia conexion base de datos y query#################
 
 
 
-
+conn = pg.connect(dbname='metadatos', user='postgres', passwd='geosig0-2016', host='172.16.1.179')
 
 
 
@@ -42,43 +42,43 @@ from PIL import Image
 
 
 
+lista_shapes = os.listdir(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\shp\\shp')
 
 
 
-#ordena la lista de shapes
 lista_shapes.sort()
 
 
-#Se enumera la lista de shapes
+
 for i,j in enumerate(lista_shapes):
 
 
-#Se imprime 
+    
     print i,j
 
 
-#ciclo for para ir tomando cada shape de la lista que se definio en lista_shapes
+
 for shapefile in lista_shapes: #si se intenta un shape en particular se anade un rango lista_shapes[45:46]
 
 
-#divide el nombre del shape tanto en su nombre como en la extension
+
     filename, file_extension = os.path.splitext(shapefile)
 
 
-#Convierte el nombre en mayusculas
+
     filename = filename.upper()
 
 
-#toma el nombre de la imagen, en funcion de su nombre en mayusculas
+
     nombreImg = filename[:len(filename)-4]
 
 
-#intenta
+
     try:
 
         
        
-
+        im = Image.open(r'T:\\jm\\\\\img\\'+nombreImg+'.JPG')
 
 
 
@@ -98,7 +98,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos."dataset_id" = coberturas."record_id" where cobertura='+"'"+filename+"'"+""
 
 
 
@@ -115,14 +115,14 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     consulta_fecha = 'select pubdate from coberturas where cobertura='+"'"+filename+"'"+""
-    consulta_cita = "select cita from coberturas where cobertura="+"'"+filename+"'"+""
+
 
 
     consulta_siglas = 'select publish_siglas from coberturas where cobertura='+"'"+filename+"'"+""
 
 
 
-
+    consulta_areageo = 'select "area_geo" as areageo from coberturas where cobertura='+"'"+filename+"'"+""
 
 
 
@@ -197,13 +197,13 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
     rows_escala = resultado_escala.namedresult()
 
 
+
     escala_query = rows_escala[0].escala
 
-    resultado_cita = conn.query(consulta_cita)
-    rows_cita = resultado_cita.namedresult()
-    cita_query = rows_cita[0].cita
+
 
     resultado_atributo = conn.query(consulta_atributo)
+
 
 
     rows_atributo = resultado_atributo.namedresult()
@@ -211,9 +211,9 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     atributo_query = rows_atributo[0].nombre
-    a = cita_query.find("Distribución")
-    titulo_nuevo = cita_query[:a-1]
-    subtitulo_nuevo = cita_query[a:]
+
+
+
     resultado_publish = conn.query(consulta_publish)
 
 
@@ -223,9 +223,9 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     publish_query = rows_publish[0].publish
-    b = titulo_nuevo.find("(")
-    titulo_normal = titulo_nuevo[:b-1]
-    titulo_cursivas = titulo_nuevo[b:]
+
+
+
     resultado_pubplace = conn.query(consulta_pubplace)
 
 
@@ -236,12 +236,12 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
     pubplace_query = rows_pubplace[0].pubplace 
 
-    subtitulo_nuevo = subtitulo_nuevo.replace("et al", "")
-    c = subtitulo_nuevo.find(".")
-    subtitulo_1 = subtitulo_nuevo[:c-1]
-    subtitulo_2 = subtitulo_nuevo[c:]
+
 
     resultado_fecha = conn.query(consulta_fecha)
+
+
+
     rows_fecha = resultado_fecha.namedresult()
 
 
@@ -262,7 +262,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
     siglas_query = rows_siglas_id[0].publish_siglas
 
-
+    autores = 'select origin from "autores" where "dataset_id"=(select "record_id" from coberturas where cobertura='+"'"+filename+"')"+""
 
 
 
@@ -533,7 +533,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        cita2 = publish_query+", "+pubplace_query+"." 
+        cita2 = publish_query+", "+pubplace_query[0:7]+"." 
 
 
 
@@ -609,13 +609,13 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
+    newlayer1 = arcpy.mapping.Layer(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\shp\\'+shapefile+'')
 
 
 
 
 
-
-
+    desc = arcpy.Describe(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\shp\\'+shapefile+'')
 
     print "Trabajando "+desc.file+". Espera por favor." 
 
@@ -637,7 +637,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+            symbologyLayer = (r'C:\\Users\\tcamacho\\Desktop\\plantilla\\simb\\'+filename+'.lyr')
 
 
 
@@ -693,8 +693,8 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-        #        elm.text = titulo_shape
-                elm.text = "<CLR red='204' green='204' blue='204'><ita>"+titulo_normal+" </ita>"+titulo_cursivas+"</CLR>"
+                elm.text = titulo_shape
+
 
 
         for fechaDp in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
@@ -705,8 +705,8 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-#                fechaDp.text = "Distribución potencial ("+autores_query+". "+fecha[2]+")"
-                fechaDp.text = subtitulo_1+"<FNT><ita> et al</ita></FNT>"+subtitulo_2
+                fechaDp.text = "Distribución potencial ("+autores_query+". "+fecha[2]+")"
+
 
 
         for elmPie in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
@@ -733,7 +733,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+                    img.sourceImage = r'T:\\jm\\\\img\\'+nombreImg+'.JPG'
 
 
 
@@ -781,11 +781,11 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
+        mxd.saveACopy(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\mxd\\'+filename+'.mxd')
 
 
 
-
-
+        arcpy.mapping.ExportToPNG(mxd, r'C:\\Users\\tcamacho\\Desktop\\plantilla\\png\\'+filename+'.png', resolution = 300)
 
 
 
@@ -803,7 +803,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+        symbologyLayer = (r'C:\\Users\\tcamacho\\Desktop\\plantilla\\simb\\'+filename+'.lyr')
 
 
 
@@ -899,7 +899,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-
+                    img.sourceImage = r'T:\\jm\\\\img\\'+nombreImg+'.JPG'
 
 
 
@@ -947,11 +947,11 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
+        mxd_P.saveACopy(r'C:\\Users\\tcamacho\\Desktop\\plantilla\\mxd\\'+filename+'.mxd')
 
 
 
-
-
+        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\Users\\tcamacho\\Desktop\\plantilla\\png\\'+filename+'.png', resolution = 300)
 
 
 
