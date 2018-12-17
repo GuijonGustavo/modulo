@@ -61,6 +61,7 @@ else
 				$sqlupd .= "issue 			= '".$_POST['c_issue'] 			."',";
 				$sqlupd .= "resumen 		= '".$_POST['c_resumen'] 		."',";
 				$sqlupd .= "abstract 		= '".$_POST['c_abstract'] 		."',";
+				$sqlupd .= "cita 		= '".$_POST['c_cita'] 		."',";
 				$sqlupd .= "objetivo 		= '".$_POST['c_objetivo'] 		."',";
 				$sqlupd .= "datos_comp 		= '".$_POST['c_datos_comp'] 	."',";
 				$sqlupd .= "tiempo 			= '".$_POST['c_tiempo'] 		."',";
