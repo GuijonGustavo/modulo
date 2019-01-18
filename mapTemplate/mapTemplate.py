@@ -167,41 +167,41 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     titulo_shape = titulo_shape.replace("Distribución potencial", "") #Cambia el primer parametro por el segundo
-
-
-
     titulo_shape = titulo_shape.replace("Registros de presencia", "") #Cambia el primer parametro por el segundo
-
-
-
     titulo_shape = titulo_shape.replace(".", "") #Cambia el primer parametro por el segundo
-
-
-
     resultado_areageo = conn.query(consulta_areageo)
-
-
-
     rows_areageo = resultado_areageo.namedresult()
-
-
-
     areageo_query = rows_areageo[0].areageo
-
-
-
     resultado_escala = conn.query(consulta_escala)
-
-
-
     rows_escala = resultado_escala.namedresult()
-
-
     escala_query = rows_escala[0].escala
-
     resultado_cita = conn.query(consulta_cita)
     rows_cita = resultado_cita.namedresult()
     cita_query = rows_cita[0].cita
+
+    cuenta = 0
+    for carac in cita_query:
+        if carac == '(':
+            cuenta += 1
+    if cuenta == 2: #normal
+        a = cita_query.find("Distribución")
+        titulo_nuevo = cita_query[:a-1]
+        subtitulo_nuevo = cita_query[a:]
+        b = titulo_nuevo.find("(")
+        titulo_normal = titulo_nuevo[:b-1]
+        titulo_cursivas = titulo_nuevo[b:]
+    else:
+        a = cita_query.find("Distribución")
+        titulo_cursivas = cita_query[:a-1]
+        subtitulo_nuevo = cita_query[a:]
+        titulo_normal=""
+
+    subtitulo_nuevo = subtitulo_nuevo.replace("et al", "")
+    c = subtitulo_nuevo.find(".")
+    subtitulo_1 = subtitulo_nuevo[:c-1]
+    subtitulo_2 = subtitulo_nuevo[c:]
+
+
 
     resultado_atributo = conn.query(consulta_atributo)
 
@@ -211,9 +211,9 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     atributo_query = rows_atributo[0].nombre
-    a = cita_query.find("Distribución")
-    titulo_nuevo = cita_query[:a-1]
-    subtitulo_nuevo = cita_query[a:]
+    
+    
+    
     resultado_publish = conn.query(consulta_publish)
 
 
@@ -223,9 +223,9 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
     publish_query = rows_publish[0].publish
-    b = titulo_nuevo.find("(")
-    titulo_normal = titulo_nuevo[:b-1]
-    titulo_cursivas = titulo_nuevo[b:]
+    
+    
+    
     resultado_pubplace = conn.query(consulta_pubplace)
 
 
@@ -237,9 +237,9 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
     pubplace_query = rows_pubplace[0].pubplace 
 
     subtitulo_nuevo = subtitulo_nuevo.replace("et al", "")
-    c = subtitulo_nuevo.find(".")
-    subtitulo_1 = subtitulo_nuevo[:c-1]
-    subtitulo_2 = subtitulo_nuevo[c:]
+
+
+
 
     resultado_fecha = conn.query(consulta_fecha)
     rows_fecha = resultado_fecha.namedresult()
@@ -577,15 +577,15 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-    if areageo_query in ("Oaxaca","Chiapas", "Guerrero"):
 
 
 
-        mxd = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\nuevo.mxd")   #mxds base para plantilla en estados 
 
 
 
-        mxd_P = arcpy.mapping.MapDocument(r"J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\nuevo.mxd")   #mxds base para plantilla en estados
+
+
+
 
 
 
@@ -689,12 +689,12 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-            if elm.text == 'titulo':
+            if elm.text == 'titulo' and cuenta == 2:
 
-
-
-        #        elm.text = titulo_shape
                 elm.text = "<CLR red='204' green='204' blue='204'><ita>"+titulo_normal+" </ita>"+titulo_cursivas+"</CLR>"
+            if elm.text == 'titulo' and cuenta == 1:
+
+                elm.text = "<CLR red='204' green='204' blue='204'><ita>"+titulo_normal+titulo_cursivas+"</ita></CLR>"
 
 
         for fechaDp in arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT"):
@@ -705,7 +705,7 @@ for shapefile in lista_shapes: #si se intenta un shape en particular se anade un
 
 
 
-#                fechaDp.text = "Distribución potencial ("+autores_query+". "+fecha[2]+")"
+
                 fechaDp.text = subtitulo_1+"<FNT><ita> et al</ita></FNT>"+subtitulo_2
 
 
