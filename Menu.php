@@ -1324,10 +1324,11 @@ map.renderSync();
 
 
 <?php
+
+$mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
 echo "<pre>";
 try {
-$ShapeFile = new ShapeFile('/var/www/html/modulo_cbm/files/potfla_dcgw/potfla_dcgw.shp');
-
+$ShapeFile = new ShapeFile($mapa);
 $valores = $ShapeFile->getDBFFields();
     $tabla = "";
 for ($i = 0; $i < sizeof($valores); $i++) {
