@@ -1306,14 +1306,13 @@ map.renderSync();
 <form>                                                  
 <p class="txtN1"><b>SLD</b></p>
 <br />
-
+  <p class="txtN1">Generar SLD</p>
                                        </form>
+                                      
+  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_xml.php"  method="post" enctype="multipart/form-data">
+  <input type="submit" id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">   
+                    
 
-
-
-
-<form>                                                  
-                                       <p class="txtN1"> ArcView3.x</p>
 </form>
 <script>
  

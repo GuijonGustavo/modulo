@@ -1177,7 +1177,6 @@ map.renderSync();
 
 <?php if($nom != $nombreUsuario){echo '<tr><td>Nombre de proyecto</td>
                                    <td><select id="nombreProy" name="nombreProy">
-                                 <option value="dist_jm071">dist_jm071</option>
                                  <option value="conect_mang">conect_mang</option>
                                  <option value="jm001">jm001</option>
                                  <option value="jm002">jm002</option>
@@ -1307,14 +1306,13 @@ map.renderSync();
 <form>                                                  
 <p class="txtN1"><b>SLD</b></p>
 <br />
-
+  <p class="txtN1">Generar SLD</p>
                                        </form>
+                                      
+  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_sld.php"  method="post" enctype="multipart/form-data">
+  <input type="submit" id="btn_map_sld" name="btn_map_sld" value="<?php echo $id;?>">   
+                    
 
-
-
-
-<form>                                                  
-                                       <p class="txtN1"> ArcView3.x</p>
 </form>
 <script>
  
