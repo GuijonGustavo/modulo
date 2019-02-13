@@ -361,6 +361,30 @@ function vectores(nameMetadato) {
 </script>
 
 <script type="text/javascript">
+var options = {
+        color : ["red","green","blue"],
+                    country : ["Spain","Germany","France"]
+}
+
+$(function(){
+        var fillSecondary = function(){
+                    var selected = $('#primary').val();
+                            $('#secondary').empty();
+                            options[selected].forEach(function(element,index){
+                                            $('#secondary').append('<option value="'+element+'">'+element+'</option>');
+                                                    });
+                                }
+            $('#primary').change(fillSecondary);
+            fillSecondary();
+});
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
 
 function habilitar(obj) {
   var hab;
@@ -1321,6 +1345,30 @@ map.renderSync();
                     
 
 </form>
+<div>
+   <select id="primary">
+      <option value="color">Color</option>
+      <option value="country">Country</option>
+   </select> 
+   <select id="secondary">
+   </select>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <?php
@@ -1329,6 +1377,63 @@ $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.
 echo "<pre>";
 try {
 $ShapeFile = new ShapeFile($mapa);
+
+
+
+
+////////////
+    echo "<form>                                                  
+<p class='txtN2'><b>Access a specific record</b></p>
+                                       </form>";
+//echo "esto es: ".$_GET['1']; 
+// Check if provided index is valid
+//if ($_GET['COV_ID'] > 0 && $_GET['COV_ID'] <= $ShapeFile->getTotRecords()) {
+if (10<= $ShapeFile->getTotRecords()) {
+    // Set the cursor to a specific record
+//$ShapeFile->setCurrentRecord($_GET['COV_ID']);
+$ShapeFile->setCurrentRecord(10);
+// Read only one record
+$ret = $ShapeFile->getRecord();
+} else {
+$ret = "Index not valid!";
+}
+
+print_r($ret);
+
+
+//////////
+
+
+ echo "Shape Type : ";
+    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
+    echo "\n\n";
+        
+// Get number of Records
+echo "Records : ";
+echo $ShapeFile->getTotRecords();
+echo "\n\n";
+
+// Get Bounding Box
+echo "Bounding Box : ";
+print_r($ShapeFile->getBoundingBox());
+echo "\n\n";
+
+// Get DBF Fields
+echo "DBF Fields : ";
+print_r($ShapeFile->getDBFFields());
+echo "\n\n";
+
+
+
+
+
+////////
+
+
+
+
+
+
 $valores = $ShapeFile->getDBFFields();
     $tabla = "";
 for ($i = 0; $i < sizeof($valores); $i++) {
@@ -1339,9 +1444,67 @@ for ($i = 0; $i < sizeof($valores); $i++) {
 
 //echo $tabla;
 echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tabla."</table>";
+///////////////////
+    echo "<form>                                                  
+<p class='txtN2'><b>Get shapefile info</b></p>
+                                       </form>";
+
+echo "Shape Type : ";
+    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
+    echo "\n\n";
+        
+// Get number of Records
+echo "Records : ";
+echo $ShapeFile->getTotRecords();
+echo "\n\n";
+
+// Get Bounding Box
+echo "Bounding Box : ";
+print_r($ShapeFile->getBoundingBox());
+echo "\n\n";
+
+// Get DBF Fields
+echo "DBF Fields : ";
+print_r($ShapeFile->getDBFFields());
+echo "\n\n";
+
+
+
+
+//////////////////////////
+    echo "<form>                                                  
+<p class='txtN2'><b>Use foreach iterator</b></p>
+                                       </form>";
+
+
+    
+// Sets default return format
+$ShapeFile->setDefaultGeometryFormat(ShapeFile::GEOMETRY_WKT | ShapeFile::GEOMETRY_GEOJSON_GEOMETRY);
+
+// Read all the records using a foreach loop
+foreach ($ShapeFile as $i => $record) {
+if ($record['dbf']['_deleted']) continue;
+// Record number
+echo "Record number: $i\n";
+// Geometry
+print_r($record['shp']);
+// DBF Data
+print_r($record['dbf']);
+
+}
+
+
+
+
+
+
+/////////////////////////////
 
 } catch (ShapeFileException $e) {
-exit('Error '.$e->getCode().' ('.$e->getErrorType().'): '.$e->getMessage());
+    echo "</pre>";
+    echo "<form>                                                  
+<p class='txtN2'><b>El shape que estás solicitando no está disponible en el servidor, sólo está en el Geoserver. Por lo pronbto no se puede generar el SLD.</b></p>
+                                       </form>";
 }
 echo "</pre>";
          ?>
