@@ -1327,8 +1327,9 @@ map.renderSync();
 
 <div>
    <select id="primary">
-      <option value="color">Color</option>
-      <option value="country">Country</option>
+      <option value="nombre">Nombre</option>
+      <option value="tipo">Tipo</option>
+      <option value="tamano">tamano</option>
    </select> 
    <select id="secondary">
    </select>
@@ -1339,7 +1340,6 @@ map.renderSync();
 
 
 
-</script>
 <?php
 
 $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
@@ -1360,17 +1360,6 @@ $lista_atributos = substr( $lista_atributos , 0 , -1);
 
 $combo_col1 = "[".$lista_atributos."]";
 echo $combo_col1;
-
-
-
-
-
-
-
-
-
-
-
 //echo $tabla;
 echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tabla."</table>";
 ///////////////////
@@ -1547,21 +1536,34 @@ echo "</pre>";
 <?php $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
 $ShapeFile = new ShapeFile($mapa);
 $valores = $ShapeFile->getDBFFields();
-    $lista_atributos = "";
+    $lista_atributos0 = "";
+    $lista_atributos1 = "";
+    $lista_atributos2 = "";
 for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
-    $lista_atributos .= "'".$fila0."',";
+    $fila1 = (string)$valores[$i]['type'];
+    $fila2 = (string)$valores[$i]['size'];
+    $lista_atributos0 .= "'".$fila0."',";
+    $lista_atributos1 .= "'".$fila1."',";
+    $lista_atributos2 .= "'".$fila2."',";
 }
 
-$lista_atributos = substr( $lista_atributos , 0 , -1);
+$lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
+$lista_atributos1 = substr( $lista_atributos1 , 0 , -1);
+$lista_atributos2 = substr( $lista_atributos2 , 0 , -1);
 
-$combo_col1 = "[".$lista_atributos."]";
+$combo_col0 = "[".$lista_atributos0."]";
+$combo_col1 = "[".$lista_atributos1."]";
+$combo_col2 = "[".$lista_atributos2."]";
 
 ?>;
 
 var options = {
-color : <?php echo $combo_col1; ?>,
-country : ["Spain","Germany","France"]
+nombre : <?php echo $combo_col0; ?>,
+tipo : <?php echo $combo_col1; ?>,
+tamano : <?php echo $combo_col2; ?>
+
+
 }
 
 $(function(){
