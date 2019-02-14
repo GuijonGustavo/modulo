@@ -1534,6 +1534,8 @@ echo "</pre>";
 <script type="text/javascript">
 
 <?php $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
+try{
+
 $ShapeFile = new ShapeFile($mapa);
 $valores = $ShapeFile->getDBFFields();
     $lista_atributos0 = "";
@@ -1555,6 +1557,13 @@ $lista_atributos2 = substr( $lista_atributos2 , 0 , -1);
 $combo_col0 = "[".$lista_atributos0."]";
 $combo_col1 = "[".$lista_atributos1."]";
 $combo_col2 = "[".$lista_atributos2."]";
+
+} catch (ShapeFileException $e) {
+    echo "</pre>";
+    echo "<form>                                                  
+<p class='txtN2'><b>El shape que estás solicitando no está disponible en el servidor, sólo está en el Geoserver. Por lo pronbto no se puede generar el SLD.</b></p>
+                                       </form>";
+}
 
 ?>;
 

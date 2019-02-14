@@ -532,24 +532,10 @@ border:none;
 
 }
 
-svg_1{
+svg{
     display:block;
 margin: auto;
 }
-
-
-svg_2{
-    display:block;
-margin: auto;
-}
-
-
-svg_3{
-    display:block;
-margin: auto;
-}
-
-
 
 
 #button{
@@ -568,7 +554,14 @@ user-select: none;
 -moz-user-select:none;
 }
 
-
+#colorPicker div {
+position: absolute;
+top: 3px;
+left: 3px;
+width: 30px;
+height: 30px;
+background: url(Javascript/plugins/colorPicker/css/images/select.png) center;
+                        }
 
 
 
