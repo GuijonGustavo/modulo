@@ -358,27 +358,6 @@ function vectores(nameMetadato) {
 		});
 	//alert(nameMetadato);
 }
-</script>
-
-<script type="text/javascript">
-var options = {
-        color : ["red","green","blue"],
-                    country : ["Spain","Germany","France"]
-}
-
-$(function(){
-        var fillSecondary = function(){
-                    var selected = $('#primary').val();
-                            $('#secondary').empty();
-                            options[selected].forEach(function(element,index){
-                                            $('#secondary').append('<option value="'+element+'">'+element+'</option>');
-                                                    });
-                                }
-            $('#primary').change(fillSecondary);
-            fillSecondary();
-});
-</script>
-
 
 
 
@@ -1345,6 +1324,7 @@ map.renderSync();
                     
 
 </form>
+
 <div>
    <select id="primary">
       <option value="color">Color</option>
@@ -1359,29 +1339,82 @@ map.renderSync();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+</script>
 <?php
 
 $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
 echo "<pre>";
 try {
 $ShapeFile = new ShapeFile($mapa);
+    echo "<form><p class='txtN2'><b>Su shape es del tipo: ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR)."</b></p></form>";
+$valores = $ShapeFile->getDBFFields();
+    $tabla = "";
+    $lista_atributos = "";
+for ($i = 0; $i < sizeof($valores); $i++) {
+    $fila = (string)$valores[$i]['name'];
+    $tabla .= "<tr><td style='border: 1px solid blue';>".$fila."</td><td style='border: 1px solid blue';></td></tr>";
+    $lista_atributos .= "'".$fila."',";
+}
+
+$lista_atributos = substr( $lista_atributos , 0 , -1);
+
+$combo_col1 = "[".$lista_atributos."]";
+echo $combo_col1;
 
 
 
 
-////////////
+
+
+
+
+
+
+
+//echo $tabla;
+echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tabla."</table>";
+///////////////////
+    echo "<form>                                                  
+<p class='txtN2'><b>Get shapefile info</b></p>
+                                       </form>";
+
+
+
+$valoresA = $ShapeFile->getDBFFields();
+    $tablaA = "";
+for ($i = 0; $i < sizeof($valoresA); $i++) {
+    $fila = (string)$valoresA[$i]['name'];
+        $tablaA .= "<tr><td style='border: 1px solid blue';>".$fila."</td><td style='border: 1px solid blue';></td></tr>";
+}
+
+
+//echo $tabla;
+echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tablaA."</table>";
+///////////////////
+    echo "<form>                                                  
+<p class='txtN2'><b>Get shapefile info</b></p>
+                                       </form>";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ echo "Shape Type : ";
+    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
+    echo "\n\n";
+    
+    ////////////
     echo "<form>                                                  
 <p class='txtN2'><b>Access a specific record</b></p>
                                        </form>";
@@ -1508,6 +1541,42 @@ print_r($record['dbf']);
 }
 echo "</pre>";
          ?>
+
+<script type="text/javascript">
+
+<?php $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
+$ShapeFile = new ShapeFile($mapa);
+$valores = $ShapeFile->getDBFFields();
+    $lista_atributos = "";
+for ($i = 0; $i < sizeof($valores); $i++) {
+    $fila0 = (string)$valores[$i]['name'];
+    $lista_atributos .= "'".$fila0."',";
+}
+
+$lista_atributos = substr( $lista_atributos , 0 , -1);
+
+$combo_col1 = "[".$lista_atributos."]";
+
+?>;
+
+var options = {
+color : <?php echo $combo_col1; ?>,
+country : ["Spain","Germany","France"]
+}
+
+$(function(){
+var fillSecondary = function(){
+var selected = $('#primary').val();
+$('#secondary').empty();
+options[selected].forEach(function(element,index){
+$('#secondary').append('<option value="'+element+'">'+element+'</option>');
+});
+}
+$('#primary').change(fillSecondary);
+fillSecondary();
+});
+</script>
+
 
 
 
