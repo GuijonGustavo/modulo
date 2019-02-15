@@ -149,6 +149,9 @@ else {
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
+ <script type="text/javascript" src="Javascript/plugins/jquery/dist/jquery.js"></script>
+ <script type="text/javascript" src="Javascript/plugins/farbtastic/farbtastic.js"></script>
+ <link rel="stylesheet" href="Javascript/plugins/farbtastic/farbtastic.css" type="text/css" />
 
 
 
@@ -457,6 +460,12 @@ $("#seconds").html(60 - ss);
 
     </script>
 
+ <script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('#demo').hide();
+    $('#picker').farbtastic('#color');
+  });
+ </script>
 
 
 
@@ -1335,6 +1344,13 @@ map.renderSync();
    </select>
 </div>
 
+<h1>jQuery Color Picker: Farbtastic</h1>
+
+<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
+
+<form action="" style="width: 400px;">
+  <div class="form-item"><label for="color">Color:</label><input type="text" id="color" name="color" value="#123456" /></div><div id="picker"></div>
+</form>
 
 
 
