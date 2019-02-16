@@ -1334,218 +1334,8 @@ map.renderSync();
 
 </form>
 
-<div>
-   <select id="primary">
-      <option value="nombre">Nombre</option>
-      <option value="tipo">Tipo</option>
-      <option value="tamano">tamano</option>
-   </select> 
-   <select id="secondary">
-   </select>
-</div>
 
-<h1>jQuery Color Picker: Farbtastic</h1>
 
-<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
-
-<form action="" style="width: 400px;">
-  <div class="form-item"><label for="color">Color:</label><input type="text" id="color" name="color" value="#123456" /></div><div id="picker"></div>
-</form>
-
-
-
-
-
-<?php
-
-$mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
-echo "<pre>";
-try {
-$ShapeFile = new ShapeFile($mapa);
-    echo "<form><p class='txtN2'><b>Su shape es del tipo: ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR)."</b></p></form>";
-$valores = $ShapeFile->getDBFFields();
-    $tabla = "";
-    $lista_atributos = "";
-for ($i = 0; $i < sizeof($valores); $i++) {
-    $fila = (string)$valores[$i]['name'];
-    $tabla .= "<tr><td style='border: 1px solid blue';>".$fila."</td><td style='border: 1px solid blue';></td></tr>";
-    $lista_atributos .= "'".$fila."',";
-}
-
-$lista_atributos = substr( $lista_atributos , 0 , -1);
-
-$combo_col1 = "[".$lista_atributos."]";
-echo $combo_col1;
-//echo $tabla;
-echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tabla."</table>";
-///////////////////
-    echo "<form>                                                  
-<p class='txtN2'><b>Get shapefile info</b></p>
-                                       </form>";
-
-
-
-$valoresA = $ShapeFile->getDBFFields();
-    $tablaA = "";
-for ($i = 0; $i < sizeof($valoresA); $i++) {
-    $fila = (string)$valoresA[$i]['name'];
-        $tablaA .= "<tr><td style='border: 1px solid blue';>".$fila."</td><td style='border: 1px solid blue';></td></tr>";
-}
-
-
-//echo $tabla;
-echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tablaA."</table>";
-///////////////////
-    echo "<form>                                                  
-<p class='txtN2'><b>Get shapefile info</b></p>
-                                       </form>";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- echo "Shape Type : ";
-    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
-    echo "\n\n";
-    
-    ////////////
-    echo "<form>                                                  
-<p class='txtN2'><b>Access a specific record</b></p>
-                                       </form>";
-//echo "esto es: ".$_GET['1']; 
-// Check if provided index is valid
-//if ($_GET['COV_ID'] > 0 && $_GET['COV_ID'] <= $ShapeFile->getTotRecords()) {
-if (10<= $ShapeFile->getTotRecords()) {
-    // Set the cursor to a specific record
-//$ShapeFile->setCurrentRecord($_GET['COV_ID']);
-$ShapeFile->setCurrentRecord(10);
-// Read only one record
-$ret = $ShapeFile->getRecord();
-} else {
-$ret = "Index not valid!";
-}
-
-print_r($ret);
-
-
-//////////
-
-
- echo "Shape Type : ";
-    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
-    echo "\n\n";
-        
-// Get number of Records
-echo "Records : ";
-echo $ShapeFile->getTotRecords();
-echo "\n\n";
-
-// Get Bounding Box
-echo "Bounding Box : ";
-print_r($ShapeFile->getBoundingBox());
-echo "\n\n";
-
-// Get DBF Fields
-echo "DBF Fields : ";
-print_r($ShapeFile->getDBFFields());
-echo "\n\n";
-
-
-
-
-
-////////
-
-
-
-
-
-
-$valores = $ShapeFile->getDBFFields();
-    $tabla = "";
-for ($i = 0; $i < sizeof($valores); $i++) {
-    $fila = (string)$valores[$i]['name'];
-        $tabla .= "<tr><td style='border: 1px solid blue';>".$fila."</td><td style='border: 1px solid blue';></td></tr>";
-}
-
-
-//echo $tabla;
-echo "<table style='border: 1px solid blue; padding: 15px; background-color: #e5efff;'><tr><th>Atributos</th><th>Color</th></tr>".$tabla."</table>";
-///////////////////
-    echo "<form>                                                  
-<p class='txtN2'><b>Get shapefile info</b></p>
-                                       </form>";
-
-echo "Shape Type : ";
-    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
-    echo "\n\n";
-        
-// Get number of Records
-echo "Records : ";
-echo $ShapeFile->getTotRecords();
-echo "\n\n";
-
-// Get Bounding Box
-echo "Bounding Box : ";
-print_r($ShapeFile->getBoundingBox());
-echo "\n\n";
-
-// Get DBF Fields
-echo "DBF Fields : ";
-print_r($ShapeFile->getDBFFields());
-echo "\n\n";
-
-
-
-
-//////////////////////////
-    echo "<form>                                                  
-<p class='txtN2'><b>Use foreach iterator</b></p>
-                                       </form>";
-
-
-    
-// Sets default return format
-$ShapeFile->setDefaultGeometryFormat(ShapeFile::GEOMETRY_WKT | ShapeFile::GEOMETRY_GEOJSON_GEOMETRY);
-
-// Read all the records using a foreach loop
-foreach ($ShapeFile as $i => $record) {
-if ($record['dbf']['_deleted']) continue;
-// Record number
-echo "Record number: $i\n";
-// Geometry
-print_r($record['shp']);
-// DBF Data
-print_r($record['dbf']);
-
-}
-
-
-
-
-
-
-/////////////////////////////
-
-} catch (ShapeFileException $e) {
-    echo "</pre>";
-    echo "<form>                                                  
-<p class='txtN2'><b>El shape que estás solicitando no está disponible en el servidor, sólo está en el Geoserver. Por lo pronbto no se puede generar el SLD.</b></p>
-                                       </form>";
-}
-echo "</pre>";
-         ?>
 
 <script type="text/javascript">
 
@@ -1557,6 +1347,8 @@ $valores = $ShapeFile->getDBFFields();
     $lista_atributos0 = "";
     $lista_atributos1 = "";
     $lista_atributos2 = "";
+    $lista_num = "";
+    $lista_cad = "";
 for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
     $fila1 = (string)$valores[$i]['type'];
@@ -1564,15 +1356,24 @@ for ($i = 0; $i < sizeof($valores); $i++) {
     $lista_atributos0 .= "'".$fila0."',";
     $lista_atributos1 .= "'".$fila1."',";
     $lista_atributos2 .= "'".$fila2."',";
+    if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
+    if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
 }
 
 $lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
 $lista_atributos1 = substr( $lista_atributos1 , 0 , -1);
 $lista_atributos2 = substr( $lista_atributos2 , 0 , -1);
+$lista_num = substr( $lista_num , 0 , -1);
+$lista_cad = substr( $lista_cad , 0 , -1);
 
 $combo_col0 = "[".$lista_atributos0."]";
 $combo_col1 = "[".$lista_atributos1."]";
 $combo_col2 = "[".$lista_atributos2."]";
+$combo_num = "[".$lista_num."]";
+$combo_cad = "[".$lista_cad."]";
+
+
+$tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
 
 } catch (ShapeFileException $e) {
     echo "</pre>";
@@ -1585,8 +1386,8 @@ $combo_col2 = "[".$lista_atributos2."]";
 
 var options = {
 nombre : <?php echo $combo_col0; ?>,
-tipo : <?php echo $combo_col1; ?>,
-tamano : <?php echo $combo_col2; ?>
+numerico : <?php echo $combo_num; ?>,
+cadena : <?php echo $combo_cad; ?>
 
 
 }
@@ -1612,316 +1413,26 @@ fillSecondary();
 
 
 
-
-<script>
- 
- 
- 
- var svg = d3.select('#div17').append('svg')
-                            .attr('width',320)
-                            .attr('height',600);
-
- var x1 = 160,
-     y1 = 150;  
-     var c_color ;
-     var color_is_choosed = false;
-     var colors = [
-     '#ff4422','#ee1166' ,'#9911bb' ,'#6633bb' ,'#3344bb' ,'#1199ff','#00aaff',
-     '#00bbdd','#009988','#44bb44','#88cc44','#ccdd22','#ffee11','#ffcc00','#ff9900','#ff5500',
-     '#775544','#999999','#828080','#444'];
-      var palet= d3.select('svg');
+<div>
+   <select id="cero">
+   <option value="cero"><?php echo $tipo_de_shape?></option>
+   </select> 
+   <select id="primary">
+      <option value="nombre">Nombre</option>
+      <option value="numerico">numerico</option>
+      <option value="cadena">cadena</option>
+   </select> 
+   <select id="secondary">
+   </select>
+</div>
 
 
- function deg_color(color){
-  
-  return d_color = [
-     d3.hsl(color).darker(0.5),
-     d3.hsl(color).darker(0.3),
-     color,
-     d3.hsl(color).brighter(0.5),
-     d3.hsl(color).brighter(1)
-   ]
+<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
 
-}
- function draw_palet(){
+<form action="" style="width: 400px;">
+  <div class="form-item"><label for="color">Color:</label><input type="text" id="color" name="color" value="#123456" /></div><div id="picker"></div>
+</form>
 
-    
-    var palet_container = d3.select('svg').append('g').attr('id','palet_container');
-
-     for(var i= 0; i<colors.length;i++){
-
-      palet_container.append('g')
-                     .attr('id','graphe_container'+i)
-                     .attr('data-color',colors[i])
-                     .attr('class','graphe_container');
-      
-
-      drawRect('#graphe_container'+i,x1,y1,5,5,145,20,'#fff','#ccc');                                  
-      drawRect('#graphe_container'+i,x1+25,y1,4,4,20,20,deg_color(colors[i])[0],'','','color_rect color_rect0');
-      drawRect('#graphe_container'+i,x1+50,y1,4,4,20,20,deg_color(colors[i])[1],'','','color_rect color_rect1'); 
-      drawRect('#graphe_container'+i,x1+75,y1,4,4,20,20,deg_color(colors[i])[2],'','','color_rect color_rect2'); 
-      drawRect('#graphe_container'+i,x1+100,y1,4,4,20,20,deg_color(colors[i])[3],'','','color_rect color_rect3');
-      drawRect('#graphe_container'+i,x1+125,y1,4,4,20,20,deg_color(colors[i])[4],'','','color_rect color_rect4');
-        
-                    
-     }
-     drawButton();
-      d3.selectAll('.color_rect').on('mouseover',mouseover);
-      d3.selectAll('.color_rect').on('click',mouseClick);
- }          
-
- function mouseover(){
-    var el = d3.select(this);
-    var s_color = el.attr('fill');
-                               
-    setColor('#show_circle',s_color );
-    d3.select('#color_code').text(s_color).attr('fill',s_color).attr('stroke',s_color); 
-}
- function mouseClick(){
-  
-       p_color =d3.select(this.parentNode).attr('data-color');
-       d3.select('#button_show_color').attr('fill',p_color);
-
-       c_color= d3.select(this).attr('fill');
-       choosed_palet.addColor(c_color);
-
-}  
-
- function setColor(el,color){
-
-    d3.select(el).transition().duration('200').attr('fill',color);
- }
- function drawGrapheText(x,y,id=null,value,s_color){
-   var graphe = d3.select('svg').append('g').attr('id','text_graphe');
-  
-        graphe.append('text')
-              .attr('id',id)
-              .attr('x',x)
-              .attr('y',y)
-              .attr('stroke',s_color)
-              .text(value);
-        graphe.append('line')
-              .attr('x1',x)
-              .attr('y1',y+5)
-              .attr('x2',x-20)
-              .attr('stroke',s_color)
-              .attr('y2',y+20);
-       graphe.append('line')
-              .attr('x1',x)
-              .attr('y1',y+5)
-              .attr('x2',x+50)
-              .attr('stroke',s_color)
-              .attr('y2',y+5);
- }
-
-
-
- function drawCircle(container,x,y,r,color=null,id=null){
-     
-    
-   var ele = d3.select('svg').append('g');
-   
-   ele.append('circle')
-             .attr('fill',color)
-             .attr('id',id)
-             .attr('cx',x)
-             .attr('cy',y)
-             .attr('stroke','#ccc')
-             .attr('r',r);
-  };
-
-   function drawRect(container,x,y,rx,ry,width,height,color=null,stroke=null,id=null,classed=null){
-     var ele;
-      if(container == 'rect'){
-        ele = d3.select('svg').append('g');
-      }else{
-        ele = d3.select('svg').select(container);
-      }
-      ele.append('rect') 
-               .attr('id',id)
-               .attr('class',classed)
-               .attr('fill',color)
-               .attr('stroke',stroke)
-               .attr('x',x)
-               .attr('y',y)
-               .attr('rx',rx)
-               .attr('ry',ry)
-               .attr('width',width)
-               .attr('height',height);
-  }
-  function drawButton(){
-
-         
-        drawCircle('svg',x1,y1+10,15,colors[colors.length-1],id="button_show_color");
-         drawCircle('svg',x1,y1+10,10,'orange');
-         drawCircle('svg',x1,y1+10,9,'white',id="button");
-         d3.select('#button').on('click',buttonClicked);
-  }
-
-function buttonClicked(){
-          // toggle_color('#button');
-           toggle_palet();
-           toggle_cirle();
-           toggle_text_graphe();
-           show_choosed_bar();
-     };
-
-
-
-
-function show_choosed_bar(){
-  var last_g= colors.length-1;
-  var last_color = colors[colors.length-1];
-   var p_color = d3.select('#button_show_color').attr('fill');
-   
-    if( palet.attr('data-palet')=='on'){
-      d3.selectAll('#graphe_container'+last_g).attr('data-color',last_color);
-         for(var i = 0; i < 5;i++){
-         
-         d3.selectAll('#graphe_container'+last_g+'>.color_rect'+i).attr('fill',deg_color(last_color)[i]);
-         
-       }
-    }else{
-       d3.selectAll('#graphe_container'+last_g).attr('data-color',deg_color(p_color)[2]);
-       for(var i = 0; i < 5;i++){
-        d3.selectAll('#graphe_container'+last_g+'>.color_rect'+i).attr('fill',deg_color(p_color)[i]);
-      }
-    }
-  
-  
-}
-
-
-  
-
-
-
-function toggle_color(el){
-        var element = d3.select(el);
-        var color = d3.select(el).attr('fill');
-        if(color == 'white'){
-         element.attr('fill','orange');
-        }else{
-          element.attr('fill','white');
-        }
-}
-
- drawCircle('circle',x1,y1+230,50,'#ccc',id='show_circle');
- drawGrapheText(x1+70,y1+200,'color_code','#cccccc','#ccc');
-
-function toggle_cirle(){
- 
-       var palet= d3.select('svg'),
-       circle = d3.select('#show_circle');
-
-     if( palet.attr('data-palet')=='on'){
-          circle.transition().duration(500).attr('r',50).attr("transform", "translate(0,0)");;
-     }else{
-          circle.transition().duration(500).attr('r',100).attr("transform", "translate(0," + -75 + ")");
-     }
-}
-function toggle_text_graphe(){
- 
-       var palet= d3.select('svg'),
-       text_graphe = d3.select('#text_graphe');
-
-     if( palet.attr('data-palet')=='on'){
-         text_graphe.transition().duration(500).attr("transform", "translate(0,0)");
-     }else{
-         text_graphe.transition().duration(500).attr("transform", "translate(0," + -150 + ")");
-     }
-}
-function open_palet(){
-  var step= 18;
-    d3.select('svg').attr('data-palet','on');
-   
-     for(var i = 0; i <colors.length ;i++){
-       d3.select('#graphe_container'+i)
-       .transition()
-      .duration(500).attr("transform", 'rotate('+i*step+' )');
-    }
-
-}
-function close_palet(){
-
- var el =d3.selectAll('.graphe_container');
-     
-      el.transition()
-      .duration(500)
-      .attr("transform", 'rotate('+-90+')' );
- 
-       
-}
-function toggle_palet(){
-    
-     if( palet.attr('data-palet')=='on'){
-         close_palet();
-          
-         palet.attr('data-palet','off');
-     }else{
-         open_palet();
-         palet.attr('data-palet','on');
-     }
-}
-
-
-
-draw_palet();
-open_palet();
-
-
-
-
-
-
-
-var choosed_palet = {
-  container:d3.select('svg').append('g').attr('class','choosed_palet'),
-  x:50,
-  y:450,
-  width:30,
-  height:10,
-  max_length:7,
-  color :[],
- 
-  addColor:function(color){
-    if(this.color.length<this.max_length){
-       this.color.push(color);
-      this.draw();
-    }
-   
-  },
-  removeColor:function(index){
-    
-   
-    this.color.splice(index,1);
-    
-   this.draw();
-  },
-  draw:function(){
-   this.container.html('');
-    for(var i = 0; i <this.color.length;i++){
-      
-      this.container.append('rect').attr('x',this.x+(i*this.width))
-                                  .attr('y',this.y)
-                                  .attr('data_color_index',i)
-                                  .attr('width',this.width)
-                                  .attr('height',this.height)
-                                  .attr('fill',this.color[i])
-                                  .on('mouseover',mouseover)
-                                  .on('dblclick',function(){ 
-                                     var el=  d3.select(this);
-                                     var index = el.attr("data_color_index");
-                                    choosed_palet.removeColor(index);
-                                    el.remove();
-
-                                });
-    }
-  }
-  
-}
-
-</script>
 
 </div>
 </div>
