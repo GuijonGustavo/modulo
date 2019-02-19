@@ -1479,7 +1479,6 @@ fillSecondary();
 
         <div class="inputs" style = "float:right";>
             <label for="low_value">Rojo CONABIO<input id="low_value" class="jscolor" value="a80000"></label>
-                <label for="high_value">Clase 2<input id="high_value" class="jscolor" value="497B94"></label>
                           </div>
 
 
