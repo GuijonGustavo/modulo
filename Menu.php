@@ -1366,6 +1366,9 @@ $combo_cad = "[".$lista_cad."]";
 
 $tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
 
+
+
+
 } catch (ShapeFileException $e) {
     echo "</pre>";
     echo "<form>                                                  
@@ -1379,8 +1382,11 @@ var options = {
 nombre : <?php echo $combo_col0; ?>,
 numerico : <?php echo $combo_num; ?>,
 cadena : <?php echo $combo_cad; ?>
+}
 
-
+var options_terciario = {
+AREA : <?php echo $combo_cad; ?>, 
+PERIMETER : <?php echo $combo_cad; ?>
 }
 
 $(function(){
@@ -1393,8 +1399,67 @@ $('#secondary').append('<option value="'+element+'">'+element+'</option>');
 }
 $('#primary').change(fillSecondary);
 fillSecondary();
+
+
+var fillTerciario = function(){
+var selecionado = $('#secondary').val();
+$('#terciario').empty();
+options_terciario[selecionado].forEach(function(elemento,indice){
+$('#terciario').append('<option value="'+elemento+'">'+elemento+'</option>');
 });
+}
+$('#secondary').change(fillTerciario);
+fillTerciario();
+});
+
+
+
 </script>
+
+<!-- Tabla -->
+
+<table style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th> 
+    <th>Tipo</th>
+    <th>Subtipo</th>
+    <th>Color</th>
+  </tr>
+  <tr>
+    <td><select><option value="volvo"><?php echo $tipo_de_shape?></option></select></td>
+    <td><select>
+  <option value="nombre">Nombre</option>
+  <option value="numerico">Numérico</option>
+  <option value="cadena">Cadena</option>
+</select></td>
+    <td>i99999</td>
+    <td>50</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>JJ</td>
+    <td>94</td>
+    <td>94</td>
+    <td>94</td>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td>
+    <td>80</td>
+    <td>80</td>
+    <td>80</td>
+  </tr>
+</table>
+
+
+
+
+
+<!-- Tabla -->
+
+
 
 <script>
 
@@ -1475,7 +1540,18 @@ fillSecondary();
    </select> 
    <select id="secondary">
    </select>
+ <select id="terciario">
+   </select>
+
+
+
+
+
+
+
+
 </div>
+
 
         <div class="inputs" style = "float:right";>
             <label for="low_value">Rojo CONABIO<input id="low_value" class="jscolor" value="a80000"></label>
@@ -1484,6 +1560,51 @@ fillSecondary();
 
 </div>
 </div>
+
+<?php
+echo "<pre>";
+
+
+/*
+echo "Shape Type : ";
+    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
+echo "\n\n";
+
+echo "Records : ";
+    echo $ShapeFile->getTotRecords();
+echo "\n\n";
+
+echo "Bounding Box : ";
+    print_r($ShapeFile->getBoundingBox());
+echo "\n\n";
+
+echo "DBF Fields : ";
+    print_r($ShapeFile->getDBFFields());
+    echo "\n\n";
+
+ */
+/*
+if ($_GET['record_index'] > 0 && $_GET['record_index'] <= $ShapeFile->getTotRecords()) {
+    $ShapeFile->setCurrentRecord($_GET['record_index']);
+    $ret = $ShapeFile->getRecord();
+        } else {
+                    $ret = "Index not valid!";
+                        }
+ */
+
+$ShapeFile->setDefaultGeometryFormat(ShapeFile::GEOMETRY_WKT | ShapeFile::GEOMETRY_GEOJSON_GEOMETRY);
+foreach ($ShapeFile as $i => $record) {
+            if ($record['dbf']['_deleted']) continue;
+            echo "Record number: $i\n";
+            print_r($record['shp']);
+            print_r($record['dbf']);
+                }
+
+
+
+echo "</pre>";
+?>;
+
 
 </div>
 
