@@ -1566,56 +1566,6 @@ fillTerciario();
 </div>
 </div>
 
-<?php
-echo "<pre>";
-
-
-/*
-echo "Shape Type : ";
-    echo $ShapeFile->getShapeType()." - ".$ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
-echo "\n\n";
-
-echo "Records : ";
-    echo $ShapeFile->getTotRecords();
-echo "\n\n";
-
-echo "Bounding Box : ";
-    print_r($ShapeFile->getBoundingBox());
-echo "\n\n";
-
-echo "DBF Fields : ";
-    print_r($ShapeFile->getDBFFields());
-    echo "\n\n";
-
- */
-/*
-if ($_GET['record_index'] > 0 && $_GET['record_index'] <= $ShapeFile->getTotRecords()) {
-    $ShapeFile->setCurrentRecord($_GET['record_index']);
-    $ret = $ShapeFile->getRecord();
-        } else {
-                    $ret = "Index not valid!";
-                        }
- */
-
-
-
-/* 
-
-    $sub = "";
-for ($r = 0; $r < sizeof($record); $r++) {
-    $filasub = (string)$sub[$r]['name'];
-     if((string)$sub[$r]['type'][r] == "AREA"){$cadsub = (string)$sub[$r]['name'];$sub .= "'".$cadsub."',";}
-}
-
-$lista_sub = substr( $lista_sub , 0 , -1);
-
-$combo_sub = "[".$lista_sub."]";
- */ 
-
-echo "</pre>";
-?>;
-
-
 </div>
 
 <!------------------------------Cierra zona de sld---------------------->
