@@ -1336,35 +1336,42 @@ try{
 $ShapeFile = new ShapeFile($mapa);
 $valores = $ShapeFile->getDBFFields();
     $lista_atributos0 = "";
-    $lista_atributos1 = "";
-    $lista_atributos2 = "";
     $lista_num = "";
     $lista_cad = "";
+    $lista_fila = "";
 for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
-    $fila1 = (string)$valores[$i]['type'];
-    $fila2 = (string)$valores[$i]['size'];
     $lista_atributos0 .= "'".$fila0."',";
-    $lista_atributos1 .= "'".$fila1."',";
-    $lista_atributos2 .= "'".$fila2."',";
     if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
     if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
+
+
+    $lista_sub = "";
+foreach ($ShapeFile as $j => $record) {
+    $sub = $record['dbf'][$fila0];
+    $lista_sub .= "'".$sub."',";
+                }
+
+$lista_sub = substr( $lista_sub , 0 , -1);
+$lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
+
 }
 
+$lista_fila = substr( $lista_fila , 0 , -2);
+
 $lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
-$lista_atributos1 = substr( $lista_atributos1 , 0 , -1);
-$lista_atributos2 = substr( $lista_atributos2 , 0 , -1);
 $lista_num = substr( $lista_num , 0 , -1);
 $lista_cad = substr( $lista_cad , 0 , -1);
 
 $combo_col0 = "[".$lista_atributos0."]";
-$combo_col1 = "[".$lista_atributos1."]";
-$combo_col2 = "[".$lista_atributos2."]";
 $combo_num = "[".$lista_num."]";
 $combo_cad = "[".$lista_cad."]";
 
-
 $tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
+
+$lista_sub = substr( $lista_sub , 0 , -1);
+$combo_sub = "[".$lista_sub."]";
+
 
 
 
@@ -1376,7 +1383,7 @@ $tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
                                        </form>";
 }
 
-?>;
+?>
 
 var options = {
 nombre : <?php echo $combo_col0; ?>,
@@ -1385,8 +1392,7 @@ cadena : <?php echo $combo_cad; ?>
 }
 
 var options_terciario = {
-AREA : <?php echo $combo_cad; ?>, 
-PERIMETER : <?php echo $combo_cad; ?>
+<?php echo $lista_fila; ?>
 }
 
 $(function(){
@@ -1399,7 +1405,6 @@ $('#secondary').append('<option value="'+element+'">'+element+'</option>');
 }
 $('#primary').change(fillSecondary);
 fillSecondary();
-
 
 var fillTerciario = function(){
 var selecionado = $('#secondary').val();
@@ -1592,15 +1597,20 @@ if ($_GET['record_index'] > 0 && $_GET['record_index'] <= $ShapeFile->getTotReco
                         }
  */
 
-$ShapeFile->setDefaultGeometryFormat(ShapeFile::GEOMETRY_WKT | ShapeFile::GEOMETRY_GEOJSON_GEOMETRY);
-foreach ($ShapeFile as $i => $record) {
-            if ($record['dbf']['_deleted']) continue;
-            echo "Record number: $i\n";
-            print_r($record['shp']);
-            print_r($record['dbf']);
-                }
 
 
+/* 
+
+    $sub = "";
+for ($r = 0; $r < sizeof($record); $r++) {
+    $filasub = (string)$sub[$r]['name'];
+     if((string)$sub[$r]['type'][r] == "AREA"){$cadsub = (string)$sub[$r]['name'];$sub .= "'".$cadsub."',";}
+}
+
+$lista_sub = substr( $lista_sub , 0 , -1);
+
+$combo_sub = "[".$lista_sub."]";
+ */ 
 
 echo "</pre>";
 ?>;
