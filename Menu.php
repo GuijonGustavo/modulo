@@ -1421,50 +1421,6 @@ fillTerciario();
 
 </script>
 
-<!-- Tabla -->
-
-<table style="width:100%">
-  <tr>
-    <th>Firstname</th>
-    <th>Lastname</th> 
-    <th>Tipo</th>
-    <th>Subtipo</th>
-    <th>Color</th>
-  </tr>
-  <tr>
-    <td><select><option value="volvo"><?php echo $tipo_de_shape?></option></select></td>
-    <td><select>
-  <option value="nombre">Nombre</option>
-  <option value="numerico">Numérico</option>
-  <option value="cadena">Cadena</option>
-</select></td>
-    <td>i99999</td>
-    <td>50</td>
-    <td>50</td>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>JJ</td>
-    <td>94</td>
-    <td>94</td>
-    <td>94</td>
-  </tr>
-  <tr>
-    <td>John</td>
-    <td>Doe</td>
-    <td>80</td>
-    <td>80</td>
-    <td>80</td>
-  </tr>
-</table>
-
-
-
-
-
-<!-- Tabla -->
-
-
 
 <script>
 
