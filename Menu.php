@@ -1104,6 +1104,17 @@ if($id == 0) {echo "<script>$(document).ready(function(){ customDialog({message:
 </script>
   </form>
 
+                                      <form>                                                  
+<input id='NoOculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Previsualizar" disabled="true"> 
+                                       </form>
+
+
+
+
+
+
+
+
 <div id="map" class="map" ></div>
 <script type="text/javascript">
 
@@ -1312,10 +1323,12 @@ map.renderSync();
 <p class="txtN1"><b>SLD</b></p>
 <br />
   <p class="txtN1">Generar SLD</p>
+<input id='Oculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Visualizar SLD en Geoserver" disabled="true">
+</form>                                                  
                                        
 
-                                      <form>                                                  
-<input id='Oculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Mostrar Previsualización" disabled="true"> 
+  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_xml.php"  method="post" enctype="multipart/form-data">
+<input type="submit" style="display:block; float:rigth;" id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">
                                        </form>
 
 
@@ -1534,7 +1547,7 @@ fillTerciario();
 
     </script>
 
-  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_xml.php"  method="post" enctype="multipart/form-data">
+                                      <form>                                                  
 <div>
    <select id="cero">
    <option value="cero"><?php echo $tipo_de_shape?></option>
@@ -1549,25 +1562,17 @@ fillTerciario();
  <select id="terciario">
    </select>
    <select>
-
-            <label for="low_value"><input id="low_value" class="jscolor" value="a80000"></label>
-
+<label for="low_value"><input id="low_value" class="jscolor" value="a80000">
+</label>
    </select>
-   <select>
-  <input type="submit" id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">
-
+    <select>
+            <label for="low_value"><input id="low_value" class="jscolor" value="2612A8">
+</label>
    </select>
+
 </div>
 </form>
-
-
 </div>
-
-                                      
-
-
-
-
 
 </div>
 
