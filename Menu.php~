@@ -1326,6 +1326,64 @@ map.renderSync();
 </form>
 
 
+                                      <form>                                                  
+<input id='Oculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Mostrar Previsualización" disabled="true"> 
+                                       </form>
+//Inicia la parte que es copia de Cartografia
+
+<div id="map1" class="map" ></div>
+<script type="text/javascript">
+
+
+var nombreDeCapa = '<?php echo $nameFileSession;?>';
+
+if(nombreDeCapa){
+    document.getElementById('Oculto').disabled = false;
+}
+
+
+var layers = new ol.layer.Tile({
+source: new ol.source.TileWMS({
+url: 'http://ssig.conabio.gob.mx:2900/capas_cbm'+'/myworkspace/wms',
+params: {'LAYERS': nombreDeCapa},
+
+})});
+
+var raster = new ol.layer.Tile({
+source: new ol.source.OSM()
+});
+
+var map = new ol.Map({
+layers: [raster, layers],
+target: 'map1', 
+controls:[],
+view: new ol.View({
+center: ol.proj.fromLonLat([-94.17,19.24]), 
+zoom: 3
+})
+});
+
+
+//Añadimos un control de zoom
+
+//map.addControl(new ol.control.ZoomSlider()); 
+//map.addControl(new ol.control.MousePosition({ numDigits: 2 }));
+map.addControl(new ol.control.ScaleLine());
+
+
+document.getElementById('Oculto').onclick = function() { //Esta función hace que aparezca en cuanto se presiona el bótón. Se tiene que hacer así, sino no se ve el mapa
+map.updateSize();
+map.render();
+map.renderSync();
+}
+
+
+
+</script>
+
+
+//Finaliza la parte que copie de cartografia
+
 
 
 <script type="text/javascript">
@@ -1420,13 +1478,6 @@ fillTerciario();
 
 
 </script>
-
-<!-- Tabla -->
-
-
-
-<!-- Tabla -->
-
 
 
 <script>
