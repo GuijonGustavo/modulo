@@ -1381,10 +1381,6 @@ map.renderSync();
 
 
 </script>
-
-
-
-
 <script type="text/javascript">
 
 <?php $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
@@ -1441,7 +1437,6 @@ $combo_sub = "[".$lista_sub."]";
 }
 
 ?>
-
 var options = {
 nombre : <?php echo $combo_col0; ?>,
 numerico : <?php echo $combo_num; ?>,
@@ -1472,6 +1467,43 @@ $('#terciario').append('<option value="'+elemento+'">'+elemento+'</option>');
 }
 $('#secondary').change(fillTerciario);
 fillTerciario();
+});
+
+</script>
+
+<script>
+
+var optionsx = {
+division : ["A","B","C"],
+desviacion : ["1","2","3"],
+cadenax : <?php echo $combo_cad; ?>
+}
+
+var options_terciariox = {
+A : <?php echo $combo_cad; ?>,
+B : <?php echo $combo_cad; ?>
+}
+
+$(function(){
+var fillSecondaryx = function(){
+var selectedx = $('#primaryx').val();
+$('#secondaryx').empty();
+optionsx[selectedx].forEach(function(elementx,indexx){
+$('#secondaryx').append('<option value="'+elementx+'">'+elementx+'</option>');
+});
+}
+$('#primaryx').change(fillSecondaryx);
+fillSecondaryx();
+
+var fillTerciariox = function(){
+var selecionadox = $('#secondaryx').val();
+$('#terciariox').empty();
+options_terciariox[selecionadox].forEach(function(elementox,indicex){
+$('#terciariox').append('<option value="'+elementox+'">'+elementox+'</option>');
+});
+}
+$('#secondaryx').change(fillTerciariox);
+fillTerciariox();
 });
 
 
@@ -1549,27 +1581,84 @@ fillTerciario();
 
                                       <form>                                                  
 <div>
-   <select id="cero">
+<table>
+
+<tr>
+<td>Shape 
+</td> 
+<td>Tipo 
+</td> 
+
+<td>Atributo 
+</td> 
+
+<td>Valor único 
+</td> 
+<td>Clasificar
+</td> 
+
+<td>Clases
+</td> 
+<td>Valores
+</td> 
+<td>Color Relleno 
+</td> 
+
+
+
+</tr>
+
+
+<tr>
+<td> 
+  <select id="cero">
    <option value="cero"><?php echo $tipo_de_shape?></option>
-   </select> 
+   </select>
+</td> 
+<td> 
    <select id="primary">
       <option value="nombre">Nombre</option>
       <option value="numerico">numerico</option>
       <option value="cadena">cadena</option>
-   </select> 
+   </select>
+
+</td> 
+<td> 
+
    <select id="secondary">
    </select>
+
+</td> 
+<td> 
  <select id="terciario">
    </select>
-   <select>
-<label for="low_value"><input id="low_value" class="jscolor" value="a80000">
-</label>
+</td> 
+<td> 
+   <select id="primaryx">
+      <option value="division">Intervalo igual</option>
+      <option value="desviacion">Desviación Estándard</option>
+      <option value="cadenax">Cad</option>
+</select>
+</td> 
+<td> 
+   <select id="secondaryx">
    </select>
+</td> 
+<td> 
+   <select id="terciariox">
+   </select>
+</td> 
+
+
+<td> 
     <select>
             <label for="low_value"><input id="low_value" class="jscolor" value="2612A8">
 </label>
    </select>
 
+</td> 
+</tr>
+</table>
 </div>
 </form>
 </div>
