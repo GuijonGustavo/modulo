@@ -1,5 +1,12 @@
 <?php 
 
+require_once('../shpRead/php-shapefile/src/ShapeFileAutoloader.php');
+\ShapeFile\ShapeFileAutoloader::register();
+
+use \ShapeFile\ShapeFile;
+use \ShapeFile\ShapeFileException;
+
+
 ob_start();
 
  session_start();
@@ -140,8 +147,11 @@ else {
 <script src="openLayers/v4.2.0/build/ol.js" type="text/javascript"></script>
 	<script src="Javascript/jquery-1.7.1.min.js"></script>
 
-
-
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="Javascript/plugins/jscolor/jscolor.js"></script>
+ <script type="text/javascript" src="Javascript/plugins/jquery/dist/jquery.js"></script>
+ <script type="text/javascript" src="Javascript/plugins/farbtastic/farbtastic.js"></script>
+ <link rel="stylesheet" href="Javascript/plugins/farbtastic/farbtastic.css" type="text/css" />
 
 
 
@@ -351,7 +361,10 @@ function vectores(nameMetadato) {
 		});
 	//alert(nameMetadato);
 }
-</script>
+
+
+
+
 
 <script type="text/javascript">
 
@@ -446,9 +459,6 @@ $("#seconds").html(60 - ss);
 
 
     </script>
-
-
-
 
 
 
@@ -718,6 +728,15 @@ if($id == 0) {echo "<script>$(document).ready(function(){ customDialog({message:
                                      <td colspan="6"><?php 	$tooltipAbst = "(Resumen en inglés) Opcional.";
                                                       		global $id;  genera("c_abstract","95px",$id , $cv_principal , "txtarea", $tooltipAbst);  ?></td>
                                  </tr>
+
+<tr valign="top">
+                                     <td>Cita:</td>
+                                     <td colspan="6"><?php 	$tooltipCita = "Cita";
+                                                      		global $id;  genera("c_cita","95px",$id , $cv_principal , "txtarea", $tooltipCita);  ?></td>
+                                 </tr>
+
+
+
                                  <tr valign="top">
                                      <td>Objetivos generales:</td>
                                      <td colspan="6"><?php 	$tooltipObje = "Propósito de la creación del dato"; 
@@ -1086,8 +1105,14 @@ if($id == 0) {echo "<script>$(document).ready(function(){ customDialog({message:
   </form>
 
                                       <form>                                                  
-<input id='NoOculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Mostrar Previsualización" disabled="true"> 
+<input id='NoOculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Previsualizar" disabled="true"> 
                                        </form>
+
+
+
+
+
+
 
 
 <div id="map" class="map" ></div>
@@ -1168,6 +1193,7 @@ map.renderSync();
 
 <?php if($nom != $nombreUsuario){echo '<tr><td>Nombre de proyecto</td>
                                    <td><select id="nombreProy" name="nombreProy">
+                                 <option value="conect_mang">conect_mang</option>
                                  <option value="jm001">jm001</option>
                                  <option value="jm002">jm002</option>
                                  <option value="jm003">jm003</option>
@@ -1290,26 +1316,358 @@ map.renderSync();
              <div id="div17"  class="element">
 
                 <div id="contenido">
+                <div id="paleta_1">
 
 
 <form>                                                  
 <p class="txtN1"><b>SLD</b></p>
 <br />
-                                       <p class="txtN1"> SLD</p>
+  <p class="txtN1">Generar SLD</p>
+<input id='Oculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Visualizar SLD en Geoserver" disabled="true">
+</form>                                                  
+                                       
 
+  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_xml.php"  method="post" enctype="multipart/form-data">
+<input type="submit" style="display:block; float:rigth;" id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">
                                        </form>
 
 
+<div id="map1" class="map" ></div>
+<script type="text/javascript">
+
+
+var nombreDeCapa = '<?php echo $nameFileSession;?>';
+
+if(nombreDeCapa){
+    document.getElementById('Oculto').disabled = false;
+}
+
+
+var layers = new ol.layer.Tile({
+source: new ol.source.TileWMS({
+url: 'http://ssig.conabio.gob.mx:2900/capas_cbm'+'/myworkspace/wms',
+params: {'LAYERS': nombreDeCapa},
+
+})});
+
+var raster = new ol.layer.Tile({
+source: new ol.source.OSM()
+});
+
+var map = new ol.Map({
+layers: [raster, layers],
+target: 'map1',
+controls:[],
+view: new ol.View({
+center: ol.proj.fromLonLat([-94.17,19.24]), 
+zoom: 3
+})
+});
+
+
+//Añadimos un control de zoom
+
+//map.addControl(new ol.control.ZoomSlider()); 
+//map.addControl(new ol.control.MousePosition({ numDigits: 2 }));
+map.addControl(new ol.control.ScaleLine());
+
+
+document.getElementById('Oculto').onclick = function() { //Esta función hace que aparezca en cuanto se presiona el bótón. Se tiene que hacer así, sino no se ve el mapa
+map.updateSize();
+map.render();
+map.renderSync();
+}
+
+
+
+</script>
+<script type="text/javascript">
+
+<?php $mapa = "/var/www/html/modulo_cbm/files/".$nameFileSession."/".$nameFileSession.".shp";
+try{
+
+$ShapeFile = new ShapeFile($mapa);
+$valores = $ShapeFile->getDBFFields();
+    $lista_atributos0 = "";
+    $lista_num = "";
+    $lista_cad = "";
+    $lista_fila = "";
+for ($i = 0; $i < sizeof($valores); $i++) {
+    $fila0 = (string)$valores[$i]['name'];
+    $lista_atributos0 .= "'".$fila0."',";
+    if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
+    if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
+
+
+    $lista_sub = "";
+foreach ($ShapeFile as $j => $record) {
+    $sub = $record['dbf'][$fila0];
+    $lista_sub .= "'".$sub."',";
+                }
+
+$lista_sub = substr( $lista_sub , 0 , -1);
+$lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
+
+}
+
+$lista_fila = substr( $lista_fila , 0 , -2);
+
+$lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
+$lista_num = substr( $lista_num , 0 , -1);
+$lista_cad = substr( $lista_cad , 0 , -1);
+
+$combo_col0 = "[".$lista_atributos0."]";
+$combo_num = "[".$lista_num."]";
+$combo_cad = "[".$lista_cad."]";
+
+$tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
+
+$lista_sub = substr( $lista_sub , 0 , -1);
+$combo_sub = "[".$lista_sub."]";
 
 
 
 
 
+} catch (ShapeFileException $e) {
+    echo "</pre>";
+    echo "<form>                                                  
+<p class='txtN2'><b>El shape que estás solicitando no está disponible en el servidor, sólo está en el Geoserver. Por lo pronbto no se puede generar el SLD.</b></p>
+                                       </form>";
+}
+
+?>
+var options = {
+nombre : <?php echo $combo_col0; ?>,
+numerico : <?php echo $combo_num; ?>,
+cadena : <?php echo $combo_cad; ?>
+}
+
+var options_terciario = {
+<?php echo $lista_fila; ?>
+}
+
+$(function(){
+var fillSecondary = function(){
+var selected = $('#primary').val();
+$('#secondary').empty();
+options[selected].forEach(function(element,index){
+$('#secondary').append('<option value="'+element+'">'+element+'</option>');
+});
+}
+$('#primary').change(fillSecondary);
+fillSecondary();
+
+var fillTerciario = function(){
+var selecionado = $('#secondary').val();
+$('#terciario').empty();
+options_terciario[selecionado].forEach(function(elemento,indice){
+$('#terciario').append('<option value="'+elemento+'">'+elemento+'</option>');
+});
+}
+$('#secondary').change(fillTerciario);
+fillTerciario();
+});
+
+</script>
+
+<script>
+
+var optionsx = {
+division : ["A","B","C"],
+desviacion : ["1","2","3"],
+cadenax : <?php echo $combo_cad; ?>
+}
+
+var options_terciariox = {
+A : <?php echo $combo_cad; ?>,
+B : <?php echo $combo_cad; ?>
+}
+
+$(function(){
+var fillSecondaryx = function(){
+var selectedx = $('#primaryx').val();
+$('#secondaryx').empty();
+optionsx[selectedx].forEach(function(elementx,indexx){
+$('#secondaryx').append('<option value="'+elementx+'">'+elementx+'</option>');
+});
+}
+$('#primaryx').change(fillSecondaryx);
+fillSecondaryx();
+
+var fillTerciariox = function(){
+var selecionadox = $('#secondaryx').val();
+$('#terciariox').empty();
+options_terciariox[selecionadox].forEach(function(elementox,indicex){
+$('#terciariox').append('<option value="'+elementox+'">'+elementox+'</option>');
+});
+}
+$('#secondaryx').change(fillTerciariox);
+fillTerciariox();
+});
+
+
+
+</script>
+
+
+<script>
+
+
+  d3.select("#colorize").on("click", colorize);
+
+
+  function colorize () {
+
+          var low_color = "#" + document.getElementById("low_value").value,
+                  high_color = "#" + document.getElementById("high_value").value,
+
+                      entries = +document.getElementById("entries").value,
+                          values = d3.range(0, entries, 1);
+
+              var color = d3.scaleLinear()
+                      .domain([0, entries - 1])
+                          .range([low_color,high_color])
+
+                              d3.select("body").select(".entries-group").remove();
+
+              var group = d3.select("body").append("div").attr('class', 'entries-group');
+
+              group.selectAll("entries").data(values)
+                      .enter()
+                          .append("div")
+                              .attr('class', 'entries')
+                                  .html(function(d){ return rgb2hex(color(d)) })
+                                      .style("background-color", function(d){
+                                                return color(d)
+                                                        })
+                                                            .on("click", copy)
+                                                              }
+    function rgb2hex(rgb){
+            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+                return (rgb && rgb.length === 4) ? "#" +
+                        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+                            ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+                                ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+              }
+
+
+
+    function copy(d){
+            var t = d3.transition().duration(1500).ease(d3.easeCubicOut);
+                d3.select(".msg").interrupt()
+                        d3.select(".copy").attr('disabled', null);
+
+            d3.select(".msg").style("opacity", 1);
+
+                var colorString = this.innerText.slice(1);
+                d3.select(".copy").attr('value', colorString)
+                        var inputColor = document.querySelector(".copy");
+                    inputColor.select();
+
+                try {
+                          var successful = document.execCommand('copy');
+
+                                d3.select(".msg").html('Copied!').transition(t).style("opacity", 0);
+                              } catch (err) {
+                                        d3.select(".msg").html('Oops, unable to copy');
+                                            }
+
+                    d3.select(".copy").attr('disabled', true);
+
+                  }
+
+    </script>
+
+                                      <form>                                                  
+<div>
+<table>
+
+<tr>
+<td>Shape 
+</td> 
+<td>Tipo 
+</td> 
+
+<td>Atributo 
+</td> 
+
+<td>Valor único 
+</td> 
+<td>Clasificar
+</td> 
+
+<td>Clases
+</td> 
+<td>Valores
+</td> 
+<td>Color Relleno 
+</td> 
+
+
+
+</tr>
+
+
+<tr>
+<td> 
+  <select id="cero">
+   <option value="cero"><?php echo $tipo_de_shape?></option>
+   </select>
+</td> 
+<td> 
+   <select id="primary">
+      <option value="nombre">Nombre</option>
+      <option value="numerico">numerico</option>
+      <option value="cadena">cadena</option>
+   </select>
+
+</td> 
+<td> 
+
+   <select id="secondary">
+   </select>
+
+</td> 
+<td> 
+ <select id="terciario">
+   </select>
+</td> 
+<td> 
+   <select id="primaryx">
+      <option value="division">Intervalo igual</option>
+      <option value="desviacion">Desviación Estándard</option>
+      <option value="cadenax">Cad</option>
+</select>
+</td> 
+<td> 
+   <select id="secondaryx">
+   </select>
+</td> 
+<td> 
+   <select id="terciariox">
+   </select>
+</td> 
+
+
+<td> 
+    <select>
+            <label for="low_value"><input id="low_value" class="jscolor" value="2612A8">
+</label>
+   </select>
+
+</td> 
+</tr>
+</table>
+</div>
+</form>
 </div>
 
 </div>
 
-<!------------------------------Cierra zona de xml---------------------->
+</div>
+
+<!------------------------------Cierra zona de sld---------------------->
 
 
 

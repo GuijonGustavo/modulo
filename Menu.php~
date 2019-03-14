@@ -1391,10 +1391,15 @@ $valores = $ShapeFile->getDBFFields();
     $lista_atributos0 = "";
     $lista_num = "";
     $lista_cad = "";
+    $lista_coluno = "";
     $lista_fila = "";
 for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
     $lista_atributos0 .= "'".$fila0."',";
+    $lista_coluno .= $fila0." : ['Intervalo_igual', 'Desviacion_estandard'], ";
+
+
+
     if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
     if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
 
@@ -1408,8 +1413,16 @@ foreach ($ShapeFile as $j => $record) {
 $lista_sub = substr( $lista_sub , 0 , -1);
 $lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
 
+
+
+
+
+
+
+
 }
 
+$lista_coluno = substr( $lista_coluno , 0 , -2);
 $lista_fila = substr( $lista_fila , 0 , -2);
 
 $lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
@@ -1424,6 +1437,9 @@ $tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
 
 $lista_sub = substr( $lista_sub , 0 , -1);
 $combo_sub = "[".$lista_sub."]";
+
+
+
 
 
 
@@ -1444,7 +1460,12 @@ cadena : <?php echo $combo_cad; ?>
 }
 
 var options_terciario = {
-<?php echo $lista_fila; ?>
+<?php echo $lista_coluno; ?>
+}
+var options_cuarto = {
+Intervalo_igual : ['1','2','3','4','5','6','7','8','9','10'],
+Desviacion_estandard : ['1','2','3','4','5','6','7','8','9','10']
+
 }
 
 $(function(){
@@ -1467,10 +1488,51 @@ $('#terciario').append('<option value="'+elemento+'">'+elemento+'</option>');
 }
 $('#secondary').change(fillTerciario);
 fillTerciario();
+
+var fillcuarto = function(){
+var selecionadoc = $('#terciario').val();
+$('#cuarto').empty();
+options_cuarto[selecionadoc].forEach(function(elementoc,indicec){
+$('#cuarto').append('<option value="'+elementoc+'">'+elementoc+'</option>');
+});
+}
+$('#terciario').change(fillcuarto);
+fillcuarto();
+
+
+
+
+
+
+
+
+
+
+
 });
 
-</script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<?php echo $lista_coluno;?>
 <script>
 
 var optionsx = {
@@ -1633,6 +1695,11 @@ fillTerciariox();
  <select id="terciario">
    </select>
 </td> 
+<td> 
+ <select id="cuarto">
+   </select>
+</td> 
+
 <td> 
    <select id="primaryx">
       <option value="division">Intervalo igual</option>
