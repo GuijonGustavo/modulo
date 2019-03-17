@@ -1406,24 +1406,22 @@ $valores = $ShapeFile->getDBFFields();
 foreach ($ShapeFile as $j => $record) {
     $sub = $record['dbf'][$fila0];
     $lista_sub .= "'".$sub."',";
-    $lista_sub_col2_div .= "'".$sub."',";
+    $lista_sub_col2_div .=$sub.",";
 }
 
 $nueva_lista_col2 = explode(',', $lista_sub_col2_div);
-
 $division = sizeof($nueva_lista_col2);
 $division = (int)$division;
 $limite = round($division/2);
-
 $nueva_lista_col2 = array_chunk($nueva_lista_col2, $limite);
-
+$rango2 = "'".$nueva_lista_col2[0][0]." ~ ".$nueva_lista_col2[0][$limite-1]."', '".$nueva_lista_col2[1][0]." ~ ".$nueva_lista_col2[1][$limite-3]."'"; 
 
 
 $lista_sub = substr( $lista_sub , 0 , -1);
 $lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
 
 $lista_sub_col2_div = substr( $lista_sub_col2_div , 0 , -1);
-$lista_col2 .= $valores[$i]['name']." : [".$lista_sub_col2_div."],\n";
+$lista_col2 .= $valores[$i]['name']." : [".$rango2."],\n";
 }
 
 $lista_fila = substr( $lista_fila , 0 , -2);
@@ -1458,7 +1456,7 @@ var options = {
 }
 
 var options_terciario = {
-<?php echo $lista_fila; ?>
+<?php echo $lista_col2; ?>
 }
 
 $(function(){
@@ -1523,7 +1521,7 @@ fillTerciariox();
 
 </script>
 
-<?php print_r($nueva_lista_col2[0][$limite-2]); ?>
+<?php echo $lista_col2; ?>
 
 <script>
 
