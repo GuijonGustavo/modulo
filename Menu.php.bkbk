@@ -1391,51 +1391,45 @@ $valores = $ShapeFile->getDBFFields();
     $lista_atributos0 = "";
     $lista_num = "";
     $lista_cad = "";
+    $lista_coluno = "";
     $lista_fila = "";
-
-    $lista_col2 = "";
-    for ($i = 0; $i < sizeof($valores); $i++) {
+for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
     $lista_atributos0 .= "'".$fila0."',";
+    $lista_coluno .= $fila0." : ['Intervalo_igual', 'Desviacion_estandard'], ";
+
+
+
     if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
     if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
 
 
     $lista_sub = "";
-    $lista_sub_col2_div = "";
 foreach ($ShapeFile as $j => $record) {
     $sub = $record['dbf'][$fila0];
     $lista_sub .= "'".$sub."',";
-    $lista_sub_col2_div .= "'".$sub."',";
-}
-
-$nueva_lista_col2 = explode(',', $lista_sub_col2_div);
-
-$division = sizeof($nueva_lista_col2);
-$division = (int)$division;
-$limite = round($division/2);
-
-$nueva_lista_col2 = array_chunk($nueva_lista_col2, $limite);
-
-
+                }
 
 $lista_sub = substr( $lista_sub , 0 , -1);
 $lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
 
-$lista_sub_col2_div = substr( $lista_sub_col2_div , 0 , -1);
-$lista_col2 .= $valores[$i]['name']." : [".$lista_sub_col2_div."],\n";
+
+
+
+
+
+
+
 }
 
+$lista_coluno = substr( $lista_coluno , 0 , -2);
 $lista_fila = substr( $lista_fila , 0 , -2);
-$lista_col2 = substr( $lista_col2 , 0 , -2);
 
 $lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
 $lista_num = substr( $lista_num , 0 , -1);
 $lista_cad = substr( $lista_cad , 0 , -1);
 
-$combo_col1 = "[".$lista_atributos0."]";
-$combo_col2 = "[".$lista_atributos0."]";
-$combo_col3 = "[".$lista_atributos0."]";
+$combo_col0 = "[".$lista_atributos0."]";
 $combo_num = "[".$lista_num."]";
 $combo_cad = "[".$lista_cad."]";
 
@@ -1443,6 +1437,7 @@ $tipo_de_shape = $ShapeFile->getShapeType(ShapeFile::FORMAT_STR);
 
 $lista_sub = substr( $lista_sub , 0 , -1);
 $combo_sub = "[".$lista_sub."]";
+
 } catch (ShapeFileException $e) {
     echo "</pre>";
     echo "<form>                                                  
@@ -1452,13 +1447,32 @@ $combo_sub = "[".$lista_sub."]";
 
 ?>
 var options = {
-1 : <?php echo $combo_col1; ?>,
-2 : <?php echo $combo_col2; ?>,
-3 : <?php echo $combo_col3; ?>
+Intervalo_igual : ['1','2','3','4','5','6','7','8','9','10'],
+Desviacion_estandard : ['1','2','3','4','5','6','7','8','9','10']
+
+
+
 }
 
 var options_terciario = {
-<?php echo $lista_fila; ?>
+
+1 : <?php echo $combo_col0; ?>,
+2 : <?php echo $combo_num; ?>,
+3 : <?php echo $combo_cad; ?>
+4 : <?php echo $combo_col0; ?>,
+5 : <?php echo $combo_num; ?>,
+6 : <?php echo $combo_cad; ?>
+7 : <?php echo $combo_col0; ?>,
+8 : <?php echo $combo_num; ?>,
+9 : <?php echo $combo_cad; ?>,
+10 : <?php echo $combo_cad; ?>
+
+}
+var options_cuarto = {
+
+
+10 : <?php echo $combo_cad; ?>
+
 }
 
 $(function(){
@@ -1481,15 +1495,27 @@ $('#terciario').append('<option value="'+elemento+'">'+elemento+'</option>');
 }
 $('#secondary').change(fillTerciario);
 fillTerciario();
+
+var fillcuarto = function(){
+var selecionadoc = $('#terciario').val();
+$('#cuarto').empty();
+options_cuarto[selecionadoc].forEach(function(elementoc,indicec){
+$('#cuarto').append('<option value="'+elementoc+'">'+elementoc+'</option>');
+});
+}
+$('#terciario').change(fillcuarto);
+fillcuarto();
 });
 
-</script>
 
+</script>
+<?php echo $lista_coluno;?>
 <script>
 
 var optionsx = {
-1 : ["A","B","C"],
-2 : <?php echo $combo_num; ?>
+division : ["A","B","C"],
+desviacion : ["1","2","3"],
+cadenax : <?php echo $combo_cad; ?>
 }
 
 var options_terciariox = {
@@ -1523,7 +1549,6 @@ fillTerciariox();
 
 </script>
 
-<?php print_r($nueva_lista_col2[0][$limite-2]); ?>
 
 <script>
 
@@ -1630,13 +1655,10 @@ fillTerciariox();
    </select>
 </td> 
 <td> 
-   <select>
-      <option value="division">Intervalo igual</option>
-   </select>
    <select id="primary">
-      <option value="1">una</option>
-      <option value="2">Dos</option>
-      <option value="3">Tres</option>
+      <option value="nombre">Nombre</option>
+      <option value="numerico">numerico</option>
+      <option value="cadena">cadena</option>
    </select>
 
 </td> 
@@ -1651,9 +1673,15 @@ fillTerciariox();
    </select>
 </td> 
 <td> 
+ <select id="cuarto">
+   </select>
+</td> 
+
+<td> 
    <select id="primaryx">
-      <option value="1">1</option>
-      <option value="2">2</option>
+      <option value="division">Intervalo igual</option>
+      <option value="desviacion">Desviación Estándard</option>
+      <option value="cadenax">Cad</option>
 </select>
 </td> 
 <td> 
