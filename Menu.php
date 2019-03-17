@@ -1388,7 +1388,8 @@ try{
 
 $ShapeFile = new ShapeFile($mapa);
 $valores = $ShapeFile->getDBFFields();
-    $lista_atributos0 = "";
+    $lista_atributos1 = "";
+    $lista_atributos2 = "";
     $lista_num = "";
     $lista_cad = "";
     $lista_fila = "";
@@ -1396,7 +1397,8 @@ $valores = $ShapeFile->getDBFFields();
     $lista_col2 = "";
     for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
-    $lista_atributos0 .= "'".$fila0."',";
+    $lista_atributos1 .= "'".$fila0."',";
+    $lista_atributos2 .= "'".$fila0."_',";
     if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
     if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
 
@@ -1421,19 +1423,20 @@ $lista_sub = substr( $lista_sub , 0 , -1);
 $lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
 
 $lista_sub_col2_div = substr( $lista_sub_col2_div , 0 , -1);
-$lista_col2 .= $valores[$i]['name']." : [".$rango2."],\n";
+$lista_col2 .= $valores[$i]['name']."_ : [".$rango2."],\n";
 }
 
 $lista_fila = substr( $lista_fila , 0 , -2);
 $lista_col2 = substr( $lista_col2 , 0 , -2);
 
-$lista_atributos0 = substr( $lista_atributos0 , 0 , -1);
+$lista_atributos1 = substr( $lista_atributos1 , 0 , -1);
+$lista_atributos2 = substr( $lista_atributos2 , 0 , -1);
 $lista_num = substr( $lista_num , 0 , -1);
 $lista_cad = substr( $lista_cad , 0 , -1);
 
-$combo_col1 = "[".$lista_atributos0."]";
-$combo_col2 = "[".$lista_atributos0."]";
-$combo_col3 = "[".$lista_atributos0."]";
+$combo_col1 = "[".$lista_atributos1."]";
+$combo_col2 = "[".$lista_atributos2."]";
+$combo_col3 = "[".$lista_atributos1."]";
 $combo_num = "[".$lista_num."]";
 $combo_cad = "[".$lista_cad."]";
 
@@ -1456,7 +1459,7 @@ var options = {
 }
 
 var options_terciario = {
-<?php echo $lista_col2; ?>
+<?php echo $lista_fila.", ".$lista_col2; ?>
 }
 
 $(function(){
@@ -1517,12 +1520,9 @@ $('#secondaryx').change(fillTerciariox);
 fillTerciariox();
 });
 
-
-
 </script>
 
-<?php echo $lista_col2; ?>
-
+<?php echo $lista_fila.", ".$lista_col2; ?>
 <script>
 
 
