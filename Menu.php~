@@ -153,7 +153,6 @@ else {
  <script type="text/javascript" src="Javascript/plugins/farbtastic/farbtastic.js"></script>
  <link rel="stylesheet" href="Javascript/plugins/farbtastic/farbtastic.css" type="text/css" />
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 
 <script src="Javascript/plugins/materialcolorpicker.js"></script>
 
