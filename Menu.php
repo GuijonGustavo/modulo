@@ -1486,43 +1486,6 @@ fillTerciario();
 });
 
 </script>
-
-<script>
-
-var optionsx = {
-1 : ["A","B","C"],
-2 : <?php echo $combo_num; ?>
-}
-
-var options_terciariox = {
-A : <?php echo $combo_cad; ?>,
-B : <?php echo $combo_cad; ?>
-}
-
-$(function(){
-var fillSecondaryx = function(){
-var selectedx = $('#primaryx').val();
-$('#secondaryx').empty();
-optionsx[selectedx].forEach(function(elementx,indexx){
-$('#secondaryx').append('<option value="'+elementx+'">'+elementx+'</option>');
-});
-}
-$('#primaryx').change(fillSecondaryx);
-fillSecondaryx();
-
-var fillTerciariox = function(){
-var selecionadox = $('#secondaryx').val();
-$('#terciariox').empty();
-options_terciariox[selecionadox].forEach(function(elementox,indicex){
-$('#terciariox').append('<option value="'+elementox+'">'+elementox+'</option>');
-});
-}
-$('#secondaryx').change(fillTerciariox);
-fillTerciariox();
-});
-
-</script>
-
 <?php echo $lista_fila.", ".$lista_col2; ?>
 
 <script>
@@ -1545,28 +1508,26 @@ fillTerciariox();
 <tr>
 <td>Shape 
 </td> 
-<td>Tipo 
+
+<td>Clasificación 
 </td> 
 
-<td>Atributo 
+<td>Clases 
 </td> 
 
-<td>Valor único 
-</td> 
-<td>Clasificar
+<td>Atributos 
 </td> 
 
-<td>Clases
+<td>Rangos
 </td> 
-<td>Valores
-</td> 
+
 <td>Color Relleno 
 </td> 
 
-
+<td>Color Línea 
+</td> 
 
 </tr>
-
 
 <tr>
 <td> 
@@ -1578,6 +1539,8 @@ fillTerciariox();
    <select>
       <option value="division">Intervalo igual</option>
    </select>
+</td> 
+<td> 
    <select id="primary">
       <option value="1">una</option>
       <option value="2">Dos</option>
@@ -1596,30 +1559,17 @@ fillTerciariox();
    </select>
 </td> 
 <td> 
-   <select id="primaryx">
-      <option value="1">1</option>
-      <option value="2">2</option>
-</select>
-</td> 
-<td> 
-   <select id="secondaryx">
+<select>
+<input class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
    </select>
 </td> 
-<td> 
-   <select id="terciariox">
-   </select>
-</td> 
-
 
 <td> 
     <select>
-
-
 <input class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
-
    </select>
-
 </td> 
+
 </tr>
 </table>
 </div>
