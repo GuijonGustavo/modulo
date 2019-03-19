@@ -153,7 +153,9 @@ else {
  <script type="text/javascript" src="Javascript/plugins/farbtastic/farbtastic.js"></script>
  <link rel="stylesheet" href="Javascript/plugins/farbtastic/farbtastic.css" type="text/css" />
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 
+<script src="Javascript/plugins/materialcolorpicker.js"></script>
 
 	<script src="Javascript/javascript.js"></script>
 	<script src="Javascript/jquery.easyui.min.js"></script>
@@ -1523,73 +1525,19 @@ fillTerciariox();
 </script>
 
 <?php echo $lista_fila.", ".$lista_col2; ?>
+
 <script>
-
-
-  d3.select("#colorize").on("click", colorize);
-
-
-  function colorize () {
-
-          var low_color = "#" + document.getElementById("low_value").value,
-                  high_color = "#" + document.getElementById("high_value").value,
-
-                      entries = +document.getElementById("entries").value,
-                          values = d3.range(0, entries, 1);
-
-              var color = d3.scaleLinear()
-                      .domain([0, entries - 1])
-                          .range([low_color,high_color])
-
-                              d3.select("body").select(".entries-group").remove();
-
-              var group = d3.select("body").append("div").attr('class', 'entries-group');
-
-              group.selectAll("entries").data(values)
-                      .enter()
-                          .append("div")
-                              .attr('class', 'entries')
-                                  .html(function(d){ return rgb2hex(color(d)) })
-                                      .style("background-color", function(d){
-                                                return color(d)
-                                                        })
-                                                            .on("click", copy)
-                                                              }
-    function rgb2hex(rgb){
-            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-                return (rgb && rgb.length === 4) ? "#" +
-                        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-                            ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-                                ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-              }
+  $(document).ready(function () {
+          $(".materialColorPickerJs").each(function(i,e){
+                    new MaterialColorPickerJS($(e)[0]);
+                        });
+            });
+</script>
 
 
 
-    function copy(d){
-            var t = d3.transition().duration(1500).ease(d3.easeCubicOut);
-                d3.select(".msg").interrupt()
-                        d3.select(".copy").attr('disabled', null);
 
-            d3.select(".msg").style("opacity", 1);
 
-                var colorString = this.innerText.slice(1);
-                d3.select(".copy").attr('value', colorString)
-                        var inputColor = document.querySelector(".copy");
-                    inputColor.select();
-
-                try {
-                          var successful = document.execCommand('copy');
-
-                                d3.select(".msg").html('Copied!').transition(t).style("opacity", 0);
-                              } catch (err) {
-                                        d3.select(".msg").html('Oops, unable to copy');
-                                            }
-
-                    d3.select(".copy").attr('disabled', true);
-
-                  }
-
-    </script>
 
                                       <form>                                                  
 <div>
@@ -1666,8 +1614,10 @@ fillTerciariox();
 
 <td> 
     <select>
-            <label for="low_value"><input id="low_value" class="jscolor" value="2612A8">
-</label>
+
+
+<input class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
+
    </select>
 
 </td> 
@@ -1680,6 +1630,9 @@ fillTerciariox();
 </div>
 
 </div>
+
+
+
 
 <!------------------------------Cierra zona de sld---------------------->
 
