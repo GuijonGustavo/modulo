@@ -1557,18 +1557,18 @@ fillTerciario();
 
 </td> 
 <td> 
- <select name="color1" id="terciario">
+ <select name="attr" id="terciario">
    </select>
 </td> 
 <td> 
-<select >
-<input name="colo1" class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
+<select  >
+<input name="color1" class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
    </select>
 </td> 
 
 <td> 
-    <select>
-<input name="colo2" class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
+    <select  >
+<input name="color2" class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
    </select>
 </td> 
 
