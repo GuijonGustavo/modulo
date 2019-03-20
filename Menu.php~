@@ -1327,12 +1327,6 @@ map.renderSync();
 <input id='Oculto' style='display:block; margin-left:auto; margin-right:auto; width:270px;'  type="button" value="Visualizar SLD en Geoserver" disabled="true">
 </form>                                                  
                                        
-
-  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_xml.php"  method="post" enctype="multipart/form-data">
-<input type="submit" style="display:block; float:rigth;" id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">
-                                       </form>
-
-
 <div id="map1" class="map" ></div>
 <script type="text/javascript">
 
@@ -1453,6 +1447,11 @@ $combo_sub = "[".$lista_sub."]";
 }
 
 ?>
+
+
+
+
+
 var options = {
 1 : <?php echo $combo_col1; ?>,
 2 : <?php echo $combo_col2; ?>,
@@ -1496,12 +1495,12 @@ fillTerciario();
             });
 </script>
 
+  <form class="mapTemplate" id="mapTemplate" action="map_sld/map_xml.php"  method="post" enctype="multipart/form-data">
 
-
-
-
-
-                                      <form>                                                  
+<!--
+  <form class="rest_sld" name="rest_sld" id="rest_sld" action="rest_sld/map_xml.php"  method="post" enctype="multipart/form-data">
+  <input type="submit" id="btn_rest_sld" name="btn_rest_sld">  
+-->
 <div>
 <table>
 
@@ -1529,10 +1528,13 @@ fillTerciario();
 
 </tr>
 
+
 <tr>
 <td> 
+
+
   <select id="cero">
-   <option value="cero"><?php echo $tipo_de_shape?></option>
+   <option name="cero" value="cero"><?php echo $tipo_de_shape?></option>
    </select>
 </td> 
 <td> 
@@ -1550,30 +1552,33 @@ fillTerciario();
 </td> 
 <td> 
 
-   <select id="secondary">
+   <select name="secondary" id="secondary">
    </select>
 
 </td> 
 <td> 
- <select id="terciario">
+ <select name="color1" id="terciario">
    </select>
 </td> 
 <td> 
-<select>
-<input class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
+<select >
+<input name="colo1" class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
    </select>
 </td> 
 
 <td> 
     <select>
-<input class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
+<input name="colo2" class="materialColorPickerJs" alt="icon-color" value="#ffffff" />
    </select>
 </td> 
 
 </tr>
 </table>
 </div>
-</form>
+
+<input type="submit"  id="btn_map_xml" name="btn_map_xml" value="<?php echo $id;?>">
+
+                                       </form>
 </div>
 
 </div>

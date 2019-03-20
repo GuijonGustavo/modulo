@@ -96,7 +96,7 @@ case "Gustavo":
     $layer = "    newlayer1 = arcpy.mapping.Layer(r'C:\\\\Users\\\\CPR\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
     $desc = "    desc = arcpy.Describe(r'C:\\\\Users\\\\CPR\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
    // $simbolo = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
-    $simbolo_dp = "        symbologyLayer = (r'C:\\\\Users\\\\CPR\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'C:\\\\Users\\\\CPR\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'C:\\\\Users\\\\CPR\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
     $conn = "conn = pg.connect(dbname='metadatos', user='postgres', passwd='geosig0-2016', host='172.16.1.179')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"dataset_id\" = coberturas.\"record_id\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -116,7 +116,7 @@ case "Tonantzin":
     $layer = "    newlayer1 = arcpy.mapping.Layer(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
     $desc = "    desc = arcpy.Describe(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
    // $simbolo = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
-    $simbolo_dp = "        symbologyLayer = (r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
     $conn = "conn = pg.connect(dbname='metadatos', user='postgres', passwd='geosig0-2016', host='172.16.1.179')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"dataset_id\" = coberturas.\"record_id\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -135,8 +135,8 @@ case "José Galvez":
     $lista_shapes = "lista_shapes = os.listdir(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\shp')";
     $layer = "    newlayer1 = arcpy.mapping.Layer(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
     $desc = "    desc = arcpy.Describe(r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\shp\\\\'+shapefile+'')";
-   // $simbolo = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
-    $simbolo = "        symbologyLayer = (r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
+   // $simbolo = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
+    $simbolo = "            symbologyLayer = (r'C:\\\\Users\\\\tcamacho\\\\Desktop\\\\plantilla\\\\simb\\\\'+filename+'.lyr')";
     $conn = "conn = pg.connect(dbname='metadatos', user='postgres', passwd='geosig0-2016', host='172.16.1.179')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"dataset_id\" = coberturas.\"record_id\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area_geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -150,7 +150,7 @@ case "Shareni Lara":
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\slara\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
-    $simbolo_dp = "        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area-geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -163,7 +163,7 @@ case "Verena Ekaterina Benítez":
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\vbenitez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
-    $simbolo_dp = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area-geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -176,7 +176,7 @@ case "ssocialsig":
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\ssocialsig.CONABIO\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
-    $simbolo_dp = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area-geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -189,7 +189,7 @@ case "Estrella Cruz":
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\ecruz\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
-    $simbolo_dp = "        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\USUARIOS\\SISTEM\\GMAGALLANES\\template\\base\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area-geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -201,7 +201,7 @@ case "Laura Herrera":
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\oherrera\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
-    $simbolo_dp = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area-geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
@@ -213,7 +213,7 @@ case "Rocio Lopez":
 
     $mxd_s = "        mxd_P.saveACopy(r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\mxd\\\\'+filename+'.mxd')";
     $png_s = "        arcpy.mapping.ExportToPNG(mxd_P, r'C:\\\\Users\\\\rlopez\\\\Desktop\\\\".$nom_proy."\\\\".$tipo_proy."\\\\png\\\\'+filename+'.png', resolution = 300)";
-    $simbolo_dp = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
+    $simbolo_dp = "            symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_dp.lyr')";
     $simbolo_sr = "        symbologyLayer = (r'J:\\\\USUARIOS\\\\SISTEM\\\\GMAGALLANES\\\\template\\\\base\\\\color_sr.lyr')";
     $consulta = "    consulta_atributo = 'select atributos.nombre from atributos inner join coberturas on atributos.\"DATASET ID\" = coberturas.\"RECORD ID\" where cobertura='+\"'\"+filename+\"'\"+\"\"";
     $area = "    consulta_areageo = 'select \"area-geo\" as areageo from coberturas where cobertura='+\"'\"+filename+\"'\"+\"\"";
