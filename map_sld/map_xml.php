@@ -7,6 +7,7 @@ $id = $_POST['btn_map_xml'];
 $color1 = $_POST['color1'];
 $color2 = $_POST['color2'];
 $rango = $_POST['rango'];
+$valor = $_POST['valor'];
 $attr = $_POST['attr'];
 
 require('../PHP/conn.php');
@@ -228,7 +229,7 @@ require('../PHP/conn.php');
 	
 } //Cerrrar conexion a la BD
 
-$xml_text_1= '<?xml version="1.0" encoding="UTF-8"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" version="1.0.0"><sld:NamedLayer><sld:Name>'.$cobertura.'</sld:Name><sld:UserStyle><sld:Name>'.$cobertura.'</sld:Name><sld:Title>'.$cobertura.'</sld:Title><sld:FeatureTypeStyle><sld:Name>name</sld:Name><sld:Rule><sld:PolygonSymbolizer><sld:Fill><sld:Title>'.$attr.'</sld:Title><sld:CssParameter name="fill">'.$color1.'</sld:CssParameter><sld:CssParameter name="fill-opacity">0.5</sld:CssParameter></sld:Fill><sld:Stroke><sld:CssParameter name="stroke">'.$color2.'</sld:CssParameter><sld:CssParameter name="stroke-opacity">0.5</sld:CssParameter></sld:Stroke></sld:PolygonSymbolizer></sld:Rule></sld:FeatureTypeStyle></sld:UserStyle></sld:NamedLayer></sld:StyledLayerDescriptor>';
+$xml_text_1= '<?xml version="1.0" encoding="UTF-8"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" version="1.0.0"><sld:NamedLayer><sld:Name>'.$cobertura.'</sld:Name><sld:UserStyle><sld:Name>'.$cobertura.'</sld:Name><sld:Title>'.$cobertura.'</sld:Title><sld:FeatureTypeStyle><sld:Name>name</sld:Name><sld:Rule><sld:PolygonSymbolizer><sld:Fill><ogc:PropertyName>'.$attr.'</ogc:PropertyName><sld:Title>'.$valor.'</sld:Title><sld:CssParameter name="fill">'.$color1.'</sld:CssParameter><sld:CssParameter name="fill-opacity">0.5</sld:CssParameter></sld:Fill><sld:Stroke><sld:CssParameter name="stroke">'.$color2.'</sld:CssParameter><sld:CssParameter name="stroke-opacity">0.5</sld:CssParameter></sld:Stroke></sld:PolygonSymbolizer></sld:Rule></sld:FeatureTypeStyle></sld:UserStyle></sld:NamedLayer></sld:StyledLayerDescriptor>';
 /*'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <StyledLayerDescriptor version="1.0.0" xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <NamedLayer>

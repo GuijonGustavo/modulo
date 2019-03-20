@@ -1552,12 +1552,12 @@ fillTerciario();
 </td> 
 <td> 
 
-   <select name="secondary" id="secondary">
+   <select name="attr" id="secondary">
    </select>
 
 </td> 
 <td> 
- <select name="attr" id="terciario">
+ <select name="valor" id="terciario">
    </select>
 </td> 
 <td> 
