@@ -1385,53 +1385,71 @@ $ShapeFile = new ShapeFile($mapa);
 $valores = $ShapeFile->getDBFFields();
     $lista_atributos1 = "";
     $lista_atributos2 = "";
+    $lista_atributos3 = "";
     $lista_num = "";
     $lista_cad = "";
     $lista_fila = "";
 
     $lista_col2 = "";
+    $lista_col3 = "";
     for ($i = 0; $i < sizeof($valores); $i++) {
     $fila0 = (string)$valores[$i]['name'];
     $lista_atributos1 .= "'".$fila0."',";
     $lista_atributos2 .= "'".$fila0."_',";
+    $lista_atributos3 .= "'".$fila0."__',";
     if((string)$valores[$i]['type'] == "N"){$num = (string)$valores[$i]['name'];$lista_num .= "'".$num."',";}
     if((string)$valores[$i]['type'] == "C"){$cad = (string)$valores[$i]['name'];$lista_cad .= "'".$cad."',";}
 
 
     $lista_sub = "";
     $lista_sub_col2_div = "";
+    $lista_sub_col3_div = "";
 foreach ($ShapeFile as $j => $record) {
     $sub = $record['dbf'][$fila0];
     $lista_sub .= "'".$sub."',";
     $lista_sub_col2_div .=$sub.",";
+    $lista_sub_col3_div .=$sub.",";
 }
 
 $nueva_lista_col2 = explode(',', $lista_sub_col2_div);
+$nueva_lista_col3 = explode(',', $lista_sub_col3_div);
 $division = sizeof($nueva_lista_col2);
+$division3 = sizeof($nueva_lista_col3);
 $division = (int)$division;
+$division3 = (int)$division3;
 $limite = round($division/2);
+$limite3 = round($division3/3);
 $nueva_lista_col2 = array_chunk($nueva_lista_col2, $limite);
+$nueva_lista_col3 = array_chunk($nueva_lista_col3, $limite3);
 $rango2 = "'".$nueva_lista_col2[0][0]." ~ ".$nueva_lista_col2[0][$limite-1]."', '".$nueva_lista_col2[1][0]." ~ ".$nueva_lista_col2[1][$limite-3]."'"; 
 
+$rango3 = "'".$nueva_lista_col3[0][0]." ~ ".$nueva_lista_col3[0][$limite3-1]."', '".$nueva_lista_col3[1][0]." ~ ".$nueva_lista_col3[1][$limite3-3]."', '".$nueva_lista_col3[2][0]." ~ ".$nueva_lista_col3[2][$limite3-3]."'"; 
 
 $lista_sub = substr( $lista_sub , 0 , -1);
 $lista_fila .= $valores[$i]['name']." : [".$lista_sub."],\n";
 
 $lista_sub_col2_div = substr( $lista_sub_col2_div , 0 , -1);
 $lista_col2 .= $valores[$i]['name']."_ : [".$rango2."],\n";
-}
+    
+    
+$lista_sub_col3_div = substr( $lista_sub_col3_div , 0 , -1);
+$lista_col3 .= $valores[$i]['name']."__ : [".$rango3."],\n";
+    
+    }
 
 $lista_fila = substr( $lista_fila , 0 , -2);
 $lista_col2 = substr( $lista_col2 , 0 , -2);
+$lista_col3 = substr( $lista_col3 , 0 , -2);
 
 $lista_atributos1 = substr( $lista_atributos1 , 0 , -1);
 $lista_atributos2 = substr( $lista_atributos2 , 0 , -1);
+$lista_atributos3 = substr( $lista_atributos3 , 0 , -1);
 $lista_num = substr( $lista_num , 0 , -1);
 $lista_cad = substr( $lista_cad , 0 , -1);
 
 $combo_col1 = "[".$lista_atributos1."]";
 $combo_col2 = "[".$lista_atributos2."]";
-$combo_col3 = "[".$lista_atributos1."]";
+$combo_col3 = "[".$lista_atributos3."]";
 $combo_num = "[".$lista_num."]";
 $combo_cad = "[".$lista_cad."]";
 
@@ -1459,7 +1477,7 @@ var options = {
 }
 
 var options_terciario = {
-<?php echo $lista_fila.", ".$lista_col2; ?>
+<?php echo $lista_fila.", ".$lista_col2.", ".$lista_col3; ?>
 }
 
 $(function(){
@@ -1485,7 +1503,6 @@ fillTerciario();
 });
 
 </script>
-<?php echo $lista_fila.", ".$lista_col2; ?>
 
 <script>
   $(document).ready(function () {
